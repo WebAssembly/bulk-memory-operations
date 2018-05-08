@@ -237,6 +237,8 @@
 .. |MEXPORTS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{exports}}
 .. |MDATA| mathdef:: \xref{syntax/modules}{syntax-module}{\K{data}}
 .. |MELEM| mathdef:: \xref{syntax/modules}{syntax-module}{\K{elem}}
+.. |MPDATA| mathdef:: \xref{syntax/modules}{syntax-module}{\K{pdata}}
+.. |MPELEM| mathdef:: \xref{syntax/modules}{syntax-module}{\K{pelem}}
 .. |MSTART| mathdef:: \xref{syntax/modules}{syntax-module}{\K{start}}
 
 .. |FTYPE| mathdef:: \xref{syntax/modules}{syntax-func}{\K{type}}
@@ -253,12 +255,12 @@
 .. |ETABLE| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{table}}
 .. |EOFFSET| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{offset}}
 .. |EINIT| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{init}}
-.. |EACTIVENESS| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{activeness}}
+.. |PEINIT| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{init}}
 
 .. |DMEM| mathdef:: \xref{syntax/modules}{syntax-data}{\K{data}}
 .. |DOFFSET| mathdef:: \xref{syntax/modules}{syntax-data}{\K{offset}}
 .. |DINIT| mathdef:: \xref{syntax/modules}{syntax-data}{\K{init}}
-.. |DACTIVENESS| mathdef:: \xref{syntax/modules}{syntax-data}{\K{activeness}}
+.. |PDINIT| mathdef:: \xref{syntax/modules}{syntax-data}{\K{init}}
 
 .. |SFUNC| mathdef:: \xref{syntax/modules}{syntax-start}{\K{func}}
 
@@ -292,6 +294,8 @@
 .. |exportdesc| mathdef:: \xref{syntax/modules}{syntax-exportdesc}{\X{exportdesc}}
 .. |elem| mathdef:: \xref{syntax/modules}{syntax-elem}{\X{elem}}
 .. |data| mathdef:: \xref{syntax/modules}{syntax-data}{\X{data}}
+.. |pelem| mathdef:: \xref{syntax/modules}{syntax-elem}{\X{pelem}}
+.. |pdata| mathdef:: \xref{syntax/modules}{syntax-data}{\X{pdata}}
 .. |start| mathdef:: \xref{syntax/modules}{syntax-start}{\X{start}}
 
 

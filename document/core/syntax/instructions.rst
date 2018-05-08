@@ -267,7 +267,7 @@ Both instructions operate in units of :ref:`page size <page-size>`.
 The |MEMORYINIT| instruction copies data from a :ref:`passive data segment <syntax-activeness>` into a memory.
 The |MEMORYDROP| instruction prevents further use of a passive data segment. This instruction is intended to be used as an optimization hint. After a data segment is dropped its data can no longer be retrieved, so the memory used by this segment may be freed.
 The |MEMORYCOPY| instruction copies data from a source memory region to a possibly overlapping destination region.
-The |MEMORYFILL| instruction sets all bytes in a region to a given byte.
+The |MEMORYFILL| instruction sets all values in a region to a given byte.
 
 .. note::
    In the current version of WebAssembly,

@@ -181,26 +181,6 @@ Global Types
    \end{array}
 
 
-.. index:: ! activeness
-   pair: abstract syntax; activeness
-   pair: element; activeness
-   pair: data; activeness
-.. _syntax-activeness:
-
-Activeness
-~~~~~~~~~~
-
-*Activeness* classifies how the storage associated with :ref:`element segments <syntax-elem>` and :ref:`data segments <syntax-data>` is copied into :ref:`tables <syntax-table>` and :ref:`memories <syntax-mem>` respectively.
-
-An active segment is copied automatically during :ref:`instantiation <exec-instantiation>`. A passive segment is not copied automatically, and instead can be copied using the :ref:`memory.init <syntax-instr-memory>` and :ref:`table.init <syntax-instr-table>` instructions.
-
-.. math::
-   \begin{array}{llll}
-   \production{activeness} & \activeness &::=&
-     \AACTIVE ~|~
-     \APASSIVE \\
-   \end{array}
-
 .. index:: ! external type, function type, table type, memory type, global type, import, external value
    pair: abstract syntax; external type
    pair: external; type
