@@ -184,10 +184,6 @@
 .. |ETMEM| mathdef:: \xref{syntax/types}{syntax-externtype}{\K{mem}}
 .. |ETGLOBAL| mathdef:: \xref{syntax/types}{syntax-externtype}{\K{global}}
 
-.. |AACTIVE| mathdef:: \xref{syntax/types}{syntax-activeness}{\K{active}}
-.. |APASSIVE| mathdef:: \xref{syntax/types}{syntax-activeness}{\K{passive}}
-
-
 .. Types, non-terminals
 
 .. |valtype| mathdef:: \xref{syntax/types}{syntax-valtype}{\X{valtype}}
@@ -200,7 +196,6 @@
 
 .. |limits| mathdef:: \xref{syntax/types}{syntax-limits}{\X{limits}}
 .. |mut| mathdef:: \xref{syntax/types}{syntax-mut}{\X{mut}}
-.. |activeness| mathdef:: \xref{syntax/types}{syntax-activeness}{\X{activeness}}
 
 .. |externtype| mathdef:: \xref{syntax/types}{syntax-externtype}{\X{externtype}}
 
