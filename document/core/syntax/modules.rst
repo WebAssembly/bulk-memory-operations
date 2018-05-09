@@ -20,9 +20,7 @@ and provide initialization logic in the form of active and passive :ref:`data <s
      \MMEMS~\vec(\mem), \\&&&&
      \MGLOBALS~\vec(\global), \\&&&&
      \MELEM~\vec(\elem), \\&&&&
-     \MPELEM~\vec(\pelem), \\&&&&
      \MDATA~\vec(\data), \\&&&&
-     \MPDATA~\vec(\pdata), \\&&&&
      \MSTART~\start^?, \\&&&&
      \MIMPORTS~\vec(\import), \\&&&&
      \MEXPORTS~\vec(\export) \quad\} \\
@@ -83,9 +81,9 @@ Each class of definition has its own *index space*, as distinguished by the foll
 The index space for :ref:`functions <syntax-func>`, :ref:`tables <syntax-table>`, :ref:`memories <syntax-mem>` and :ref:`globals <syntax-global>` includes respective :ref:`imports <syntax-import>` declared in the same module.
 The indices of these imports precede the indices of other definitions in the same index space.
 
-Element indices reference :ref:`passive element segments <syntax-elem>`.
+Element indices reference :ref:`element segments <syntax-elem>`.
 
-Data indices reference :ref:`passive data segments <syntax-data>`.
+Data indices reference :ref:`data segments <syntax-data>`.
 
 The index space for :ref:`locals <syntax-local>` is only accessible inside a :ref:`function <syntax-func>` and includes the parameters and local variables of that function, which precede the other locals.
 
@@ -239,29 +237,26 @@ starting with the smallest index not referencing a global :ref:`import <syntax-i
 Element Segments
 ~~~~~~~~~~~~~~~~
 
-The initial contents of a table is uninitialized. *Element segments* initialize a subrange of a table from a static :ref:`vector <syntax-vec>` of elements.
+The initial contents of a table is uninitialized. *Element segments* can be used to initialize a subrange of a table from a static :ref:`vector <syntax-vec>` of elements.
 
 Element segments can be *active* or *passive*. An active element segment copies its elements into a table during :ref:`instantiation <exec-instantiation>`. A passive element segment's elements can be copied using the |TABLEINIT| instruction.
 
-The |MELEM| component of a module defines a vector of active element segments. Each active element segment defines the |ETABLE| and the starting |EOFFSET| in that table to initialize.
+The |MELEM| component of a module defines a vector of element segments. Each active element segment defines the |ETABLE| and the starting |EOFFSET| in that table to initialize. Each passive element segment only defines its contents.
 
 .. math::
    \begin{array}{llll}
    \production{element segment} & \elem &::=&
+     \EACTIVE~\aelem ~|~
+     \EPASSIVE~\pelem \\
+   \production{active element segment} & \aelem &::=&
      \{ \ETABLE~\tableidx, \EOFFSET~\expr, \EINIT~\vec(\funcidx) \} \\
+   \production{passive element segment} & \pelem &::=&
+     \{ \EINIT~\vec(\funcidx) \} \\
    \end{array}
 
 The |EOFFSET| is given by a :ref:`constant <valid-constant>` :ref:`expression <syntax-expr>`.
 
-The |MPELEM| component of a module defines a vector of passive element segments. Each passive element segment only defines its contents.
-
-.. math::
-   \begin{array}{llll}
-   \production{passive element segment} & \pelem &::=&
-     \{ \PEINIT~\vec(\funcidx) \} \\
-   \end{array}
-
-Passive element segments are referenced through :ref:`element indices <syntax-elemidx>`.
+Element segments are referenced through :ref:`element indices <syntax-elemidx>`.
 
 .. note::
    In the current version of WebAssembly, at most one table is allowed in a module.
@@ -277,29 +272,26 @@ Passive element segments are referenced through :ref:`element indices <syntax-el
 Data Segments
 ~~~~~~~~~~~~~
 
-The initial contents of a :ref:`memory <syntax-mem>` are zero bytes. *Data segments* initialize a range of memory from a static :ref:`vector <syntax-vec>` of :ref:`bytes <syntax-byte>`.
+The initial contents of a :ref:`memory <syntax-mem>` are zero bytes. *Data segments* can be used to initialize a range of memory from a static :ref:`vector <syntax-vec>` of :ref:`bytes <syntax-byte>`.
 
 Like element segments, data segments can be active or passive. An active data segment copies its contents into a table during :ref:`instantiation <exec-instantiation>`. A passive data segment's contents can be copied using the |MEMORYINIT| instruction.
 
-The |MDATA| component of a module defines a vector of active data segments. Each active data segment defines the memory to initialize, and the starting |DOFFSET| in that memory to initialize.
+The |MDATA| component of a module defines a vector of data segments. Each active data segment defines the memory to initialize, and the starting |DOFFSET| in that memory to initialize. Each passive data segment only defines its contents.
 
 .. math::
    \begin{array}{llll}
    \production{data segment} & \data &::=&
+     \DACTIVE~\adata ~|~
+     \DPASSIVE~\pdata \\
+   \production{active data segment} & \adata &::=&
      \{ \DMEM~\memidx, \DOFFSET~\expr, \DINIT~\vec(\byte) \} \\
+   \production{passive data segment} & \pdata &::=&
+     \{ \DINIT~\vec(\byte) \} \\
    \end{array}
 
 The |DOFFSET| is given by a :ref:`constant <valid-constant>` :ref:`expression <syntax-expr>`.
 
-The |MPDATA| component of a module defines a vector of passive data segments. Each passive data segment only defines its contents.
-
-.. math::
-   \begin{array}{llll}
-   \production{passive data segment} & \pdata &::=&
-     \{ \PDINIT~\vec(\byte) \} \\
-   \end{array}
-
-Passive data segments are referenced through :ref:`data indices <syntax-dataidx>`.
+Data segments are referenced through :ref:`data indices <syntax-dataidx>`.
 
 .. note::
    In the current version of WebAssembly, at most one memory is allowed in a module.
