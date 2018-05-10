@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -115,6 +115,7 @@ All parts of this specification are defined in terms of this abstract syntax.</p
 <li><span class="math">\(A^?\)</span> is an optional occurrence of <span class="math">\(A\)</span>.
 (This is a shorthand for <span class="math">\(A^n\)</span> where <span class="math">\(n \leq 1\)</span>.)</li>
 <li>Productions are written <span class="math">\(\mathit{sym} ::= A_1 ~|~ \dots ~|~ A_n\)</span>.</li>
+<li>Large productions may be split into multiple definitions, indicated by ending the first one with explicit ellipses, <span class="math">\(\mathit{sym} ::= A_1 ~|~ \dots\)</span>, and starting continuations with ellipses, <span class="math">\(\mathit{sym} ::= \dots ~|~ A_2\)</span>.</li>
 <li>Some productions are augmented with side conditions in parentheses, “<span class="math">\((\mathrel{\mbox{if}} \mathit{condition})\)</span>”, that provide a shorthand for a combinatorial expansion of the production into many separate cases.</li>
 </ul>
 </div>
@@ -171,7 +172,7 @@ where the <span class="math">\(A\)</span> can either be values or complex constr
 A vector can have at most <span class="math">\(2^{32}-1\)</span> elements.</p>
 <div class="math">
 \[\begin{split}\begin{array}{lllll}
-\def\mathdef1898#1{{}}\mathdef1898{vector} &amp; \href{../syntax/conventions.html#syntax-vec}{\mathit{vec}}(A) &amp;::=&amp;
+\def\mathdef1899#1{{}}\mathdef1899{vector} &amp; \href{../syntax/conventions.html#syntax-vec}{\mathit{vec}}(A) &amp;::=&amp;
   A^n
   &amp; (\mathrel{\mbox{if}} n &lt; 2^{32})\\
 \end{array}\end{split}\]</div>
