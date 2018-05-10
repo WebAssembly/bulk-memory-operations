@@ -145,7 +145,7 @@ Globals :math:`\global` are classified by :ref:`global types <syntax-globaltype>
 Element Segments
 ~~~~~~~~~~~~~~~~
 
-Element segments :math:`\elem` are not classified by a type.
+Element segments :math:`\elem` are classified by :ref:`activeness <syntax-activeness>`.
 
 :math:`\{ \ETABLE~x, \EOFFSET~\expr, \EINIT~y^\ast \}`
 ......................................................
@@ -163,7 +163,7 @@ Element segments :math:`\elem` are not classified by a type.
 * For each :math:`y_i` in :math:`y^\ast`,
   the function :math:`C.\CFUNCS[y]` must be defined in the context.
 
-* Then the element segment is valid.
+* Then the element segment is valid with activeness |AACTIVE|.
 
 
 .. math::
@@ -176,7 +176,24 @@ Element segments :math:`\elem` are not classified by a type.
      \qquad
      (C.\CFUNCS[y] = \functype)^\ast
    }{
-     C \vdashelem \{ \ETABLE~x, \EOFFSET~\expr, \EINIT~y^\ast \} \ok
+     C \vdashelem \{ \ETABLE~x, \EOFFSET~\expr, \EINIT~y^\ast \} : \AACTIVE
+   }
+
+
+:math:`\{ \EINIT~y^\ast \}`
+......................................................
+
+* For each :math:`y_i` in :math:`y^\ast`,
+  the function :math:`C.\CFUNCS[y]` must be defined in the context.
+
+* Then the element segment is valid with activeness |APASSIVE|.
+
+
+.. math::
+   \frac{
+     (C.\CFUNCS[y] = \functype)^\ast
+   }{
+     C \vdashelem \{ \EINIT~y^\ast \} : \APASSIVE
    }
 
 
@@ -190,7 +207,7 @@ Element segments :math:`\elem` are not classified by a type.
 Data Segments
 ~~~~~~~~~~~~~
 
-Data segments :math:`\data` are not classified by any type.
+Data segments :math:`\data` are classified by :ref:`activeness <syntax-activeness>`.
 
 :math:`\{ \DMEM~x, \DOFFSET~\expr, \DINIT~b^\ast \}`
 ....................................................
@@ -201,7 +218,7 @@ Data segments :math:`\data` are not classified by any type.
 
 * The expression :math:`\expr` must be :ref:`constant <valid-constant>`.
 
-* Then the data segment is valid.
+* Then the data segment is valid with activeness |AACTIVE|.
 
 
 .. math::
@@ -212,7 +229,20 @@ Data segments :math:`\data` are not classified by any type.
      \qquad
      C \vdashexprconst \expr \const
    }{
-     C \vdashdata \{ \DMEM~x, \DOFFSET~\expr, \DINIT~b^\ast \} \ok
+     C \vdashdata \{ \DMEM~x, \DOFFSET~\expr, \DINIT~b^\ast \} : \AACTIVE
+   }
+
+
+:math:`\{ \DINIT~b^\ast \}`
+....................................................
+
+* The data segment is valid.
+
+
+.. math::
+   \frac{
+   }{
+     C \vdashdata \{ \DINIT~b^\ast \} : \APASSIVE
    }
 
 
@@ -465,6 +495,10 @@ Instead, the context :math:`C` for validation of the module's content is constru
   * :math:`C.\CGLOBALS` is :math:`\etglobals(\X{it}^\ast)` concatenated with :math:`\X{gt}^\ast`,
     with the import's :ref:`external types <syntax-externtype>` :math:`\X{it}^\ast` and the internal :ref:`global types <syntax-globaltype>` :math:`\X{gt}^\ast` as determined below,
 
+  * :math:`C.\CELEM` is :math:`\X{ea}^\ast`, with :ref:`activeness <syntax-activeness>` :math:`\X{ea}^\ast` as determined below,
+
+  * :math:`C.\CDATA` is :math:`\X{da}^\ast`, with :ref:`activeness <syntax-activeness>` :math:`\X{da}^\ast` as determined below,
+
   * :math:`C.\CLOCALS` is empty,
 
   * :math:`C.\CLABELS` is empty,
@@ -493,10 +527,10 @@ Instead, the context :math:`C` for validation of the module's content is constru
       the definition :math:`\global_i` must be :ref:`valid <valid-global>` with a :ref:`global type <syntax-globaltype>` :math:`\X{gt}_i`.
 
   * For each :math:`\elem_i` in :math:`\module.\MELEM`,
-    the segment :math:`\elem_i` must be :ref:`valid <valid-elem>`.
+    the segment :math:`\elem_i` must be :ref:`valid <valid-elem>` with :ref:`activeness <syntax-activeness>` :math:`\X{ea}_i`.
 
   * For each :math:`\data_i` in :math:`\module.\MDATA`,
-    the segment :math:`\data_i` must be :ref:`valid <valid-data>`.
+    the segment :math:`\data_i` must be :ref:`valid <valid-data>` with :ref:`activeness <syntax-activeness>` :math:`\X{da}_i`.
 
   * If :math:`\module.\MSTART` is non-empty,
     then :math:`\module.\MSTART` must be :ref:`valid <valid-start>`.
@@ -520,6 +554,10 @@ Instead, the context :math:`C` for validation of the module's content is constru
 * Let :math:`\X{mt}^\ast` be the concatenation of the internal :ref:`memory types <syntax-memtype>` :math:`\X{mt}_i`, in index order.
 
 * Let :math:`\X{gt}^\ast` be the concatenation of the internal :ref:`global types <syntax-globaltype>` :math:`\X{gt}_i`, in index order.
+
+* Let :math:`\X{ea}^\ast` be the concatenation of the :ref:`activeness <syntax-activeness>` :math:`\X{ea}_i`, in index order.
+
+* Let :math:`\X{da}^\ast` be the concatenation of the :ref:`activeness <syntax-activeness>` :math:`\X{da}_i`, in index order.
 
 * Let :math:`\X{it}^\ast` be the concatenation of :ref:`external types <syntax-externtype>` :math:`\X{it}_i` of the imports, in index order.
 

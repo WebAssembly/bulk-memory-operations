@@ -179,6 +179,9 @@
 .. |LMIN| mathdef:: \xref{syntax/types}{syntax-limits}{\K{min}}
 .. |LMAX| mathdef:: \xref{syntax/types}{syntax-limits}{\K{max}}
 
+.. |AACTIVE| mathdef:: \xref{syntax/types}{syntax-activeness}{\K{active}}
+.. |APASSIVE| mathdef:: \xref{syntax/types}{syntax-activeness}{\K{passive}}
+
 .. |ETFUNC| mathdef:: \xref{syntax/types}{syntax-externtype}{\K{func}}
 .. |ETTABLE| mathdef:: \xref{syntax/types}{syntax-externtype}{\K{table}}
 .. |ETMEM| mathdef:: \xref{syntax/types}{syntax-externtype}{\K{mem}}
@@ -197,6 +200,8 @@
 
 .. |limits| mathdef:: \xref{syntax/types}{syntax-limits}{\X{limits}}
 .. |mut| mathdef:: \xref{syntax/types}{syntax-mut}{\X{mut}}
+
+.. |activeness| mathdef:: \xref{syntax/types}{syntax-activeness}{\X{activeness}}
 
 .. |externtype| mathdef:: \xref{syntax/types}{syntax-externtype}{\X{externtype}}
 
@@ -723,6 +728,8 @@
 .. |CTABLES| mathdef:: \xref{valid/conventions}{context}{\K{tables}}
 .. |CMEMS| mathdef:: \xref{valid/conventions}{context}{\K{mems}}
 .. |CGLOBALS| mathdef:: \xref{valid/conventions}{context}{\K{globals}}
+.. |CELEM| mathdef:: \xref{valid/conventions}{context}{\K{elem}}
+.. |CDATA| mathdef:: \xref{valid/conventions}{context}{\K{data}}
 .. |CLOCALS| mathdef:: \xref{valid/conventions}{context}{\K{locals}}
 .. |CLABELS| mathdef:: \xref{valid/conventions}{context}{\K{labels}}
 .. |CRETURN| mathdef:: \xref{valid/conventions}{context}{\K{return}}
