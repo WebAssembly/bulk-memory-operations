@@ -246,11 +246,7 @@ The |MELEM| component of a module defines a vector of element segments. Each act
 .. math::
    \begin{array}{llll}
    \production{element segment} & \elem &::=&
-     \EACTIVE~\aelem ~|~
-     \EPASSIVE~\pelem \\
-   \production{active element segment} & \aelem &::=&
-     \{ \ETABLE~\tableidx, \EOFFSET~\expr, \EINIT~\vec(\funcidx) \} \\
-   \production{passive element segment} & \pelem &::=&
+     \{ \ETABLE~\tableidx, \EOFFSET~\expr, \EINIT~\vec(\funcidx) \} \\&&|&
      \{ \EINIT~\vec(\funcidx) \} \\
    \end{array}
 
@@ -281,11 +277,7 @@ The |MDATA| component of a module defines a vector of data segments. Each active
 .. math::
    \begin{array}{llll}
    \production{data segment} & \data &::=&
-     \DACTIVE~\adata ~|~
-     \DPASSIVE~\pdata \\
-   \production{active data segment} & \adata &::=&
-     \{ \DMEM~\memidx, \DOFFSET~\expr, \DINIT~\vec(\byte) \} \\
-   \production{passive data segment} & \pdata &::=&
+     \{ \DMEM~\memidx, \DOFFSET~\expr, \DINIT~\vec(\byte) \} \\&&|&
      \{ \DINIT~\vec(\byte) \} \\
    \end{array}
 

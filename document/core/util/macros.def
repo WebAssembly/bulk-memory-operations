@@ -246,14 +246,10 @@
 .. |GTYPE| mathdef:: \xref{syntax/modules}{syntax-global}{\K{type}}
 .. |GINIT| mathdef:: \xref{syntax/modules}{syntax-global}{\K{init}}
 
-.. |EACTIVE| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{active}}
-.. |EPASSIVE| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{passive}}
 .. |ETABLE| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{table}}
 .. |EOFFSET| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{offset}}
 .. |EINIT| mathdef:: \xref{syntax/modules}{syntax-elem}{\K{init}}
 
-.. |DACTIVE| mathdef:: \xref{syntax/modules}{syntax-data}{\K{active}}
-.. |DPASSIVE| mathdef:: \xref{syntax/modules}{syntax-data}{\K{passive}}
 .. |DMEM| mathdef:: \xref{syntax/modules}{syntax-data}{\K{data}}
 .. |DOFFSET| mathdef:: \xref{syntax/modules}{syntax-data}{\K{offset}}
 .. |DINIT| mathdef:: \xref{syntax/modules}{syntax-data}{\K{init}}
@@ -289,11 +285,7 @@
 .. |importdesc| mathdef:: \xref{syntax/modules}{syntax-importdesc}{\X{importdesc}}
 .. |exportdesc| mathdef:: \xref{syntax/modules}{syntax-exportdesc}{\X{exportdesc}}
 .. |elem| mathdef:: \xref{syntax/modules}{syntax-elem}{\X{elem}}
-.. |aelem| mathdef:: \xref{syntax/modules}{syntax-elem}{\X{aelem}}
-.. |pelem| mathdef:: \xref{syntax/modules}{syntax-elem}{\X{pelem}}
 .. |data| mathdef:: \xref{syntax/modules}{syntax-data}{\X{data}}
-.. |adata| mathdef:: \xref{syntax/modules}{syntax-data}{\X{adata}}
-.. |pdata| mathdef:: \xref{syntax/modules}{syntax-data}{\X{pdata}}
 .. |start| mathdef:: \xref{syntax/modules}{syntax-start}{\X{start}}
 
 
