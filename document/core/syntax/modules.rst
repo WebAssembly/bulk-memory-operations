@@ -9,7 +9,7 @@ WebAssembly programs are organized into *modules*,
 which are the unit of deployment, loading, and compilation.
 A module collects definitions for :ref:`types <syntax-type>`, :ref:`functions <syntax-func>`, :ref:`tables <syntax-table>`, :ref:`memories <syntax-mem>`, and :ref:`globals <syntax-global>`.
 In addition, it can declare :ref:`imports <syntax-import>` and :ref:`exports <syntax-export>`
-and provide initialization logic in the form of :ref:`active <syntax-active>` and :ref:`passive <syntax-passive>` :ref:`data <syntax-data>` and :ref:`element <syntax-elem>` segments, or a :ref:`start function <syntax-start>`.
+and provide initialization in the form of :ref:`active <syntax-active>` and :ref:`passive <syntax-passive>` :ref:`data <syntax-data>` and :ref:`element <syntax-elem>` segments, or a :ref:`start function <syntax-start>`.
 
 .. math::
    \begin{array}{lllll}

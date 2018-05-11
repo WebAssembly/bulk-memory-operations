@@ -432,9 +432,7 @@ Memory Instructions
 
 * The data segment :math:`C.\CDATA[x]` must be defined in the context.
 
-* Let :math:`a` be the :ref:`activeness <syntax-activeness>` :math:`C.\CDATA[x]`.
-
-* The activeness :math:`a` must be |APASSIVE|.
+* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[\I32~\I32~\I32] \to []`.
 
@@ -442,9 +440,9 @@ Memory Instructions
    \frac{
      C.\CMEMS[0] = \memtype
      \qquad
-     C.\CDATA[x] = \APASSIVE
+     C.\CDATA[x] = \SPASSIVE
    }{
-     C \vdashinstr \MEMORYINIT : [\I32~\I32~\I32] \to []
+     C \vdashinstr \MEMORYINIT~x : [\I32~\I32~\I32] \to []
    }
 
 
@@ -455,17 +453,15 @@ Memory Instructions
 
 * The data segment :math:`C.\CDATA[x]` must be defined in the context.
 
-* Let :math:`a` be the :ref:`activeness <syntax-activeness>` :math:`C.\CDATA[x]`.
-
-* The activeness :math:`a` must be |APASSIVE|.
+* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[] \to []`.
 
 .. math::
    \frac{
-     C.\CDATA[x] = \APASSIVE
+     C.\CDATA[x] = \SPASSIVE
    }{
-     C \vdashinstr \MEMORYDROP : [] \to []
+     C \vdashinstr \MEMORYDROP~x : [] \to []
    }
 
 
@@ -520,9 +516,7 @@ Table Instructions
 
 * The element segment :math:`C.\CELEM[x]` must be defined in the context.
 
-* Let :math:`a` be the :ref:`activeness <syntax-activeness>` :math:`C.\CELEM[x]`.
-
-* The activeness :math:`a` must be |APASSIVE|.
+* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[\I32~\I32~\I32] \to []`.
 
@@ -530,9 +524,9 @@ Table Instructions
    \frac{
      C.\CTABLES[0] = \tabletype
      \qquad
-     C.\CELEM[x] = \APASSIVE
+     C.\CELEM[x] = \SPASSIVE
    }{
-     C \vdashinstr \TABLEINIT : [\I32~\I32~\I32] \to []
+     C \vdashinstr \TABLEINIT~x : [\I32~\I32~\I32] \to []
    }
 
 
@@ -543,17 +537,15 @@ Table Instructions
 
 * The element segment :math:`C.\CELEM[x]` must be defined in the context.
 
-* Let :math:`a` be the :ref:`activeness <syntax-activeness>` :math:`C.\CELEM[x]`.
-
-* The activeness :math:`a` must be |APASSIVE|.
+* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[] \to []`.
 
 .. math::
    \frac{
-     C.\CELEM[x] = \APASSIVE
+     C.\CELEM[x] = \SPASSIVE
    }{
-     C \vdashinstr \TABLEDROP : [] \to []
+     C \vdashinstr \TABLEDROP~x : [] \to []
    }
 
 

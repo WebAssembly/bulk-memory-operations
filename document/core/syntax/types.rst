@@ -181,24 +181,22 @@ Global Types
    \end{array}
 
 
-.. index:: ! activeness, ! active, ! passive
-   pair: abstract syntax; activeness
-.. _syntax-activeness:
+.. index:: ! segmenttype, ! active, ! passive
+   pair: abstract syntax; segmenttype
+.. _syntax-segmenttype:
 .. _syntax-active:
 .. _syntax-passive:
 
-Activeness
-~~~~~~~~~~
+Segment Types
+~~~~~~~~~~~~~
 
-*Activeness* classifies :ref:`data segments <syntax-data>` and :ref:`element segments <syntax-elem>`, which either be *active* or *passive*.
-
-An active segment copies its contents into a table or memory during :ref:`instantiation <exec-instantiation>`. A passive segment's contents can be copied using the |TABLEINIT| and |MEMORYINIT| instructions.
+*Segment types* classify :ref:`data segments <syntax-data>` and :ref:`element segments <syntax-elem>`, which can either be *active* or *passive*.
 
 .. math::
    \begin{array}{llll}
-   \production{activeness} & \activeness &::=&
-     \AACTIVE ~|~
-     \APASSIVE \\
+   \production{segment type} & \segmenttype &::=&
+     \SACTIVE ~|~
+     \SPASSIVE \\
    \end{array}
 
 
