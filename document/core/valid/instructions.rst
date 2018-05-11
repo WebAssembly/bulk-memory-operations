@@ -432,7 +432,7 @@ Memory Instructions
 
 * The data segment :math:`C.\CDATA[x]` must be defined in the context.
 
-* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
+* The :ref:`segment type <syntax-segtype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[\I32~\I32~\I32] \to []`.
 
@@ -453,7 +453,7 @@ Memory Instructions
 
 * The data segment :math:`C.\CDATA[x]` must be defined in the context.
 
-* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
+* The :ref:`segment type <syntax-segtype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[] \to []`.
 
@@ -516,7 +516,7 @@ Table Instructions
 
 * The element segment :math:`C.\CELEM[x]` must be defined in the context.
 
-* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CELEM[x]` must be |SPASSIVE|.
+* The :ref:`segment type <syntax-segtype>` :math:`C.\CELEM[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[\I32~\I32~\I32] \to []`.
 
@@ -537,7 +537,7 @@ Table Instructions
 
 * The element segment :math:`C.\CELEM[x]` must be defined in the context.
 
-* The :ref:`segment type <syntax-segmenttype>` :math:`C.\CELEM[x]` must be |SPASSIVE|.
+* The :ref:`segment type <syntax-segtype>` :math:`C.\CELEM[x]` must be |SPASSIVE|.
 
 * Then the instruction is valid with type :math:`[] \to []`.
 

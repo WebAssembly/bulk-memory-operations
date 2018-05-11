@@ -60,8 +60,8 @@ More concretely, contexts are defined as :ref:`records <notation-record>` :math:
         & \CTABLES & \tabletype^\ast, \\
         & \CMEMS & \memtype^\ast, \\
         & \CGLOBALS & \globaltype^\ast, \\
-        & \CELEM & \segmenttype^\ast, \\
-        & \CDATA & \segmenttype^\ast, \\
+        & \CELEM & \segtype^\ast, \\
+        & \CDATA & \segtype^\ast, \\
         & \CLOCALS & \valtype^\ast, \\
         & \CLABELS & \resulttype^\ast, \\
         & \CRETURN & \resulttype^? ~\} \\

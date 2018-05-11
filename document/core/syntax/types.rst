@@ -181,9 +181,9 @@ Global Types
    \end{array}
 
 
-.. index:: ! segmenttype, ! active, ! passive
-   pair: abstract syntax; segmenttype
-.. _syntax-segmenttype:
+.. index:: ! segtype, ! active, ! passive
+   pair: abstract syntax; segtype
+.. _syntax-segtype:
 .. _syntax-active:
 .. _syntax-passive:
 
@@ -194,7 +194,7 @@ Segment Types
 
 .. math::
    \begin{array}{llll}
-   \production{segment type} & \segmenttype &::=&
+   \production{segment type} & \segtype &::=&
      \SACTIVE ~|~
      \SPASSIVE \\
    \end{array}
