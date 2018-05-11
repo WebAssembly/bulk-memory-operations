@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -196,7 +196,7 @@ the expression <span class="math">\(\href{../syntax/instructions.html#syntax-exp
 </div>
 <div class="section" id="element-segments">
 <span id="valid-elem"></span><span id="index-4"></span><h2>Element Segments<a class="headerlink" href="#element-segments" title="Permalink to this headline">¶</a></h2>
-<p>Element segments <span class="math">\(\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}\)</span> are classified by <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a>.</p>
+<p>Element segments <span class="math">\(\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}\)</span> are classified by <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment types</span></a>.</p>
 <div class="section" id="id5">
 <h3><span class="math">\(\{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~x, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \}\)</span><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -207,7 +207,7 @@ the expression <span class="math">\(\href{../syntax/instructions.html#syntax-exp
 <li>The expression <span class="math">\(\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}\)</span> must be <a class="reference internal" href="instructions.html#valid-constant"><span class="std std-ref">constant</span></a>.</li>
 <li>For each <span class="math">\(y_i\)</span> in <span class="math">\(y^\ast\)</span>,
 the function <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{funcs}}[y]\)</span> must be defined in the context.</li>
-<li>Then the element segment is valid with activeness <span class="math">\(\href{../syntax/types.html#syntax-activeness}{\mathsf{active}}\)</span>.</li>
+<li>Then the element segment is valid with type <span class="math">\(\href{../syntax/types.html#syntax-segmenttype}{\mathsf{active}}\)</span>.</li>
 </ul>
 <div class="math">
 \[\frac{
@@ -219,7 +219,7 @@ the function <span class="math">\(C.\href{../valid/conventions.html#context}{\ma
   \qquad
   (C.\href{../valid/conventions.html#context}{\mathsf{funcs}}[y] = \href{../syntax/types.html#syntax-functype}{\mathit{functype}})^\ast
 }{
-  C \href{../valid/modules.html#valid-elem}{\vdash} \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~x, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} : \href{../syntax/types.html#syntax-activeness}{\mathsf{active}}
+  C \href{../valid/modules.html#valid-elem}{\vdash} \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~x, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} : \href{../syntax/types.html#syntax-segmenttype}{\mathsf{active}}
 }\]</div>
 </div>
 <div class="section" id="id6">
@@ -227,26 +227,26 @@ the function <span class="math">\(C.\href{../valid/conventions.html#context}{\ma
 <ul class="simple">
 <li>For each <span class="math">\(y_i\)</span> in <span class="math">\(y^\ast\)</span>,
 the function <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{funcs}}[y]\)</span> must be defined in the context.</li>
-<li>Then the element segment is valid with activeness <span class="math">\(\href{../syntax/types.html#syntax-activeness}{\mathsf{passive}}\)</span>.</li>
+<li>Then the element segment is valid with type <span class="math">\(\href{../syntax/types.html#syntax-segmenttype}{\mathsf{passive}}\)</span>.</li>
 </ul>
 <div class="math">
 \[\frac{
   (C.\href{../valid/conventions.html#context}{\mathsf{funcs}}[y] = \href{../syntax/types.html#syntax-functype}{\mathit{functype}})^\ast
 }{
-  C \href{../valid/modules.html#valid-elem}{\vdash} \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} : \href{../syntax/types.html#syntax-activeness}{\mathsf{passive}}
+  C \href{../valid/modules.html#valid-elem}{\vdash} \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} : \href{../syntax/types.html#syntax-segmenttype}{\mathsf{passive}}
 }\]</div>
 </div>
 </div>
 <div class="section" id="data-segments">
 <span id="valid-data"></span><span id="index-5"></span><h2>Data Segments<a class="headerlink" href="#data-segments" title="Permalink to this headline">¶</a></h2>
-<p>Data segments <span class="math">\(\href{../syntax/modules.html#syntax-data}{\mathit{data}}\)</span> are classified by <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a>.</p>
+<p>Data segments <span class="math">\(\href{../syntax/modules.html#syntax-data}{\mathit{data}}\)</span> are classified by <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment types</span></a>.</p>
 <div class="section" id="id7">
 <h3><span class="math">\(\{ \href{../syntax/modules.html#syntax-data}{\mathsf{data}}~x, \href{../syntax/modules.html#syntax-data}{\mathsf{offset}}~\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}, \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \}\)</span><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The memory <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{mems}}[x]\)</span> must be defined in the context.</li>
 <li>The expression <span class="math">\(\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}\)</span> must be <a class="reference internal" href="instructions.html#valid-expr"><span class="std std-ref">valid</span></a> with <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result type</span></a> <span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}]\)</span>.</li>
 <li>The expression <span class="math">\(\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}\)</span> must be <a class="reference internal" href="instructions.html#valid-constant"><span class="std std-ref">constant</span></a>.</li>
-<li>Then the data segment is valid with activeness <span class="math">\(\href{../syntax/types.html#syntax-activeness}{\mathsf{active}}\)</span>.</li>
+<li>Then the data segment is valid with type <span class="math">\(\href{../syntax/types.html#syntax-segmenttype}{\mathsf{active}}\)</span>.</li>
 </ul>
 <div class="math">
 \[\frac{
@@ -256,7 +256,7 @@ the function <span class="math">\(C.\href{../valid/conventions.html#context}{\ma
   \qquad
   C \href{../valid/instructions.html#valid-constant}{\vdash} \href{../syntax/instructions.html#syntax-expr}{\mathit{expr}} \href{../valid/instructions.html#valid-constant}{\mathrel{\mbox{const}}}
 }{
-  C \href{../valid/modules.html#valid-data}{\vdash} \{ \href{../syntax/modules.html#syntax-data}{\mathsf{data}}~x, \href{../syntax/modules.html#syntax-data}{\mathsf{offset}}~\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}, \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} : \href{../syntax/types.html#syntax-activeness}{\mathsf{active}}
+  C \href{../valid/modules.html#valid-data}{\vdash} \{ \href{../syntax/modules.html#syntax-data}{\mathsf{data}}~x, \href{../syntax/modules.html#syntax-data}{\mathsf{offset}}~\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}, \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} : \href{../syntax/types.html#syntax-segmenttype}{\mathsf{active}}
 }\]</div>
 </div>
 <div class="section" id="id8">
@@ -267,7 +267,7 @@ the function <span class="math">\(C.\href{../valid/conventions.html#context}{\ma
 <div class="math">
 \[\frac{
 }{
-  C \href{../valid/modules.html#valid-data}{\vdash} \{ \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} : \href{../syntax/types.html#syntax-activeness}{\mathsf{passive}}
+  C \href{../valid/modules.html#valid-data}{\vdash} \{ \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} : \href{../syntax/types.html#syntax-segmenttype}{\mathsf{passive}}
 }\]</div>
 </div>
 </div>
@@ -458,8 +458,8 @@ with the import’s <a class="reference internal" href="../syntax/types.html#syn
 with the import’s <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> <span class="math">\(\mathit{it}^\ast\)</span> and the internal <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory types</span></a> <span class="math">\(\mathit{mt}^\ast\)</span> as determined below,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{globals}}\)</span> is <span class="math">\(\href{../syntax/types.html#syntax-externtype}{\mathrm{globals}}(\mathit{it}^\ast)\)</span> concatenated with <span class="math">\(\mathit{gt}^\ast\)</span>,
 with the import’s <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> <span class="math">\(\mathit{it}^\ast\)</span> and the internal <a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">global types</span></a> <span class="math">\(\mathit{gt}^\ast\)</span> as determined below,</li>
-<li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{elem}}\)</span> is <span class="math">\(\mathit{ea}^\ast\)</span>, with <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a> <span class="math">\(\mathit{ea}^\ast\)</span> as determined below,</li>
-<li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{data}}\)</span> is <span class="math">\(\mathit{da}^\ast\)</span>, with <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a> <span class="math">\(\mathit{da}^\ast\)</span> as determined below,</li>
+<li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{elem}}\)</span> is <span class="math">\(\mathit{est}^\ast\)</span>, with <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment types</span></a> <span class="math">\(\mathit{est}^\ast\)</span> as determined below,</li>
+<li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{data}}\)</span> is <span class="math">\(\mathit{dst}^\ast\)</span>, with <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment types</span></a> <span class="math">\(\mathit{dst}^\ast\)</span> as determined below,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{locals}}\)</span> is empty,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{labels}}\)</span> is empty,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{return}}\)</span> is empty.</li>
@@ -481,9 +481,9 @@ the definition <span class="math">\(\href{../syntax/modules.html#syntax-global}{
 </ul>
 </li>
 <li>For each <span class="math">\(\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}_i\)</span> in <span class="math">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{elem}}\)</span>,
-the segment <span class="math">\(\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}_i\)</span> must be <a class="reference internal" href="#valid-elem"><span class="std std-ref">valid</span></a> with <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a> <span class="math">\(\mathit{ea}_i\)</span>.</li>
+the segment <span class="math">\(\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}_i\)</span> must be <a class="reference internal" href="#valid-elem"><span class="std std-ref">valid</span></a> with a <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment type</span></a> <span class="math">\(\mathit{est}_i\)</span>.</li>
 <li>For each <span class="math">\(\href{../syntax/modules.html#syntax-data}{\mathit{data}}_i\)</span> in <span class="math">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{data}}\)</span>,
-the segment <span class="math">\(\href{../syntax/modules.html#syntax-data}{\mathit{data}}_i\)</span> must be <a class="reference internal" href="#valid-data"><span class="std std-ref">valid</span></a> with <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a> <span class="math">\(\mathit{da}_i\)</span>.</li>
+the segment <span class="math">\(\href{../syntax/modules.html#syntax-data}{\mathit{data}}_i\)</span> must be <a class="reference internal" href="#valid-data"><span class="std std-ref">valid</span></a> with a <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment type</span></a> <span class="math">\(\mathit{dst}_i\)</span>.</li>
 <li>If <span class="math">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{start}}\)</span> is non-empty,
 then <span class="math">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{start}}\)</span> must be <a class="reference internal" href="#valid-start"><span class="std std-ref">valid</span></a>.</li>
 <li>For each <span class="math">\(\href{../syntax/modules.html#syntax-import}{\mathit{import}}_i\)</span> in <span class="math">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{imports}}\)</span>,
@@ -499,8 +499,8 @@ the segment <span class="math">\(\href{../syntax/modules.html#syntax-export}{\ma
 <li>Let <span class="math">\(\mathit{tt}^\ast\)</span> be the concatenation of the internal <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table types</span></a> <span class="math">\(\mathit{tt}_i\)</span>, in index order.</li>
 <li>Let <span class="math">\(\mathit{mt}^\ast\)</span> be the concatenation of the internal <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory types</span></a> <span class="math">\(\mathit{mt}_i\)</span>, in index order.</li>
 <li>Let <span class="math">\(\mathit{gt}^\ast\)</span> be the concatenation of the internal <a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">global types</span></a> <span class="math">\(\mathit{gt}_i\)</span>, in index order.</li>
-<li>Let <span class="math">\(\mathit{ea}^\ast\)</span> be the concatenation of the <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a> <span class="math">\(\mathit{ea}_i\)</span>, in index order.</li>
-<li>Let <span class="math">\(\mathit{da}^\ast\)</span> be the concatenation of the <a class="reference internal" href="../syntax/types.html#syntax-activeness"><span class="std std-ref">activeness</span></a> <span class="math">\(\mathit{da}_i\)</span>, in index order.</li>
+<li>Let <span class="math">\(\mathit{est}^\ast\)</span> be the concatenation of the <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment types</span></a> <span class="math">\(\mathit{est}_i\)</span>, in index order.</li>
+<li>Let <span class="math">\(\mathit{dst}^\ast\)</span> be the concatenation of the <a class="reference internal" href="../syntax/types.html#syntax-segmenttype"><span class="std std-ref">segment types</span></a> <span class="math">\(\mathit{dst}_i\)</span>, in index order.</li>
 <li>Let <span class="math">\(\mathit{it}^\ast\)</span> be the concatenation of <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> <span class="math">\(\mathit{it}_i\)</span> of the imports, in index order.</li>
 <li>Let <span class="math">\(\mathit{et}^\ast\)</span> be the concatenation of <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> <span class="math">\(\mathit{et}_i\)</span> of the exports, in index order.</li>
 <li>Then the module is valid with <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> <span class="math">\(\mathit{it}^\ast \href{../syntax/types.html#syntax-functype}{\rightarrow} \mathit{et}^\ast\)</span>.</li>
@@ -518,9 +518,9 @@ the segment <span class="math">\(\href{../syntax/modules.html#syntax-export}{\ma
   \quad
   (C' \href{../valid/modules.html#valid-global}{\vdash} \href{../syntax/modules.html#syntax-global}{\mathit{global}} : \mathit{gt})^\ast
   \\
-  (C \href{../valid/modules.html#valid-elem}{\vdash} \href{../syntax/modules.html#syntax-elem}{\mathit{elem}} \mathrel{\mbox{ok}})^\ast
+  (C \href{../valid/modules.html#valid-elem}{\vdash} \href{../syntax/modules.html#syntax-elem}{\mathit{elem}} : \mathit{est})^\ast
   \quad
-  (C \href{../valid/modules.html#valid-data}{\vdash} \href{../syntax/modules.html#syntax-data}{\mathit{data}} \mathrel{\mbox{ok}})^\ast
+  (C \href{../valid/modules.html#valid-data}{\vdash} \href{../syntax/modules.html#syntax-data}{\mathit{data}} : \mathit{dst})^\ast
   \quad
   (C \href{../valid/modules.html#valid-start}{\vdash} \href{../syntax/modules.html#syntax-start}{\mathit{start}} \mathrel{\mbox{ok}})^?
   \quad
@@ -536,7 +536,7 @@ the segment <span class="math">\(\href{../syntax/modules.html#syntax-export}{\ma
   \qquad
   \mathit{igt}^\ast = \href{../syntax/types.html#syntax-externtype}{\mathrm{globals}}(\mathit{it}^\ast)
   \\
-  C = \{ \href{../valid/conventions.html#context}{\mathsf{types}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast, \href{../valid/conventions.html#context}{\mathsf{funcs}}~\mathit{ift}^\ast~\mathit{ft}^\ast, \href{../valid/conventions.html#context}{\mathsf{tables}}~\mathit{itt}^\ast~\mathit{tt}^\ast, \href{../valid/conventions.html#context}{\mathsf{mems}}~\mathit{imt}^\ast~\mathit{mt}^\ast, \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast~\mathit{gt}^\ast \}
+  C = \{ \href{../valid/conventions.html#context}{\mathsf{types}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast, \href{../valid/conventions.html#context}{\mathsf{funcs}}~\mathit{ift}^\ast~\mathit{ft}^\ast, \href{../valid/conventions.html#context}{\mathsf{tables}}~\mathit{itt}^\ast~\mathit{tt}^\ast, \href{../valid/conventions.html#context}{\mathsf{mems}}~\mathit{imt}^\ast~\mathit{mt}^\ast, \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast~\mathit{gt}^\ast, \href{../valid/conventions.html#context}{\mathsf{elem}}~\mathit{est}^\ast, \href{../valid/conventions.html#context}{\mathsf{data}}~\mathit{dst}^\ast \}
   \\
   C' = \{ \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast \}
   \qquad

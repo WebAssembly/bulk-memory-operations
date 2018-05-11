@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -54,7 +54,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#memory-types">Memory Types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#table-types">Table Types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#global-types">Global Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#activeness">Activeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segment-types">Segment Types</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#external-types">External Types</a></li>
 </ul>
 </li>
@@ -208,15 +208,14 @@ A table of that type thus contains references to functions of heterogeneous type
   \href{../syntax/types.html#syntax-mut}{\mathsf{var}} \\
 \end{array}\end{split}\]</div>
 </div>
-<div class="section" id="activeness">
-<span id="syntax-passive"></span><span id="syntax-active"></span><span id="syntax-activeness"></span><span id="index-8"></span><h2>Activeness<a class="headerlink" href="#activeness" title="Permalink to this headline">¶</a></h2>
-<p><em>Activeness</em> classifies <a class="reference internal" href="modules.html#syntax-data"><span class="std std-ref">data segments</span></a> and <a class="reference internal" href="modules.html#syntax-elem"><span class="std std-ref">element segments</span></a>, which either be <em>active</em> or <em>passive</em>.</p>
-<p>An active segment copies its contents into a table or memory during <a class="reference internal" href="../exec/modules.html#exec-instantiation"><span class="std std-ref">instantiation</span></a>. A passive segment’s contents can be copied using the <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}\)</span> and <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}\)</span> instructions.</p>
+<div class="section" id="segment-types">
+<span id="syntax-passive"></span><span id="syntax-active"></span><span id="syntax-segmenttype"></span><span id="index-8"></span><h2>Segment Types<a class="headerlink" href="#segment-types" title="Permalink to this headline">¶</a></h2>
+<p><em>Segment types</em> classify <a class="reference internal" href="modules.html#syntax-data"><span class="std std-ref">data segments</span></a> and <a class="reference internal" href="modules.html#syntax-elem"><span class="std std-ref">element segments</span></a>, which can either be <em>active</em> or <em>passive</em>.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llll}
-\def\mathdef2129#1{{}}\mathdef2129{activeness} &amp; \href{../syntax/types.html#syntax-activeness}{\mathit{activeness}} &amp;::=&amp;
-  \href{../syntax/types.html#syntax-activeness}{\mathsf{active}} ~|~
-  \href{../syntax/types.html#syntax-activeness}{\mathsf{passive}} \\
+\def\mathdef2129#1{{}}\mathdef2129{segment type} &amp; \href{../syntax/types.html#syntax-segmenttype}{\mathit{segmenttype}} &amp;::=&amp;
+  \href{../syntax/types.html#syntax-segmenttype}{\mathsf{active}} ~|~
+  \href{../syntax/types.html#syntax-segmenttype}{\mathsf{passive}} \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="external-types">
