@@ -321,13 +321,12 @@ The *element section* has the id 9.
 It decodes into a vector of :ref:`element segments <syntax-elem>` that represent the |MELEM| component of a :ref:`module <syntax-module>`.
 
 .. math::
-   \begin{array}{llclll@{\qquad}l}
+   \begin{array}{llclll}
    \production{element section} & \Belemsec &::=&
      \X{seg}^\ast{:}\Bsection_9(\Bvec(\Belem)) &\Rightarrow& \X{seg} \\
    \production{element segment} & \Belem &::=&
      \hex{00}~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
-       &\Rightarrow& \{ \ETABLE~x, \EOFFSET~e, \EINIT~y^\ast \} 
-       & (\iff x = 0) \\
+       &\Rightarrow& \{ \ETABLE~0, \EOFFSET~e, \EINIT~y^\ast \} \\
    \production{element segment} & \Belem &::=&
      \hex{01}~~y^\ast{:}\Bvec(\Bfuncidx)
        &\Rightarrow& \{ \EINIT~y^\ast \} \\
@@ -411,13 +410,12 @@ The *data section* has the id 11.
 It decodes into a vector of :ref:`data segments <syntax-data>` that represent the |MDATA| component of a :ref:`module <syntax-module>`.
 
 .. math::
-   \begin{array}{llclll@{\qquad}l}
+   \begin{array}{llclll}
    \production{data section} & \Bdatasec &::=&
      \X{seg}^\ast{:}\Bsection_{11}(\Bvec(\Bdata)) &\Rightarrow& \X{seg} \\
    \production{data segment} & \Bdata &::=&
-     x{:}\Bmemidx~~e{:}\Bexpr~~b^\ast{:}\Bvec(\Bbyte)
-       &\Rightarrow& \{ \DMEM~x, \DOFFSET~e, \DINIT~b^\ast \}
-       & (\iff x = 0) \\
+     \hex{00}~~e{:}\Bexpr~~b^\ast{:}\Bvec(\Bbyte)
+       &\Rightarrow& \{ \DMEM~0, \DOFFSET~e, \DINIT~b^\ast \} \\
    \production{data segment} & \Bdata &::=&
      \hex{01}~~b^\ast{:}\Bvec(\Bbyte)
        &\Rightarrow& \{ \DINIT~b^\ast \} \\
