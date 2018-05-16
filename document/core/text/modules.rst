@@ -485,7 +485,7 @@ Element segments allow for an optional :ref:`table index <text-tableidx>` to ide
    \production{element segment} & \Telem_I &::=&
      \text{(}~\text{elem}~~x{:}\Ttableidx_I~~\text{(}~\text{offset}~~e{:}\Texpr_I~\text{)}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
+     \text{(}~\text{elem}~~\text{passive}~~\Tid^?~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \EINIT~y^\ast \} \\
    \end{array}
 
@@ -537,7 +537,7 @@ The data is written as a :ref:`string <text-string>`, which may be split up into
    \production{data segment} & \Tdata_I &::=&
      \text{(}~\text{data}~~x{:}\Tmemidx_I~~\text{(}~\text{offset}~~e{:}\Texpr_I~\text{)}~~b^\ast{:}\Tdatastring~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \DMEM~x', \DOFFSET~e, \DINIT~b^\ast \} \\ &&|&
-     \text{(}~\text{data}~~b^\ast{:}\Tdatastring~\text{)} \\ &&& \qquad
+     \text{(}~\text{data}~~\text{passive}~~\Tid^?~~b^\ast{:}\Tdatastring~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \DINIT~b^\ast \} \\
    \production{data string} & \Tdatastring &::=&
      (b^\ast{:}\Tstring)^\ast \quad\Rightarrow\quad \concat((b^\ast)^\ast) \\
@@ -643,6 +643,10 @@ The definition of the initial :ref:`identifier context <text-context>` :math:`I`
      \{\IMEMS~(\Tid^?)\} \\
    \F{idc}(\text{(}~\text{global}~\Tid^?~\dots~\text{)}) &=&
      \{\IGLOBALS~(\Tid^?)\} \\
+   \F{idc}(\text{(}~\text{elem}~\Tid^?~\dots~\text{)}) &=&
+     \{\IELEM~(\Tid^?)\} \\
+   \F{idc}(\text{(}~\text{data}~\Tid^?~\dots~\text{)}) &=&
+     \{\IDATA~(\Tid^?)\} \\
    \F{idc}(\text{(}~\text{import}~\dots~\text{(}~\text{func}~\Tid^?~\dots~\text{)}~\text{)}) &=&
      \{\IFUNCS~(\Tid^?)\} \\
    \F{idc}(\text{(}~\text{import}~\dots~\text{(}~\text{table}~\Tid^?~\dots~\text{)}~\text{)}) &=&
