@@ -618,6 +618,76 @@ Memory Instructions
    In practice, the choice depends on the :ref:`resources <impl-exec>` available to the :ref:`embedder <embedder>`.
 
 
+.. _exec-memory.init:
+
+:math:`\MEMORYINIT~x`
+.....................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-memory.init>`, :math:`F.\AMODULE.\MIMEMS[0]` exists.
+
+3. Let :math:`ma` be the :ref:`memory address <syntax-memaddr>` :math:`F.\AMODULE.\MIMEMS[0]`.
+
+4. Assert: due to :ref:`validation <valid-memory.init>`, :math:`S.\SMEMS[ma]` exists.
+
+5. Let :math:`\X{mem}` be the :ref:`memory instance <syntax-meminst>` :math:`S.\SMEMS[ma]`.
+
+6. Let :math:`msz` be the length of :math:`\X{mem}.\MIDATA`.
+
+7. Assert: due to :ref:`validation <valid-memory.init>`, :math:`F.\AMODULE.\MIDATAS[x]` exists.
+
+8. Let :math:`da` be the :ref:`data segment address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
+
+9. If :math:`S.\SDATA[da]` does not exist, then:
+
+   a. Trap.
+
+10. Let :math:`\X{data}` be the :ref:`data segment instance <syntax-datainst>` :math:`S.\SDATA[da]`.
+
+11. Assert: due to :ref:`validation <valid-memory.init>`, three values of :ref:`value type <syntax-valtype>` |I32| are on the top of the stack.
+
+12. Pop the value :math:`\I32.\CONST~s` from the stack.
+
+13. Pop the value :math:`\I32.\CONST~t` from the stack.
+
+14. Pop the value :math:`\I32.\CONST~n` from the stack.
+
+15. Let :math:`dsz` be the length of :math:`\X{data}.\DSIINIT`.
+
+16. If :math:`s + n > dsz`, then:
+
+    a. Trap.
+
+17. If :math:`t + n > msz`, then:
+
+    a. Trap.
+
+18. Let :math:`y` be the byte sequence :math:`\X{mem}.\DSIINIT[s \slice n]`.
+
+19. :ref:`Initialize <initdata>` the memory instance at address :math:`ma` starting from offset :math:`t` with the byte sequence :math:`y`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~t)~(\I32.\CONST~s)~(\MEMORYINIT~x) &\stepto& S; F; (\INITDATA~ma~t~y)
+   \end{array}
+   \\ \qquad
+     \begin{array}[t]{@{}r@{~}l@{}}
+     (\iff & F.\AMODULE.\MIMEMS[0] = ma \\
+     \wedge & F.\AMODULE.\MIDATAS[x] = da \\
+     \wedge & (s + n \leq |S.\SDATA[da].\DSIINIT|) \\
+     \wedge & (t + n \leq |S.\SMEMS[ma].\MIDATA|) \\
+     \wedge & y = S.\SDATA[da].\DSIINIT[s \slice n]) \\
+     \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~t)~(\I32.\CONST~s)~(\MEMORYINIT~x) &\stepto& S; F; \TRAP
+   \end{array}
+   \end{array}
+
+
 .. index:: control instructions, structured control, label, block, branch, result type, label index, function index, type index, vector, address, table address, table instance, store, frame
    pair: execution; instruction
    single: abstract syntax; instruction
