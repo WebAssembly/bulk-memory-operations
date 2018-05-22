@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -389,7 +389,7 @@ However, it may be substantially slower on some hardware.</p>
 </li>
 <li>Let <span class="math">\(b^\ast\)</span> be the byte sequence <span class="math">\(\mathit{mem}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}[\mathit{ea} \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} N/8]\)</span>.</li>
 <li>If <span class="math">\(N\)</span> and <span class="math">\(\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}}\)</span> are part of the instruction, then:<ol class="loweralpha">
-<li>Let <span class="math">\(n\)</span> be the integer for which <span class="math">\(\href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1452#1{{\mathit{i}#1}}\mathdef1452{N}}}(n) = b^\ast\)</span>.</li>
+<li>Let <span class="math">\(n\)</span> be the integer for which <span class="math">\(\href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1473#1{{\mathit{i}#1}}\mathdef1473{N}}}(n) = b^\ast\)</span>.</li>
 <li>Let <span class="math">\(c\)</span> be the result of computing <span class="math">\(\href{../exec/numerics.html#op-extend-u}{\mathrm{extend}}\mathrm{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}}_{N,|t|}(n)\)</span>.</li>
 </ol>
 </li>
@@ -420,7 +420,7 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
   \begin{array}[t]{&#64;{}r&#64;{~}l&#64;{}}
   (\mathrel{\mbox{if}} &amp; \mathit{ea} = i + \href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}}.\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}} \\
   \wedge &amp; \mathit{ea} + N/8 \leq |S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]].\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}| \\
-  \wedge &amp; \href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1452#1{{\mathit{i}#1}}\mathdef1452{N}}}(n) = S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]].\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}[\mathit{ea} \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} N/8])
+  \wedge &amp; \href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1473#1{{\mathit{i}#1}}\mathdef1473{N}}}(n) = S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]].\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}[\mathit{ea} \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} N/8])
   \end{array}
 \\[1ex]
 \begin{array}{lcl&#64;{\qquad}l}
@@ -453,7 +453,7 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
 </li>
 <li>If <span class="math">\(N\)</span> is part of the instruction, then:<ol class="loweralpha">
 <li>Let <span class="math">\(n\)</span> be the result of computing <span class="math">\(\href{../exec/numerics.html#op-wrap}{\mathrm{wrap}}_{|t|,N}(c)\)</span>.</li>
-<li>Let <span class="math">\(b^\ast\)</span> be the byte sequence <span class="math">\(\href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1452#1{{\mathit{i}#1}}\mathdef1452{N}}}(n)\)</span>.</li>
+<li>Let <span class="math">\(b^\ast\)</span> be the byte sequence <span class="math">\(\href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1473#1{{\mathit{i}#1}}\mathdef1473{N}}}(n)\)</span>.</li>
 </ol>
 </li>
 <li>Else:<ol class="loweralpha">
@@ -482,7 +482,7 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
   \begin{array}[t]{&#64;{}r&#64;{~}l&#64;{}}
   (\mathrel{\mbox{if}} &amp; \mathit{ea} = i + \href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}}.\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}} \\
   \wedge &amp; \mathit{ea} + N/8 \leq |S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]].\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}| \\
-  \wedge &amp; S' = S \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]].\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}[\mathit{ea} \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} N/8] = \href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1452#1{{\mathit{i}#1}}\mathdef1452{N}}}(\href{../exec/numerics.html#op-wrap}{\mathrm{wrap}}_{|t|,N}(c))
+  \wedge &amp; S' = S \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]].\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}[\mathit{ea} \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} N/8] = \href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_{\href{../syntax/values.html#syntax-int}{\def\mathdef1473#1{{\mathit{i}#1}}\mathdef1473{N}}}(\href{../exec/numerics.html#op-wrap}{\mathrm{wrap}}_{|t|,N}(c))
   \end{array}
 \\[1ex]
 \begin{array}{lcl&#64;{\qquad}l}
@@ -557,11 +557,63 @@ However, failure <em>can</em> occur in other cases as well.
 In practice, the choice depends on the <a class="reference internal" href="../appendix/implementation.html#impl-exec"><span class="std std-ref">resources</span></a> available to the <a class="reference internal" href="../intro/overview.html#embedder"><span class="std std-ref">embedder</span></a>.</p>
 </div>
 </div>
+<div class="section" id="exec-memory-init">
+<span id="id17"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x\)</span><a class="headerlink" href="#exec-memory-init" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Let <span class="math">\(F\)</span> be the <a class="reference internal" href="conventions.html#exec-notation-textual"><span class="std std-ref">current</span></a> <a class="reference internal" href="runtime.html#syntax-frame"><span class="std std-ref">frame</span></a>.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-init"><span class="std std-ref">validation</span></a>, <span class="math">\(F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]\)</span> exists.</li>
+<li>Let <span class="math">\(ma\)</span> be the <a class="reference internal" href="runtime.html#syntax-memaddr"><span class="std std-ref">memory address</span></a> <span class="math">\(F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0]\)</span>.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-init"><span class="std std-ref">validation</span></a>, <span class="math">\(S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[ma]\)</span> exists.</li>
+<li>Let <span class="math">\(\mathit{mem}\)</span> be the <a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">memory instance</span></a> <span class="math">\(S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[ma]\)</span>.</li>
+<li>Let <span class="math">\(msz\)</span> be the length of <span class="math">\(\mathit{mem}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}\)</span>.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-init"><span class="std std-ref">validation</span></a>, <span class="math">\(F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{dataaddrs}}[x]\)</span> exists.</li>
+<li>Let <span class="math">\(da\)</span> be the <a class="reference internal" href="runtime.html#syntax-dataaddr"><span class="std std-ref">data segment address</span></a> <span class="math">\(F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{dataaddrs}}[x]\)</span>.</li>
+<li>If <span class="math">\(S.\href{../exec/runtime.html#syntax-store}{\mathsf{data}}[da]\)</span> does not exist, then:<ol class="loweralpha">
+<li>Trap.</li>
+</ol>
+</li>
+<li>Let <span class="math">\(\mathit{data}\)</span> be the <a class="reference internal" href="runtime.html#syntax-datainst"><span class="std std-ref">data segment instance</span></a> <span class="math">\(S.\href{../exec/runtime.html#syntax-store}{\mathsf{data}}[da]\)</span>.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-init"><span class="std std-ref">validation</span></a>, three values of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> are on the top of the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~s\)</span> from the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~t\)</span> from the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~n\)</span> from the stack.</li>
+<li>Let <span class="math">\(dsz\)</span> be the length of <span class="math">\(\mathit{data}.\href{../exec/runtime.html#syntax-datainst}{\mathsf{init}}\)</span>.</li>
+<li>If <span class="math">\(s + n &gt; dsz\)</span>, then:<ol class="loweralpha">
+<li>Trap.</li>
+</ol>
+</li>
+<li>If <span class="math">\(t + n &gt; msz\)</span>, then:<ol class="loweralpha">
+<li>Trap.</li>
+</ol>
+</li>
+<li>Let <span class="math">\(y\)</span> be the byte sequence <span class="math">\(\mathit{mem}.\href{../exec/runtime.html#syntax-datainst}{\mathsf{init}}[s \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} n]\)</span>.</li>
+<li><a class="reference internal" href="modules.html#initdata"><span class="std std-ref">Initialize</span></a> the memory instance at address <span class="math">\(ma\)</span> starting from offset <span class="math">\(t\)</span> with the byte sequence <span class="math">\(y\)</span>.</li>
+</ol>
+<div class="math">
+\[\begin{split}~\\[-1ex]
+\begin{array}{l}
+\begin{array}{lcl&#64;{\qquad}l}
+S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~n)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~t)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~s)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x) &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F; (\href{../exec/runtime.html#syntax-init-data}{\mathsf{init\_data}}~ma~t~y)
+\end{array}
+\\ \qquad
+  \begin{array}[t]{&#64;{}r&#64;{~}l&#64;{}}
+  (\mathrel{\mbox{if}} &amp; F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{memaddrs}}[0] = ma \\
+  \wedge &amp; F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{dataaddrs}}[x] = da \\
+  \wedge &amp; (s + n \leq |S.\href{../exec/runtime.html#syntax-store}{\mathsf{data}}[da].\href{../exec/runtime.html#syntax-datainst}{\mathsf{init}}|) \\
+  \wedge &amp; (t + n \leq |S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}[ma].\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}|) \\
+  \wedge &amp; y = S.\href{../exec/runtime.html#syntax-store}{\mathsf{data}}[da].\href{../exec/runtime.html#syntax-datainst}{\mathsf{init}}[s \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} n]) \\
+  \end{array}
+\\[1ex]
+\begin{array}{lcl&#64;{\qquad}l}
+S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~n)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~t)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~s)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x) &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F; \href{../exec/runtime.html#syntax-trap}{\mathsf{trap}}
+\end{array}
+\end{array}\end{split}\]</div>
+</div>
 </div>
 <div class="section" id="control-instructions">
 <span id="exec-instr-control"></span><span id="exec-label"></span><span id="index-5"></span><h2>Control Instructions<a class="headerlink" href="#control-instructions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="exec-nop">
-<span id="id17"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{nop}}\)</span><a class="headerlink" href="#exec-nop" title="Permalink to this headline">¶</a></h3>
+<span id="id18"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{nop}}\)</span><a class="headerlink" href="#exec-nop" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Do nothing.</li>
 </ol>
@@ -571,7 +623,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\]</div>
 </div>
 <div class="section" id="exec-unreachable">
-<span id="id18"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{unreachable}}\)</span><a class="headerlink" href="#exec-unreachable" title="Permalink to this headline">¶</a></h3>
+<span id="id19"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{unreachable}}\)</span><a class="headerlink" href="#exec-unreachable" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Trap.</li>
 </ol>
@@ -581,7 +633,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\]</div>
 </div>
 <div class="section" id="exec-block">
-<span id="id19"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{block}}~[t^?]~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span><a class="headerlink" href="#exec-block" title="Permalink to this headline">¶</a></h3>
+<span id="id20"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{block}}~[t^?]~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span><a class="headerlink" href="#exec-block" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math">\(n\)</span> be the arity <span class="math">\(|t^?|\)</span> of the <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result type</span></a> <span class="math">\(t^?\)</span>.</li>
 <li>Let <span class="math">\(L\)</span> be the label whose arity is <span class="math">\(n\)</span> and whose continuation is the end of the block.</li>
@@ -595,7 +647,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="exec-loop">
-<span id="id20"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{loop}}~[t^?]~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span><a class="headerlink" href="#exec-loop" title="Permalink to this headline">¶</a></h3>
+<span id="id21"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{loop}}~[t^?]~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span><a class="headerlink" href="#exec-loop" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math">\(L\)</span> be the label whose arity is <span class="math">\(0\)</span> and whose continuation is the start of the loop.</li>
 <li><a class="reference internal" href="#exec-instr-seq-enter"><span class="std std-ref">Enter</span></a> the block <span class="math">\(\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast\)</span> with label <span class="math">\(L\)</span>.</li>
@@ -608,7 +660,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="exec-if">
-<span id="id21"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{if}}~[t^?]~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}_1^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{else}}~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}_2^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span><a class="headerlink" href="#exec-if" title="Permalink to this headline">¶</a></h3>
+<span id="id22"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{if}}~[t^?]~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}_1^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{else}}~\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}_2^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span><a class="headerlink" href="#exec-if" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-if"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
 <li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~c\)</span> from the stack.</li>
@@ -635,7 +687,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="exec-br">
-<span id="id22"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{br}}~l\)</span><a class="headerlink" href="#exec-br" title="Permalink to this headline">¶</a></h3>
+<span id="id23"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{br}}~l\)</span><a class="headerlink" href="#exec-br" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-br"><span class="std std-ref">validation</span></a>, the stack contains at least <span class="math">\(l+1\)</span> labels.</li>
 <li>Let <span class="math">\(L\)</span> be the <span class="math">\(l\)</span>-th label appearing on the stack, starting from the top and counting from zero.</li>
@@ -661,7 +713,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="exec-br-if">
-<span id="id23"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{br\_if}}~l\)</span><a class="headerlink" href="#exec-br-if" title="Permalink to this headline">¶</a></h3>
+<span id="id24"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{br\_if}}~l\)</span><a class="headerlink" href="#exec-br-if" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-br-if"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
 <li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~c\)</span> from the stack.</li>
@@ -684,7 +736,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="exec-br-table">
-<span id="id24"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{br\_table}}~l^\ast~l_N\)</span><a class="headerlink" href="#exec-br-table" title="Permalink to this headline">¶</a></h3>
+<span id="id25"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{br\_table}}~l^\ast~l_N\)</span><a class="headerlink" href="#exec-br-table" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-if"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
 <li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~i\)</span> from the stack.</li>
@@ -708,7 +760,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="exec-return">
-<span id="id25"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{return}}\)</span><a class="headerlink" href="#exec-return" title="Permalink to this headline">¶</a></h3>
+<span id="id26"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{return}}\)</span><a class="headerlink" href="#exec-return" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math">\(F\)</span> be the <a class="reference internal" href="conventions.html#exec-notation-textual"><span class="std std-ref">current</span></a> <a class="reference internal" href="runtime.html#syntax-frame"><span class="std std-ref">frame</span></a>.</li>
 <li>Let <span class="math">\(n\)</span> be the arity of <span class="math">\(F\)</span>.</li>
@@ -731,7 +783,7 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="exec-call">
-<span id="id26"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call}}~x\)</span><a class="headerlink" href="#exec-call" title="Permalink to this headline">¶</a></h3>
+<span id="id27"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call}}~x\)</span><a class="headerlink" href="#exec-call" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math">\(F\)</span> be the <a class="reference internal" href="conventions.html#exec-notation-textual"><span class="std std-ref">current</span></a> <a class="reference internal" href="runtime.html#syntax-frame"><span class="std std-ref">frame</span></a>.</li>
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-call"><span class="std std-ref">validation</span></a>, <span class="math">\(F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{funcaddrs}}[x]\)</span> exists.</li>
@@ -745,7 +797,7 @@ F; (\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call}}~x) &a
 \end{array}\]</div>
 </div>
 <div class="section" id="exec-call-indirect">
-<span id="id27"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call\_indirect}}~x\)</span><a class="headerlink" href="#exec-call-indirect" title="Permalink to this headline">¶</a></h3>
+<span id="id28"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call\_indirect}}~x\)</span><a class="headerlink" href="#exec-call-indirect" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math">\(F\)</span> be the <a class="reference internal" href="conventions.html#exec-notation-textual"><span class="std std-ref">current</span></a> <a class="reference internal" href="runtime.html#syntax-frame"><span class="std std-ref">frame</span></a>.</li>
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-call-indirect"><span class="std std-ref">validation</span></a>, <span class="math">\(F.\href{../exec/runtime.html#syntax-frame}{\mathsf{module}}.\href{../exec/runtime.html#syntax-moduleinst}{\mathsf{tableaddrs}}[0]\)</span> exists.</li>
