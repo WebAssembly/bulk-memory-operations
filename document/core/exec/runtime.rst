@@ -294,7 +294,7 @@ The value of mutable globals can be mutated through :ref:`variable instructions 
    pair: element; instance
 .. _syntax-eleminst:
 
-element instances
+Element Instances
 ~~~~~~~~~~~~~~~~~
 
 An *element instance* is the runtime representation of a :ref:`passive element segment <syntax-elem>`.
@@ -312,7 +312,7 @@ It holds a vector of :ref:`function addresses <syntax-funcaddr>`.
    pair: data; instance
 .. _syntax-datainst:
 
-data instances
+Data Instances
 ~~~~~~~~~~~~~~
 
 An *data instance* is the runtime representation of a :ref:`passive data segment <syntax-data>`.
