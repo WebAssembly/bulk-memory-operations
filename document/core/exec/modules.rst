@@ -389,18 +389,22 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
    c. Let :math:`\funcaddr^\ast` be the concatenation of the function addresses :math:`\funcaddr_i`.
 
-   d. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \ESIINIT~\funcaddr^\ast \}`.
+   d. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\funcaddr^\ast \}`.
 
    e. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
 
+   f. Return :math:`a`.
+
+3. Else, return :math:`\epsilon`.
+
 .. math::
-   \begin{array}{rlll@{\qquad}l}
-   \allocelem(S, e, \moduleinst) &=& S', \elemaddr & (\iff e = \{ \EINIT~x^\ast \}) \\[1ex]
-   \allocelem(S, e, \moduleinst) &=& S & (\otherwise) \\[1ex]
+   \begin{array}{rlll}
+   \allocelem(S, e, \moduleinst) &=& S', \elemaddr \\[1ex]
    \mbox{where:} \hfill \\
    \elemaddr &=& |S.\SELEM| \\
-   \eleminst &=& \{ \ESIINIT~(\moduleinst.\MIFUNCS[x])^\ast \} \\
+   \eleminst &=& \{ \EIINIT~(\moduleinst.\MIFUNCS[x])^\ast \} \\
    S' &=& S \compose \{\SELEM~\eleminst\} \\
+   \allocelem(S, e, \moduleinst) &=& S, \epsilon & (\otherwise) \\[1ex]
    \end{array}
 
 
@@ -416,18 +420,22 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
    a. Let :math:`a` be the first free :ref:`data address <syntax-dataaddr>` in :math:`S`.
 
-   b. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \ESIINIT~d.\DINIT \}`.
+   b. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIINIT~d.\DINIT \}`.
 
    c. Append :math:`\datainst` to the |SDATA| of :math:`S`.
 
+   d. Return :math:`a`.
+
+3. Else, return :math:`\epsilon`.
+
 .. math::
    \begin{array}{rlll}
-   \allocdata(S, d, \moduleinst) &=& S', \dataaddr & (\iff d = \{ \DINIT~b^\ast \}) \\[1ex]
-   \allocdata(S, d, \moduleinst) &=& S & (\otherwise)  \\[1ex]
+   \allocdata(S, d, \moduleinst) &=& S', \dataaddr \\[1ex]
    \mbox{where:} \hfill \\
    \dataaddr &=& |S.\SDATA| \\
-   \datainst &=& \{ \DSIINIT~d.\DINIT \} \\
+   \datainst &=& \{ \DIINIT~d.\DINIT \} \\
    S' &=& S \compose \{\SDATA~\datainst\} \\
+   \allocdata(S, d, \moduleinst) &=& S, \epsilon & (\otherwise)  \\[1ex]
    \end{array}
 
 
@@ -501,11 +509,11 @@ and :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the modul
 
 6. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEM`, do:
 
-   a. Let :math:`\elemaddr_i` be the :ref:`element address <syntax-elemaddr>` resulting from :ref:`allocating <alloc-elem>` :math:`\elem_i` for the :ref:`\module instance <syntax-moduleinst>` :math:`\moduleinst` defined below.
+   a. Let :math:`\elemaddr_i^?` be the optional :ref:`element address <syntax-elemaddr>` resulting from :ref:`allocating <alloc-elem>` :math:`\elem_i` for the :ref:`\module instance <syntax-moduleinst>` :math:`\moduleinst` defined below.
 
 7. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATA`, do:
 
-   a. Let :math:`\dataaddr_i` be the :ref:`data address <syntax-dataaddr>` resulting from :ref:`allocating <alloc-data>` :math:`\data_i`.
+   a. Let :math:`\dataaddr_i^?` be the optional :ref:`data address <syntax-dataaddr>` resulting from :ref:`allocating <alloc-data>` :math:`\data_i`.
 
 8. Let :math:`\funcaddr^\ast` be the the concatenation of the :ref:`function addresses <syntax-funcaddr>` :math:`\funcaddr_i` in index order.
 
@@ -515,9 +523,9 @@ and :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the modul
 
 11. Let :math:`\globaladdr^\ast` be the the concatenation of the :ref:`global addresses <syntax-globaladdr>` :math:`\globaladdr_i` in index order.
 
-12. Let :math:`\elemaddr^\ast` be the the concatenation of the :ref:`element addresses <syntax-elemaddr>` :math:`\elemaddr_i` in index order.
+12. Let :math:`(\elemaddr^?)^\ast` be the the concatenation of the optional :ref:`element addresses <syntax-elemaddr>` :math:`\elemaddr_i^?` in index order.
 
-13. Let :math:`\dataaddr^\ast` be the the concatenation of the :ref:`data addresses <syntax-dataaddr>` :math:`\dataaddr_i` in index order.
+13. Let :math:`(\dataaddr^?)^\ast` be the the concatenation of the optional :ref:`data addresses <syntax-dataaddr>` :math:`\dataaddr_i^?` in index order.
 
 14. Let :math:`\funcaddr_{\F{mod}}^\ast` be the list of :ref:`function addresses <syntax-funcaddr>` extracted from :math:`\externval_{\F{im}}^\ast`, concatenated with :math:`\funcaddr^\ast`.
 
@@ -541,7 +549,7 @@ and :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the modul
 
 19. Let :math:`\exportinst^\ast` be the the concatenation of the :ref:`export instances <syntax-exportinst>` :math:`\exportinst_i` in index order.
 
-20. Let :math:`\moduleinst` be the :ref:`module instance <syntax-moduleinst>` :math:`\{\MITYPES~(\module.\MTYPES),` :math:`\MIFUNCS~\funcaddr_{\F{mod}}^\ast,` :math:`\MITABLES~\tableaddr_{\F{mod}}^\ast,` :math:`\MIMEMS~\memaddr_{\F{mod}}^\ast,` :math:`\MIGLOBALS~\globaladdr_{\F{mod}}^\ast,` :math:`\MIELEMS~\elemaddr^\ast`, :math:`\MIDATAS~\dataaddr^\ast`, :math:`\MIEXPORTS~\exportinst^\ast\}`.
+20. Let :math:`\moduleinst` be the :ref:`module instance <syntax-moduleinst>` :math:`\{\MITYPES~(\module.\MTYPES),` :math:`\MIFUNCS~\funcaddr_{\F{mod}}^\ast,` :math:`\MITABLES~\tableaddr_{\F{mod}}^\ast,` :math:`\MIMEMS~\memaddr_{\F{mod}}^\ast,` :math:`\MIGLOBALS~\globaladdr_{\F{mod}}^\ast,` :math:`\MIELEMS~(\elemaddr^?)^\ast`, :math:`\MIDATAS~(\dataaddr^?)^\ast`, :math:`\MIEXPORTS~\exportinst^\ast\}`.
 
 21. Return :math:`\moduleinst`.
 
@@ -562,8 +570,8 @@ where:
      \MITABLES~\evtables(\externval_{\F{im}}^\ast)~\tableaddr^\ast, \\
      \MIMEMS~\evmems(\externval_{\F{im}}^\ast)~\memaddr^\ast, \\
      \MIGLOBALS~\evglobals(\externval_{\F{im}}^\ast)~\globaladdr^\ast, \\
-     \MIELEMS~\elemaddr^\ast, \\
-     \MIDATAS~\dataaddr^\ast, \\
+     \MIELEMS~(\elemaddr^?)^\ast, \\
+     \MIDATAS~(\dataaddr^?)^\ast, \\
      \MIEXPORTS~\exportinst^\ast ~\}
      \end{array} \\[1ex]
    S_1, \funcaddr^\ast &=& \allocfunc^\ast(S, \module.\MFUNCS, \moduleinst) \\
@@ -573,8 +581,8 @@ where:
      \qquad\qquad\qquad~ (\where \mem^\ast = \module.\MMEMS) \\
    S_4, \globaladdr^\ast &=& \allocglobal^\ast(S_3, (\global.\GTYPE)^\ast, \val^\ast)
      \qquad\quad~ (\where \global^\ast = \module.\MGLOBALS) \\
-   S_5, \elemaddr^\ast &=& \allocelem^\ast(S_4, \module.\MELEM, \moduleinst) \\
-   S', \dataaddr^\ast &=& \allocdata^\ast(S_5, \module.\MDATA) \\
+   S_5, (\elemaddr^?)^\ast &=& \allocelem^\ast(S_4, \module.\MELEM, \moduleinst) \\
+   S', (\dataaddr^?)^\ast &=& \allocdata^\ast(S_5, \module.\MDATA) \\
    \exportinst^\ast &=& \{ \EINAME~(\export.\ENAME), \EIVALUE~\externval_{\F{ex}} \}^\ast
      \quad (\where \export^\ast = \module.\MEXPORTS) \\[1ex]
    \evfuncs(\externval_{\F{ex}}^\ast) &=& (\moduleinst.\MIFUNCS[x])^\ast
@@ -721,47 +729,51 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
 9. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEM`, do:
 
-    a. Let :math:`\X{eoval}_i` be the result of :ref:`evaluating <exec-expr>` the expression :math:`\elem_i.\EOFFSET`.
+   a. If :math:`\elem_i` is :ref:`active <syntax-active>`, then:
 
-    b. Assert: due to :ref:`validation <valid-elem>`, :math:`\X{eoval}_i` is of the form :math:`\I32.\CONST~\X{eo}_i`.
+      i. Let :math:`\X{eoval}_i` be the result of :ref:`evaluating <exec-expr>` the expression :math:`\elem_i.\EOFFSET`.
 
-    c. Let :math:`\tableidx_i` be the :ref:`table index <syntax-tableidx>` :math:`\elem_i.\ETABLE`.
+      ii. Assert: due to :ref:`validation <valid-elem>`, :math:`\X{eoval}_i` is of the form :math:`\I32.\CONST~\X{eo}_i`.
 
-    d. Assert: due to :ref:`validation <valid-elem>`, :math:`\moduleinst.\MITABLES[\tableidx_i]` exists.
+      iii. Let :math:`\tableidx_i` be the :ref:`table index <syntax-tableidx>` :math:`\elem_i.\ETABLE`.
 
-    e. Let :math:`\tableaddr_i` be the :ref:`table address <syntax-tableaddr>` :math:`\moduleinst.\MITABLES[\tableidx_i]`.
+      iv. Assert: due to :ref:`validation <valid-elem>`, :math:`\moduleinst.\MITABLES[\tableidx_i]` exists.
 
-    f. Assert: due to :ref:`validation <valid-elem>`, :math:`S'.\STABLES[\tableaddr_i]` exists.
+      v. Let :math:`\tableaddr_i` be the :ref:`table address <syntax-tableaddr>` :math:`\moduleinst.\MITABLES[\tableidx_i]`.
 
-    g. Let :math:`\tableinst_i` be the :ref:`table instance <syntax-tableinst>` :math:`S'.\STABLES[\tableaddr_i]`.
+      vi. Assert: due to :ref:`validation <valid-elem>`, :math:`S'.\STABLES[\tableaddr_i]` exists.
 
-    h. Let :math:`\X{eend}_i` be :math:`\X{eo}_i` plus the length of :math:`\elem_i.\EINIT`.
+      vii. Let :math:`\tableinst_i` be the :ref:`table instance <syntax-tableinst>` :math:`S'.\STABLES[\tableaddr_i]`.
 
-    i. If :math:`\X{eend}_i` is larger than the length of :math:`\tableinst_i.\TIELEM`, then:
+      viii. Let :math:`\X{eend}_i` be :math:`\X{eo}_i` plus the length of :math:`\elem_i.\EINIT`.
 
-       i. Fail.
+      ix. If :math:`\X{eend}_i` is larger than the length of :math:`\tableinst_i.\TIELEM`, then:
+
+          1. Fail.
 
 10. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATA`, do:
 
-    a. Let :math:`\X{doval}_i` be the result of :ref:`evaluating <exec-expr>` the expression :math:`\data_i.\DOFFSET`.
+    a. If :math:`\data_i` is :ref:`active <syntax-active>`, then:
 
-    b. Assert: due to :ref:`validation <valid-data>`, :math:`\X{doval}_i` is of the form :math:`\I32.\CONST~\X{do}_i`.
+       i. Let :math:`\X{doval}_i` be the result of :ref:`evaluating <exec-expr>` the expression :math:`\data_i.\DOFFSET`.
 
-    c. Let :math:`\memidx_i` be the :ref:`memory index <syntax-memidx>` :math:`\data_i.\DMEM`.
+       ii. Assert: due to :ref:`validation <valid-data>`, :math:`\X{doval}_i` is of the form :math:`\I32.\CONST~\X{do}_i`.
 
-    d. Assert: due to :ref:`validation <valid-data>`, :math:`\moduleinst.\MIMEMS[\memidx_i]` exists.
+       iii. Let :math:`\memidx_i` be the :ref:`memory index <syntax-memidx>` :math:`\data_i.\DMEM`.
 
-    e. Let :math:`\memaddr_i` be the :ref:`memory address <syntax-memaddr>` :math:`\moduleinst.\MIMEMS[\memidx_i]`.
+       iv. Assert: due to :ref:`validation <valid-data>`, :math:`\moduleinst.\MIMEMS[\memidx_i]` exists.
 
-    f. Assert: due to :ref:`validation <valid-data>`, :math:`S'.\SMEMS[\memaddr_i]` exists.
+       v. Let :math:`\memaddr_i` be the :ref:`memory address <syntax-memaddr>` :math:`\moduleinst.\MIMEMS[\memidx_i]`.
 
-    g. Let :math:`\meminst_i` be the :ref:`memory instance <syntax-meminst>` :math:`S'.\SMEMS[\memaddr_i]`.
+       vi. Assert: due to :ref:`validation <valid-data>`, :math:`S'.\SMEMS[\memaddr_i]` exists.
 
-    h. Let :math:`\X{dend}_i` be :math:`\X{do}_i` plus the length of :math:`\data_i.\DINIT`.
+       vii. Let :math:`\meminst_i` be the :ref:`memory instance <syntax-meminst>` :math:`S'.\SMEMS[\memaddr_i]`.
 
-    i. If :math:`\X{dend}_i` is larger than the length of :math:`\meminst_i.\MIDATA`, then:
+       viii. Let :math:`\X{dend}_i` be :math:`\X{do}_i` plus the length of :math:`\data_i.\DINIT`.
 
-       i. Fail.
+       ix. If :math:`\X{dend}_i` is larger than the length of :math:`\meminst_i.\MIDATA`, then:
+
+           1. Fail.
 
 11. Assert: due to :ref:`validation <valid-module>`, the frame :math:`F` is now on the top of the stack.
 
@@ -769,11 +781,15 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
 13. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEM`, do:
 
-    a. :ref:`Intialize <initelem>` the table instance at :math:`\tableaddr_i` starting from offset :math:`\X{eo}_i` with the :ref:`function index <syntax-funcidx>` sequence :math:`\elem_i.\EINIT`.
+    a. If :math:`\elem_i` is :ref:`active <syntax-active>`, then:
+
+       i. :ref:`Intialize <initelem>` the table instance at :math:`\tableaddr_i` starting from offset :math:`\X{eo}_i` with the :ref:`function index <syntax-funcidx>` sequence :math:`\elem_i.\EINIT`.
 
 14. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATA`, do:
 
-    a. :ref:`Initialize <initdata>` the memory instance at :math:`\memaddr_i` starting from offset :math:`\X{do}_i` with the :ref:`byte <syntax-byte>` sequence :math:`\data_i.\DINIT`.
+    a. If :math:`\data_i` :ref:`active <syntax-active>`, then:
+
+       i. :ref:`Initialize <initdata>` the memory instance at :math:`\memaddr_i` starting from offset :math:`\X{do}_i` with the :ref:`byte <syntax-byte>` sequence :math:`\data_i.\DINIT`.
 
 15. If the :ref:`start function <syntax-start>` :math:`\module.\MSTART` is not empty, then:
 
@@ -798,8 +814,8 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
      &\wedge& (S \vdashexternval \externval : \externtype)^n \\
      &\wedge& (\vdashexterntypematch \externtype \matches \externtype_{\F{im}})^n \\[1ex]
      &\wedge& \module.\MGLOBALS = \global^\ast \\
-     &\wedge& \module.\MELEM = \elem^\ast \\
-     &\wedge& \module.\MDATA = \data^\ast \\
+     &\wedge& \eactive(\module.\MELEM) = \elem^\ast \\
+     &\wedge& \dactive(\module.\MDATA) = \data^\ast \\
      &\wedge& \module.\MSTART = \start^? \\[1ex]
      &\wedge& S', \moduleinst = \allocmodule(S, \module, \externval^n, \val^\ast) \\
      &\wedge& F = \{ \AMODULE~\moduleinst, \ALOCALS~\epsilon \} \\[1ex]

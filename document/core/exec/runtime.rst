@@ -170,8 +170,8 @@ and collects runtime representations of all entities that are imported, defined,
      \MITABLES & \tableaddr^\ast, \\
      \MIMEMS & \memaddr^\ast, \\
      \MIGLOBALS & \globaladdr^\ast, \\
-     \MIELEMS & \elemaddr^\ast, \\
-     \MIDATAS & \dataaddr^\ast, \\
+     \MIELEMS & (\elemaddr^?)^\ast, \\
+     \MIDATAS & (\dataaddr^?)^\ast, \\
      \MIEXPORTS & \exportinst^\ast ~\} \\
      \end{array}
    \end{array}
@@ -303,7 +303,7 @@ It holds a vector of :ref:`function addresses <syntax-funcaddr>`.
 .. math::
    \begin{array}{llll}
    \production{(element instance)} & \eleminst &::=&
-     \{ \ESIINIT~\vec(\funcaddr) \} \\
+     \{ \EIINIT~\vec(\funcaddr) \} \\
    \end{array}
 
 
@@ -321,7 +321,7 @@ It holds a vector of :ref:`bytes <syntax-byte>`.
 .. math::
    \begin{array}{llll}
    \production{(data instance)} & \datainst &::=&
-     \{ \DSIINIT~\vec(\byte) \} \\
+     \{ \DIINIT~\vec(\byte) \} \\
    \end{array}
 
 

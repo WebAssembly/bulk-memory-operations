@@ -295,6 +295,10 @@
 
 .. Modules, meta functions
 
+.. |eactive| mathdef:: \xref{syntax/modules}{syntax-elem}{\F{active}}
+.. |epassive| mathdef:: \xref{syntax/modules}{syntax-elem}{\F{passive}}
+.. |dactive| mathdef:: \xref{syntax/modules}{syntax-data}{\F{active}}
+.. |dpassive| mathdef:: \xref{syntax/modules}{syntax-data}{\F{passive}}
 .. |edfuncs| mathdef:: \xref{syntax/modules}{syntax-exportdesc}{\F{funcs}}
 .. |edtables| mathdef:: \xref{syntax/modules}{syntax-exportdesc}{\F{tables}}
 .. |edmems| mathdef:: \xref{syntax/modules}{syntax-exportdesc}{\F{mems}}
@@ -816,9 +820,9 @@
 .. |GIVALUE| mathdef:: \xref{exec/runtime}{syntax-globalinst}{\K{value}}
 .. |GIMUT| mathdef:: \xref{exec/runtime}{syntax-globalinst}{\K{mut}}
 
-.. |ESIINIT| mathdef:: \xref{exec/runtime}{syntax-eleminst}{\K{init}}
+.. |EIINIT| mathdef:: \xref{exec/runtime}{syntax-eleminst}{\K{init}}
 
-.. |DSIINIT| mathdef:: \xref{exec/runtime}{syntax-datainst}{\K{init}}
+.. |DIINIT| mathdef:: \xref{exec/runtime}{syntax-datainst}{\K{init}}
 
 .. |EINAME| mathdef:: \xref{exec/runtime}{syntax-exportinst}{\K{name}}
 .. |EIVALUE| mathdef:: \xref{exec/runtime}{syntax-exportinst}{\K{value}}

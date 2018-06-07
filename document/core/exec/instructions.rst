@@ -647,44 +647,46 @@ Memory Instructions
 
 11. Assert: due to :ref:`validation <valid-memory.init>`, three values of :ref:`value type <syntax-valtype>` |I32| are on the top of the stack.
 
-12. Pop the value :math:`\I32.\CONST~s` from the stack.
+12. Pop the value :math:`\I32.\CONST~i` from the stack.
 
-13. Pop the value :math:`\I32.\CONST~t` from the stack.
+13. Pop the value :math:`\I32.\CONST~j` from the stack.
 
 14. Pop the value :math:`\I32.\CONST~n` from the stack.
 
-15. Let :math:`dsz` be the length of :math:`\X{data}.\DSIINIT`.
+15. Let :math:`dsz` be the length of :math:`\X{data}.\DIINIT`.
 
-16. If :math:`s + n > dsz`, then:
-
-    a. Trap.
-
-17. If :math:`t + n > msz`, then:
+16. If :math:`i + n > dsz`, then:
 
     a. Trap.
 
-18. Let :math:`y` be the byte sequence :math:`\X{mem}.\DSIINIT[s \slice n]`.
+17. If :math:`j + n > msz`, then:
 
-19. :ref:`Initialize <initdata>` the memory instance at address :math:`ma` starting from offset :math:`t` with the byte sequence :math:`y`.
+    a. Trap.
+
+18. Let :math:`b^\ast` be the byte sequence :math:`\X{mem}.\DIINIT[i \slice n]`.
+
+19. :ref:`Initialize <initdata>` the memory instance at address :math:`ma` starting from offset :math:`j` with the byte sequence :math:`b^\ast`.
 
 .. math::
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~n)~(\I32.\CONST~t)~(\I32.\CONST~s)~(\MEMORYINIT~x) &\stepto& S; F; (\INITDATA~ma~t~y)
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYINIT~x) &\stepto& S; F; (\INITDATA~ma~j~b^\ast)
    \end{array}
    \\ \qquad
-     \begin{array}[t]{@{}r@{~}l@{}}
+     \begin{array}[j]{@{}r@{~}l@{}}
      (\iff & F.\AMODULE.\MIMEMS[0] = ma \\
      \wedge & F.\AMODULE.\MIDATAS[x] = da \\
-     \wedge & (s + n \leq |S.\SDATA[da].\DSIINIT|) \\
-     \wedge & (t + n \leq |S.\SMEMS[ma].\MIDATA|) \\
-     \wedge & y = S.\SDATA[da].\DSIINIT[s \slice n]) \\
+     \wedge & (i + n \leq |S.\SDATA[da].\DIINIT|) \\
+     \wedge & (j + n \leq |S.\SMEMS[ma].\MIDATA|) \\
+     \wedge & b^\ast = S.\SDATA[da].\DIINIT[i \slice n]) \\
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~n)~(\I32.\CONST~t)~(\I32.\CONST~s)~(\MEMORYINIT~x) &\stepto& S; F; \TRAP
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYINIT~x) &\stepto& S; F; \TRAP
    \end{array}
+   \\ \qquad
+     (\otherwise)
    \end{array}
 
 

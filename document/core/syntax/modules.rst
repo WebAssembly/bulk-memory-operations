@@ -259,6 +259,16 @@ Element segments are referenced through :ref:`element indices <syntax-elemidx>`.
    Consequently, the only valid |tableidx| is :math:`0`.
 
 
+Conventions
+...........
+
+The following auxiliary notation is defined for sequences of element segments, filtering out items of a specific kind in an order-preserving fashion:
+
+* :math:`\eactive(\elem^\ast) = [\elem ~|~ \{ \ETABLE~\tableidx, \EOFFSET~\expr, \EINIT~\vec(\funcidx) \} \in \elem^\ast]`
+
+* :math:`\epassive(\elem^\ast) = [\elem ~|~ \{ \EINIT~\vec(\funcidx) \} \in \elem^\ast]`
+
+
 .. index:: ! data, active, passive, data index, memory, memory index, expression, constant, byte, vector
    pair: abstract syntax; data
    single: memory; data
@@ -288,6 +298,16 @@ Data segments are referenced through :ref:`data indices <syntax-dataidx>`.
 .. note::
    In the current version of WebAssembly, at most one memory is allowed in a module.
    Consequently, the only valid |memidx| is :math:`0`.
+
+
+Conventions
+...........
+
+The following auxiliary notation is defined for sequences of data segments, filtering out items of a specific kind in an order-preserving fashion:
+
+* :math:`\dactive(\data^\ast) = [\data ~|~ \{ \DMEM~\memidx, \DOFFSET~\expr, \DINIT~\vec(\byte) \} \in \data^\ast]`
+
+* :math:`\dpassive(\data^\ast) = [\data ~|~ \{ \DINIT~\vec(\byte) \} \in \data^\ast]`
 
 
 .. index:: ! start function, function, function index, table, memory, instantiation
