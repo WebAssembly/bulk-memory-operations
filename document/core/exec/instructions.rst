@@ -663,7 +663,7 @@ Memory Instructions
 
     a. Trap.
 
-18. Let :math:`b^\ast` be the byte sequence :math:`\X{mem}.\DIINIT[i \slice n]`.
+18. Let :math:`b^\ast` be the byte sequence :math:`\X{data}.\DIINIT[i \slice n]`.
 
 19. :ref:`Initialize <initdata>` the memory instance at address :math:`ma` starting from offset :math:`j` with the byte sequence :math:`b^\ast`.
 
@@ -677,6 +677,7 @@ Memory Instructions
      \begin{array}[j]{@{}r@{~}l@{}}
      (\iff & F.\AMODULE.\MIMEMS[0] = ma \\
      \wedge & F.\AMODULE.\MIDATAS[x] = da \\
+     \wedge & S.\SDATA[da] \neq \epsilon \\
      \wedge & (i + n \leq |S.\SDATA[da].\DIINIT|) \\
      \wedge & (j + n \leq |S.\SMEMS[ma].\MIDATA|) \\
      \wedge & b^\ast = S.\SDATA[da].\DIINIT[i \slice n]) \\
@@ -684,6 +685,101 @@ Memory Instructions
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYINIT~x) &\stepto& S; F; \TRAP
+   \end{array}
+   \\ \qquad
+     (\otherwise)
+   \end{array}
+
+
+.. _exec-memory.drop:
+
+:math:`\MEMORYDROP~x`
+.....................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-memory.drop>`, :math:`F.\AMODULE.\MIMEMS[0]` exists.
+
+3. Let :math:`ma` be the :ref:`memory address <syntax-memaddr>` :math:`F.\AMODULE.\MIMEMS[0]`.
+
+4. Assert: due to :ref:`validation <valid-memory.drop>`, :math:`S.\SMEMS[ma]` exists.
+
+5. Let :math:`\X{mem}` be the :ref:`memory instance <syntax-meminst>` :math:`S.\SMEMS[ma]`.
+
+6. Assert: due to :ref:`validation <valid-memory.drop>`, :math:`F.\AMODULE.\MIDATAS[x]` exists.
+
+7. Let :math:`da` be the :ref:`data segment address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
+
+8. Replace :math:`S.\SDATA[da]` with :math:`\epsilon`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\MEMORYDROP~x) &\stepto& S'; F; \epsilon
+   \end{array}
+   \\ \qquad
+     \begin{array}[j]{@{}r@{~}l@{}}
+     (\iff & F.\AMODULE.\MIMEMS[0] = ma \\
+     \wedge & F.\AMODULE.\MIDATAS[x] = da \\
+     \wedge & S' = S \with \SDATA[da] = \epsilon) \\
+     \end{array}
+   \end{array}
+
+
+.. _exec-memory.copy:
+
+:math:`\MEMORYCOPY`
+...................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-memory.init>`, :math:`F.\AMODULE.\MIMEMS[0]` exists.
+
+3. Let :math:`ma` be the :ref:`memory address <syntax-memaddr>` :math:`F.\AMODULE.\MIMEMS[0]`.
+
+4. Assert: due to :ref:`validation <valid-memory.init>`, :math:`S.\SMEMS[ma]` exists.
+
+5. Let :math:`\X{mem}` be the :ref:`memory instance <syntax-meminst>` :math:`S.\SMEMS[ma]`.
+
+6. Let :math:`sz` be the length of :math:`\X{mem}.\MIDATA`.
+
+7. Assert: due to :ref:`validation <valid-memory.init>`, three values of :ref:`value type <syntax-valtype>` |I32| are on the top of the stack.
+
+8. Pop the value :math:`\I32.\CONST~i` from the stack.
+
+9. Pop the value :math:`\I32.\CONST~j` from the stack.
+
+10. Pop the value :math:`\I32.\CONST~n` from the stack.
+
+11. If :math:`i + n > sz`, then:
+
+    a. Trap.
+
+12. If :math:`j + n > sz`, then:
+
+    a. Trap.
+
+13. Let :math:`b^\ast` be the byte sequence :math:`\X{mem}.\MIDATA[i \slice n]`.
+
+14. :ref:`Initialize <initdata>` the memory instance at address :math:`ma` starting from offset :math:`j` with the byte sequence :math:`b^\ast`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYCOPY~x) &\stepto& S; F; (\INITDATA~ma~j~b^\ast)
+   \end{array}
+   \\ \qquad
+     \begin{array}[j]{@{}r@{~}l@{}}
+     (\iff & F.\AMODULE.\MIMEMS[0] = ma \\
+     \wedge & (i + n \leq |S.\SMEMS[ma].\MIDATA|) \\
+     \wedge & (j + n \leq |S.\SMEMS[ma].\MIDATA|) \\
+     \wedge & b^\ast = S.\SMEMS[ma].\MIDATA[i \slice n]) \\
+     \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYCOPY~x) &\stepto& S; F; \TRAP
    \end{array}
    \\ \qquad
      (\otherwise)
