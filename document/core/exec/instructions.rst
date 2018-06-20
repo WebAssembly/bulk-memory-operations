@@ -786,6 +786,177 @@ Memory Instructions
    \end{array}
 
 
+Table Instructions
+~~~~~~~~~~~~~~~~~~
+
+.. _exec-table.init:
+
+:math:`\TABLEINIT`
+..................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-table.init>`, :math:`F.\AMODULE.\MITABLES[0]` exists.
+
+3. Let :math:`ta` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[0]`.
+
+4. Assert: due to :ref:`validation <valid-table.init>`, :math:`S.\STABLES[ta]` exists.
+
+5. Let :math:`\X{table}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[ta]`.
+
+6. Let :math:`tsz` be the length of :math:`\X{table}.\MIELEMS`.
+
+7. Assert: due to :ref:`validation <valid-table.init>`, :math:`F.\AMODULE.\MIELEMS[x]` exists.
+
+8. Let :math:`ea` be the :ref:`element segment address <syntax-elemaddr>` :math:`F.\AMODULE.\MIELEMS[x]`.
+
+9. If :math:`S.\SELEM[ea]` does not exist, then:
+
+   a. Trap.
+
+10. Let :math:`\X{elem}` be the :ref:`element segment instance <syntax-eleminst>` :math:`S.\SELEM[ea]`.
+
+11. Assert: due to :ref:`validation <valid-table.init>`, three values of :ref:`value type <syntax-valtype>` |I32| are on the top of the stack.
+
+12. Pop the value :math:`\I32.\CONST~i` from the stack.
+
+13. Pop the value :math:`\I32.\CONST~j` from the stack.
+
+14. Pop the value :math:`\I32.\CONST~n` from the stack.
+
+15. Let :math:`esz` be the length of :math:`\X{elem}.\EIINIT`.
+
+16. If :math:`i + n > esz`, then:
+
+    a. Trap.
+
+17. If :math:`j + n > tsz`, then:
+
+    a. Trap.
+
+18. Let :math:`y^\ast` be the function address sequence :math:`\X{elem}.\EIINIT[i \slice n]`.
+
+19. :ref:`Initialize <initelem>` the table instance at address :math:`ta` starting from offset :math:`j` with the function address sequence :math:`y^\ast`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLEINIT~x) &\stepto& S; F; (\INITELEM~ta~j~y^\ast)
+   \end{array}
+   \\ \qquad
+     \begin{array}[j]{@{}r@{~}l@{}}
+     (\iff & F.\AMODULE.\MITABLES[0] = ta \\
+     \wedge & F.\AMODULE.\MIELEMS[x] = ea \\
+     \wedge & S.\SELEM[ea] \neq \epsilon \\
+     \wedge & (i + n \leq |S.\SELEM[ea].\EIINIT|) \\
+     \wedge & (j + n \leq |S.\STABLES[ta].\MIELEMS|) \\
+     \wedge & y^\ast = S.\SELEM[ea].\EIINIT[i \slice n]) \\
+     \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLEINIT~x) &\stepto& S; F; \TRAP
+   \end{array}
+   \\ \qquad
+     (\otherwise)
+   \end{array}
+
+
+.. _exec-table.drop:
+
+:math:`\TABLEDROP~x`
+.....................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-table.drop>`, :math:`F.\AMODULE.\MITABLES[0]` exists.
+
+3. Let :math:`ta` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[0]`.
+
+4. Assert: due to :ref:`validation <valid-table.drop>`, :math:`S.\STABLES[ta]` exists.
+
+5. Let :math:`\X{table}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[ta]`.
+
+6. Assert: due to :ref:`validation <valid-table.drop>`, :math:`F.\AMODULE.\MIELEMS[x]` exists.
+
+7. Let :math:`ea` be the :ref:`element segment address <syntax-elemaddr>` :math:`F.\AMODULE.\MIELEMS[x]`.
+
+8. Replace :math:`S.\SELEM[ea]` with :math:`\epsilon`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\TABLEDROP~x) &\stepto& S'; F; \epsilon
+   \end{array}
+   \\ \qquad
+     \begin{array}[j]{@{}r@{~}l@{}}
+     (\iff & F.\AMODULE.\MITABLES[0] = ta \\
+     \wedge & F.\AMODULE.\MIELEMS[x] = ea \\
+     \wedge & S' = S \with \SELEM[ea] = \epsilon) \\
+     \end{array}
+   \end{array}
+
+
+.. _exec-table.copy:
+
+:math:`\TABLECOPY`
+...................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-table.init>`, :math:`F.\AMODULE.\MITABLES[0]` exists.
+
+3. Let :math:`ta` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[0]`.
+
+4. Assert: due to :ref:`validation <valid-table.init>`, :math:`S.\STABLES[ta]` exists.
+
+5. Let :math:`\X{table}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[ta]`.
+
+6. Let :math:`sz` be the length of :math:`\X{table}.\MIELEMS`.
+
+7. Assert: due to :ref:`validation <valid-table.init>`, three values of :ref:`value type <syntax-valtype>` |I32| are on the top of the stack.
+
+8. Pop the value :math:`\I32.\CONST~i` from the stack.
+
+9. Pop the value :math:`\I32.\CONST~j` from the stack.
+
+10. Pop the value :math:`\I32.\CONST~n` from the stack.
+
+11. If :math:`i + n > sz`, then:
+
+    a. Trap.
+
+12. If :math:`j + n > sz`, then:
+
+    a. Trap.
+
+13. Let :math:`y^\ast` be the function address sequence :math:`\X{table}.\MIELEMS[i \slice n]`.
+
+14. :ref:`Initialize <initelem>` the table instance at address :math:`ta` starting from offset :math:`j` with the function address sequence :math:`y^\ast`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLECOPY~x) &\stepto& S; F; (\INITELEM~ta~j~y^\ast)
+   \end{array}
+   \\ \qquad
+     \begin{array}[j]{@{}r@{~}l@{}}
+     (\iff & F.\AMODULE.\MITABLES[0] = ta \\
+     \wedge & (i + n \leq |S.\STABLES[ta].\MIELEMS|) \\
+     \wedge & (j + n \leq |S.\STABLES[ta].\MIELEMS|) \\
+     \wedge & y^\ast = S.\STABLES[ta].\MIELEMS[i \slice n]) \\
+     \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLECOPY~x) &\stepto& S; F; \TRAP
+   \end{array}
+   \\ \qquad
+     (\otherwise)
+   \end{array}
+
+
 .. index:: control instructions, structured control, label, block, branch, result type, label index, function index, type index, vector, address, table address, table instance, store, frame
    pair: execution; instruction
    single: abstract syntax; instruction
