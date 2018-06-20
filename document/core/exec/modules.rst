@@ -379,23 +379,19 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 1. Let :math:`e` be the :ref:`element segment <syntax-elem>` to allocate.
 
-2. If :math:`e` is of the form :math:`\{ \EINIT~x^\ast \}`, then:
+2. Let :math:`a` be the first free :ref:`element address <syntax-elemaddr>` in :math:`S`.
 
-   a. Let :math:`a` be the first free :ref:`element address <syntax-elemaddr>` in :math:`S`.
+3. For each :ref:`function index <syntax-funcidx>` :math:`x_i` in :math:`e.\EINIT`, do:
 
-   b. For each :ref:`function index <syntax-funcidx>` :math:`x_i` in :math:`e.\EINIT`, do:
+   a. Let :math:`\funcaddr_i` be the :ref:`function address <syntax-funcaddr>` :math:`\moduleinst.\MIFUNCS[x_i]`.
 
-      i. Let :math:`\funcaddr_i` be the :ref:`function address <syntax-funcaddr>` :math:`\moduleinst.\MIFUNCS[x_i]`.
+4. Let :math:`\funcaddr^\ast` be the concatenation of the function addresses :math:`\funcaddr_i`.
 
-   c. Let :math:`\funcaddr^\ast` be the concatenation of the function addresses :math:`\funcaddr_i`.
+5. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\funcaddr^\ast \}`.
 
-   d. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\funcaddr^\ast \}`.
+6. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
 
-   e. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
-
-   f. Return :math:`a`.
-
-3. Else, return :math:`\epsilon`.
+7. Return :math:`a`.
 
 .. math::
    \begin{array}{rlll}
@@ -404,7 +400,6 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
    \elemaddr &=& |S.\SELEM| \\
    \eleminst &=& \{ \EIINIT~(\moduleinst.\MIFUNCS[x])^\ast \} \\
    S' &=& S \compose \{\SELEM~\eleminst\} \\
-   \allocelem(S, e, \moduleinst) &=& S, \epsilon & (\otherwise) \\[1ex]
    \end{array}
 
 
@@ -416,17 +411,13 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 1. Let :math:`d` be the :ref:`data segment <syntax-data>` to allocate.
 
-2. If :math:`d` is of the form :math:`\{ \DINIT~b^\ast \}`, then:
+2. Let :math:`a` be the first free :ref:`data address <syntax-dataaddr>` in :math:`S`.
 
-   a. Let :math:`a` be the first free :ref:`data address <syntax-dataaddr>` in :math:`S`.
+3. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIINIT~d.\DINIT \}`.
 
-   b. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIINIT~d.\DINIT \}`.
+4. Append :math:`\datainst` to the |SDATA| of :math:`S`.
 
-   c. Append :math:`\datainst` to the |SDATA| of :math:`S`.
-
-   d. Return :math:`a`.
-
-3. Else, return :math:`\epsilon`.
+5. Return :math:`a`.
 
 .. math::
    \begin{array}{rlll}
@@ -435,7 +426,6 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
    \dataaddr &=& |S.\SDATA| \\
    \datainst &=& \{ \DIINIT~d.\DINIT \} \\
    S' &=& S \compose \{\SDATA~\datainst\} \\
-   \allocdata(S, d, \moduleinst) &=& S, \epsilon & (\otherwise)  \\[1ex]
    \end{array}
 
 
@@ -509,11 +499,11 @@ and :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the modul
 
 6. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEM`, do:
 
-   a. Let :math:`\elemaddr_i^?` be the optional :ref:`element address <syntax-elemaddr>` resulting from :ref:`allocating <alloc-elem>` :math:`\elem_i` for the :ref:`\module instance <syntax-moduleinst>` :math:`\moduleinst` defined below.
+   a. Let :math:`\elemaddr_i` be the :ref:`element address <syntax-elemaddr>` resulting from :ref:`allocating <alloc-elem>` :math:`\elem_i` for the :ref:`\module instance <syntax-moduleinst>` :math:`\moduleinst` defined below.
 
 7. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATA`, do:
 
-   a. Let :math:`\dataaddr_i^?` be the optional :ref:`data address <syntax-dataaddr>` resulting from :ref:`allocating <alloc-data>` :math:`\data_i`.
+   a. Let :math:`\dataaddr_i` be the :ref:`data address <syntax-dataaddr>` resulting from :ref:`allocating <alloc-data>` :math:`\data_i`.
 
 8. Let :math:`\funcaddr^\ast` be the the concatenation of the :ref:`function addresses <syntax-funcaddr>` :math:`\funcaddr_i` in index order.
 
@@ -523,9 +513,9 @@ and :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the modul
 
 11. Let :math:`\globaladdr^\ast` be the the concatenation of the :ref:`global addresses <syntax-globaladdr>` :math:`\globaladdr_i` in index order.
 
-12. Let :math:`(\elemaddr^?)^\ast` be the the concatenation of the optional :ref:`element addresses <syntax-elemaddr>` :math:`\elemaddr_i^?` in index order.
+12. Let :math:`\elemaddr^\ast` be the the concatenation of the :ref:`element addresses <syntax-elemaddr>` :math:`\elemaddr_i` in index order.
 
-13. Let :math:`(\dataaddr^?)^\ast` be the the concatenation of the optional :ref:`data addresses <syntax-dataaddr>` :math:`\dataaddr_i^?` in index order.
+13. Let :math:`\dataaddr^\ast` be the the concatenation of the :ref:`data addresses <syntax-dataaddr>` :math:`\dataaddr_i` in index order.
 
 14. Let :math:`\funcaddr_{\F{mod}}^\ast` be the list of :ref:`function addresses <syntax-funcaddr>` extracted from :math:`\externval_{\F{im}}^\ast`, concatenated with :math:`\funcaddr^\ast`.
 
@@ -549,7 +539,7 @@ and :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the modul
 
 19. Let :math:`\exportinst^\ast` be the the concatenation of the :ref:`export instances <syntax-exportinst>` :math:`\exportinst_i` in index order.
 
-20. Let :math:`\moduleinst` be the :ref:`module instance <syntax-moduleinst>` :math:`\{\MITYPES~(\module.\MTYPES),` :math:`\MIFUNCS~\funcaddr_{\F{mod}}^\ast,` :math:`\MITABLES~\tableaddr_{\F{mod}}^\ast,` :math:`\MIMEMS~\memaddr_{\F{mod}}^\ast,` :math:`\MIGLOBALS~\globaladdr_{\F{mod}}^\ast,` :math:`\MIELEMS~(\elemaddr^?)^\ast`, :math:`\MIDATAS~(\dataaddr^?)^\ast`, :math:`\MIEXPORTS~\exportinst^\ast\}`.
+20. Let :math:`\moduleinst` be the :ref:`module instance <syntax-moduleinst>` :math:`\{\MITYPES~(\module.\MTYPES),` :math:`\MIFUNCS~\funcaddr_{\F{mod}}^\ast,` :math:`\MITABLES~\tableaddr_{\F{mod}}^\ast,` :math:`\MIMEMS~\memaddr_{\F{mod}}^\ast,` :math:`\MIGLOBALS~\globaladdr_{\F{mod}}^\ast,` :math:`\MIELEMS~\elemaddr^\ast`, :math:`\MIDATAS~\dataaddr^\ast`, :math:`\MIEXPORTS~\exportinst^\ast\}`.
 
 21. Return :math:`\moduleinst`.
 
@@ -570,8 +560,8 @@ where:
      \MITABLES~\evtables(\externval_{\F{im}}^\ast)~\tableaddr^\ast, \\
      \MIMEMS~\evmems(\externval_{\F{im}}^\ast)~\memaddr^\ast, \\
      \MIGLOBALS~\evglobals(\externval_{\F{im}}^\ast)~\globaladdr^\ast, \\
-     \MIELEMS~(\elemaddr^?)^\ast, \\
-     \MIDATAS~(\dataaddr^?)^\ast, \\
+     \MIELEMS~\elemaddr^\ast, \\
+     \MIDATAS~\dataaddr^\ast, \\
      \MIEXPORTS~\exportinst^\ast ~\}
      \end{array} \\[1ex]
    S_1, \funcaddr^\ast &=& \allocfunc^\ast(S, \module.\MFUNCS, \moduleinst) \\
@@ -581,8 +571,8 @@ where:
      \qquad\qquad\qquad~ (\where \mem^\ast = \module.\MMEMS) \\
    S_4, \globaladdr^\ast &=& \allocglobal^\ast(S_3, (\global.\GTYPE)^\ast, \val^\ast)
      \qquad\quad~ (\where \global^\ast = \module.\MGLOBALS) \\
-   S_5, (\elemaddr^?)^\ast &=& \allocelem^\ast(S_4, \module.\MELEM, \moduleinst) \\
-   S', (\dataaddr^?)^\ast &=& \allocdata^\ast(S_5, \module.\MDATA) \\
+   S_5, \elemaddr^\ast &=& \allocelem^\ast(S_4, \module.\MELEM, \moduleinst) \\
+   S', \dataaddr^\ast &=& \allocdata^\ast(S_5, \module.\MDATA) \\
    \exportinst^\ast &=& \{ \EINAME~(\export.\ENAME), \EIVALUE~\externval_{\F{ex}} \}^\ast
      \quad (\where \export^\ast = \module.\MEXPORTS) \\[1ex]
    \evfuncs(\externval_{\F{ex}}^\ast) &=& (\moduleinst.\MIFUNCS[x])^\ast
@@ -619,54 +609,6 @@ Moreover, if the dots :math:`\dots` are a sequence :math:`A^n` (as for globals),
 .. note::
    The definition of module allocation is mutually recursive with the allocation of its associated functions, because the resulting module instance :math:`\moduleinst` is passed to the function allocator as an argument, in order to form the necessary closures.
    In an implementation, this recursion is easily unraveled by mutating one or the other in a secondary step.
-
-
-.. index:: table, table instance, table address, initialize table
-.. _initelem:
-
-:math:`\INITELEM~\tableaddr~o~x^\ast`
-.....................................
-
-1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
-
-2. For each :ref:`function index <syntax-funcidx>` :math:`x_i` of :math:`x^\ast`:
-
-   a. Let :math:`\funcaddr_i` be the :ref:`function address <syntax-funcaddr>` :math:`F.\AMODULE.\MIFUNCS[x_i]`.
-
-   b. Replace :math:`S.\STABLES[\tableaddr].\TIELEM[o + i]` with :math:`\funcaddr_i`.
-
-.. math::
-   ~\\[-1ex]
-   \begin{array}{l}
-   \begin{array}{lcl@{\qquad}l}
-   S; F; \INITELEM~\tableaddr~o~\epsilon &\stepto& S; F; \epsilon & \\
-   S; F; \INITELEM~\tableaddr~o~(x_0~x^\ast) &\stepto& S'; F; \INITELEM~\tableaddr~(o+1)~x^\ast
-   \end{array}
-   \\ \qquad
-     (\iff S' = S \with \STABLES[\tableaddr].\TIELEM[o] = F.\AMODULE.\MIFUNCS[x_0]) \\
-   \end{array}
-
-
-.. index:: memory, memory instance, memory address, initialize memory
-.. _initdata:
-
-:math:`\INITDATA~\memaddr~o~b^\ast`
-...................................
-
-1. For each byte :math:`b_i` of :math:`b^\ast`:
-
-   a. Replace :math:`S.\SMEMS[\memaddr].\MIDATA[o + i]` with :math:`b_i`.
-
-.. math::
-   ~\\[-1ex]
-   \begin{array}{l}
-   \begin{array}{lcl@{\qquad}l}
-   S; F; \INITDATA~\memaddr~o~\epsilon &\stepto& S; F; \epsilon \\
-   S; F; \INITDATA~\memaddr~o~(b_0~b^\ast) &\stepto& S'; F; \INITDATA~\memaddr~(o+1)~b^\ast
-   \end{array}
-   \\ \qquad
-     (\iff S' = S \with \SMEMS[\memaddr].\MIDATA[o] = b_0) \\
-   \end{array}
 
 
 .. index:: ! instantiation, module, instance, store, trap

@@ -786,6 +786,28 @@ Memory Instructions
    \end{array}
 
 
+.. index:: memory, memory instance, memory address, initialize memory
+.. _initdata:
+
+:math:`\INITDATA~\memaddr~o~b^\ast`
+...................................
+
+1. For each byte :math:`b_i` of :math:`b^\ast`:
+
+   a. Replace :math:`S.\SMEMS[\memaddr].\MIDATA[o + i]` with :math:`b_i`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; \INITDATA~\memaddr~o~\epsilon &\stepto& S; F; \epsilon \\
+   S; F; \INITDATA~\memaddr~o~(b_0~b^\ast) &\stepto& S'; F; \INITDATA~\memaddr~(o+1)~b^\ast
+   \end{array}
+   \\ \qquad
+     (\iff S' = S \with \SMEMS[\memaddr].\MIDATA[o] = b_0) \\
+   \end{array}
+
+
 Table Instructions
 ~~~~~~~~~~~~~~~~~~
 
@@ -954,6 +976,32 @@ Table Instructions
    \end{array}
    \\ \qquad
      (\otherwise)
+   \end{array}
+
+
+.. index:: table, table instance, table address, initialize table
+.. _initelem:
+
+:math:`\INITELEM~\tableaddr~o~x^\ast`
+.....................................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. For each :ref:`function index <syntax-funcidx>` :math:`x_i` of :math:`x^\ast`:
+
+   a. Let :math:`\funcaddr_i` be the :ref:`function address <syntax-funcaddr>` :math:`F.\AMODULE.\MIFUNCS[x_i]`.
+
+   b. Replace :math:`S.\STABLES[\tableaddr].\TIELEM[o + i]` with :math:`\funcaddr_i`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; \INITELEM~\tableaddr~o~\epsilon &\stepto& S; F; \epsilon & \\
+   S; F; \INITELEM~\tableaddr~o~(x_0~x^\ast) &\stepto& S'; F; \INITELEM~\tableaddr~(o+1)~x^\ast
+   \end{array}
+   \\ \qquad
+     (\iff S' = S \with \STABLES[\tableaddr].\TIELEM[o] = F.\AMODULE.\MIFUNCS[x_0]) \\
    \end{array}
 
 
