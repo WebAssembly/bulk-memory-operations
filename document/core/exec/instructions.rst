@@ -813,7 +813,7 @@ Table Instructions
 
 .. _exec-table.init:
 
-:math:`\TABLEINIT`
+:math:`\TABLEINIT~x`
 ..................
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
@@ -826,7 +826,7 @@ Table Instructions
 
 5. Let :math:`\X{table}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[ta]`.
 
-6. Let :math:`tsz` be the length of :math:`\X{table}.\MIELEMS`.
+6. Let :math:`tsz` be the length of :math:`\X{table}.\TIELEM`.
 
 7. Assert: due to :ref:`validation <valid-table.init>`, :math:`F.\AMODULE.\MIELEMS[x]` exists.
 
@@ -872,7 +872,7 @@ Table Instructions
      \wedge & F.\AMODULE.\MIELEMS[x] = ea \\
      \wedge & S.\SELEM[ea] \neq \epsilon \\
      \wedge & (i + n \leq |S.\SELEM[ea].\EIINIT|) \\
-     \wedge & (j + n \leq |S.\STABLES[ta].\MIELEMS|) \\
+     \wedge & (j + n \leq |S.\STABLES[ta].\TIELEM|) \\
      \wedge & y^\ast = S.\SELEM[ea].\EIINIT[i \slice n]) \\
      \end{array}
    \\[1ex]
@@ -935,7 +935,7 @@ Table Instructions
 
 5. Let :math:`\X{table}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[ta]`.
 
-6. Let :math:`sz` be the length of :math:`\X{table}.\MIELEMS`.
+6. Let :math:`sz` be the length of :math:`\X{table}.\TIELEM`.
 
 7. Assert: due to :ref:`validation <valid-table.init>`, three values of :ref:`value type <syntax-valtype>` |I32| are on the top of the stack.
 
@@ -953,7 +953,7 @@ Table Instructions
 
     a. Trap.
 
-13. Let :math:`y^\ast` be the function address sequence :math:`\X{table}.\MIELEMS[i \slice n]`.
+13. Let :math:`y^\ast` be the function address sequence :math:`\X{table}.\TIELEM[i \slice n]`.
 
 14. :ref:`Initialize <initelem>` the table instance at address :math:`ta` starting from offset :math:`j` with the function address sequence :math:`y^\ast`.
 
@@ -966,9 +966,9 @@ Table Instructions
    \\ \qquad
      \begin{array}[j]{@{}r@{~}l@{}}
      (\iff & F.\AMODULE.\MITABLES[0] = ta \\
-     \wedge & (i + n \leq |S.\STABLES[ta].\MIELEMS|) \\
-     \wedge & (j + n \leq |S.\STABLES[ta].\MIELEMS|) \\
-     \wedge & y^\ast = S.\STABLES[ta].\MIELEMS[i \slice n]) \\
+     \wedge & (i + n \leq |S.\STABLES[ta].\TIELEM|) \\
+     \wedge & (j + n \leq |S.\STABLES[ta].\TIELEM|) \\
+     \wedge & y^\ast = S.\STABLES[ta].\TIELEM[i \slice n]) \\
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
@@ -987,11 +987,9 @@ Table Instructions
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. For each :ref:`function index <syntax-funcidx>` :math:`x_i` of :math:`x^\ast`:
+2. For each :ref:`function address <syntax-funcaddr>` :math:`x_i` of :math:`x^\ast`:
 
-   a. Let :math:`\funcaddr_i` be the :ref:`function address <syntax-funcaddr>` :math:`F.\AMODULE.\MIFUNCS[x_i]`.
-
-   b. Replace :math:`S.\STABLES[\tableaddr].\TIELEM[o + i]` with :math:`\funcaddr_i`.
+   a. Replace :math:`S.\STABLES[\tableaddr].\TIELEM[o + i]` with :math:`x_i`.
 
 .. math::
    ~\\[-1ex]
@@ -1001,7 +999,7 @@ Table Instructions
    S; F; \INITELEM~\tableaddr~o~(x_0~x^\ast) &\stepto& S'; F; \INITELEM~\tableaddr~(o+1)~x^\ast
    \end{array}
    \\ \qquad
-     (\iff S' = S \with \STABLES[\tableaddr].\TIELEM[o] = F.\AMODULE.\MIFUNCS[x_0]) \\
+     (\iff S' = S \with \STABLES[\tableaddr].\TIELEM[o] = x_0) \\
    \end{array}
 
 
