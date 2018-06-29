@@ -200,9 +200,13 @@ The element section is encoded similarly.
 ### `memory.init` instruction
 
 The `memory.init` instruction copies data from a given passive segment into a target
-memory. The source segment and target memory are given as immediates. The
-instruction also has three i32 operands: an offset into the source segment, an
-offset into the target memory, and a length to copy.
+memory. The source segment and target memory are given as immediates.
+
+The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in order:
+
+- top-2: destination address
+- top-1: offset into the source segment
+- top-0: size of memory region in bytes
 
 When `memory.init` is executed, its behavior matches the steps described in
 step 11 of
@@ -276,8 +280,8 @@ implemented as follows:
 
     ;; copy data segment 1 into memory
     (memory.init 1
-      (i32.const 0)     ;; source offset
       (i32.const 16)    ;; target offset
+      (i32.const 0)     ;; source offset
       (i32.const 7))    ;; length
 
     ;; The memory used by this segment is no longer needed, so this segment can
