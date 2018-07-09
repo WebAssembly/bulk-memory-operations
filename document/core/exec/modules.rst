@@ -383,7 +383,9 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 3. For each :ref:`function index <syntax-funcidx>` :math:`x_i` in :math:`e.\EINIT`, do:
 
-   a. Let :math:`\funcaddr_i` be the :ref:`function address <syntax-funcaddr>` :math:`\moduleinst.\MIFUNCS[x_i]`.
+   a. Assert: due to :ref:`validation <valid-elem>`, the :ref:`function address <syntax-funcaddr>` :math:`\moduleinst.\MIFUNCS[x_i]` exists.
+
+   b. Let :math:`\funcaddr_i` be the function address :math:`\moduleinst.\MIFUNCS[x_i]`.
 
 4. Let :math:`\funcaddr^\ast` be the concatenation of the function addresses :math:`\funcaddr_i`.
 
@@ -397,6 +399,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
    \begin{array}{rlll}
    \allocelem(S, e, \moduleinst) &=& S', \elemaddr \\[1ex]
    \mbox{where:} \hfill \\
+   \x^\ast &=& e.\EINIT \\
    \elemaddr &=& |S.\SELEM| \\
    \eleminst &=& \{ \EIINIT~(\moduleinst.\MIFUNCS[x])^\ast \} \\
    S' &=& S \compose \{\SELEM~\eleminst\} \\

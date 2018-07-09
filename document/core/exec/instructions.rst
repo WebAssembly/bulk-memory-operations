@@ -639,7 +639,7 @@ Memory Instructions
 
 8. Let :math:`da` be the :ref:`data segment address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
 
-9. If :math:`S.\SDATA[da]` does not exist, then:
+9. If :math:`S.\SDATA[da]` is :math:`\epsilon`, then:
 
    a. Trap.
 
@@ -698,19 +698,11 @@ Memory Instructions
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. Assert: due to :ref:`validation <valid-memory.drop>`, :math:`F.\AMODULE.\MIMEMS[0]` exists.
+2. Assert: due to :ref:`validation <valid-memory.drop>`, :math:`F.\AMODULE.\MIDATAS[x]` exists.
 
-3. Let :math:`ma` be the :ref:`memory address <syntax-memaddr>` :math:`F.\AMODULE.\MIMEMS[0]`.
+3. Let :math:`da` be the :ref:`data segment address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
 
-4. Assert: due to :ref:`validation <valid-memory.drop>`, :math:`S.\SMEMS[ma]` exists.
-
-5. Let :math:`\X{mem}` be the :ref:`memory instance <syntax-meminst>` :math:`S.\SMEMS[ma]`.
-
-6. Assert: due to :ref:`validation <valid-memory.drop>`, :math:`F.\AMODULE.\MIDATAS[x]` exists.
-
-7. Let :math:`da` be the :ref:`data segment address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
-
-8. Replace :math:`S.\SDATA[da]` with :math:`\epsilon`.
+4. Replace :math:`S.\SDATA[da]` with :math:`\epsilon`.
 
 .. math::
    ~\\[-1ex]
@@ -720,8 +712,7 @@ Memory Instructions
    \end{array}
    \\ \qquad
      \begin{array}[j]{@{}r@{~}l@{}}
-     (\iff & F.\AMODULE.\MIMEMS[0] = ma \\
-     \wedge & F.\AMODULE.\MIDATAS[x] = da \\
+     (\iff & F.\AMODULE.\MIDATAS[x] = da \\
      \wedge & S' = S \with \SDATA[da] = \epsilon) \\
      \end{array}
    \end{array}
@@ -768,7 +759,7 @@ Memory Instructions
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYCOPY~x) &\stepto& S; F; (\INITDATA~ma~j~b^\ast)
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYCOPY) &\stepto& S; F; (\INITDATA~ma~j~b^\ast)
    \end{array}
    \\ \qquad
      \begin{array}[j]{@{}r@{~}l@{}}
@@ -779,11 +770,15 @@ Memory Instructions
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYCOPY~x) &\stepto& S; F; \TRAP
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\MEMORYCOPY) &\stepto& S; F; \TRAP
    \end{array}
    \\ \qquad
      (\otherwise)
    \end{array}
+
+.. TODO: The semantics here describe making a copy of the source memory before
+   the writing begins. This is probably OK for now but will need to be updated
+   when threads are added.
 
 
 .. index:: memory, memory instance, memory address, initialize memory
@@ -832,7 +827,7 @@ Table Instructions
 
 8. Let :math:`ea` be the :ref:`element segment address <syntax-elemaddr>` :math:`F.\AMODULE.\MIELEMS[x]`.
 
-9. If :math:`S.\SELEM[ea]` does not exist, then:
+9. If :math:`S.\SELEM[ea]` is :math:`\epsilon`, then:
 
    a. Trap.
 
@@ -891,19 +886,11 @@ Table Instructions
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. Assert: due to :ref:`validation <valid-table.drop>`, :math:`F.\AMODULE.\MITABLES[0]` exists.
+2. Assert: due to :ref:`validation <valid-table.drop>`, :math:`F.\AMODULE.\MIELEMS[x]` exists.
 
-3. Let :math:`ta` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[0]`.
+3. Let :math:`ea` be the :ref:`element segment address <syntax-elemaddr>` :math:`F.\AMODULE.\MIELEMS[x]`.
 
-4. Assert: due to :ref:`validation <valid-table.drop>`, :math:`S.\STABLES[ta]` exists.
-
-5. Let :math:`\X{table}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[ta]`.
-
-6. Assert: due to :ref:`validation <valid-table.drop>`, :math:`F.\AMODULE.\MIELEMS[x]` exists.
-
-7. Let :math:`ea` be the :ref:`element segment address <syntax-elemaddr>` :math:`F.\AMODULE.\MIELEMS[x]`.
-
-8. Replace :math:`S.\SELEM[ea]` with :math:`\epsilon`.
+4. Replace :math:`S.\SELEM[ea]` with :math:`\epsilon`.
 
 .. math::
    ~\\[-1ex]
@@ -913,8 +900,7 @@ Table Instructions
    \end{array}
    \\ \qquad
      \begin{array}[j]{@{}r@{~}l@{}}
-     (\iff & F.\AMODULE.\MITABLES[0] = ta \\
-     \wedge & F.\AMODULE.\MIELEMS[x] = ea \\
+     (\iff & F.\AMODULE.\MIELEMS[x] = ea \\
      \wedge & S' = S \with \SELEM[ea] = \epsilon) \\
      \end{array}
    \end{array}
@@ -961,7 +947,7 @@ Table Instructions
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLECOPY~x) &\stepto& S; F; (\INITELEM~ta~j~y^\ast)
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLECOPY) &\stepto& S; F; (\INITELEM~ta~j~y^\ast)
    \end{array}
    \\ \qquad
      \begin{array}[j]{@{}r@{~}l@{}}
@@ -972,7 +958,7 @@ Table Instructions
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLECOPY~x) &\stepto& S; F; \TRAP
+   S; F; (\I32.\CONST~n)~(\I32.\CONST~j)~(\I32.\CONST~i)~(\TABLECOPY) &\stepto& S; F; \TRAP
    \end{array}
    \\ \qquad
      (\otherwise)
@@ -982,12 +968,12 @@ Table Instructions
 .. index:: table, table instance, table address, initialize table
 .. _initelem:
 
-:math:`\INITELEM~\tableaddr~o~x^\ast`
+:math:`\INITELEM~\tableaddr~o~a^\ast`
 .....................................
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. For each :ref:`function address <syntax-funcaddr>` :math:`x_i` of :math:`x^\ast`:
+2. For each :ref:`function address <syntax-funcaddr>` :math:`x_i` of :math:`a^\ast`:
 
    a. Replace :math:`S.\STABLES[\tableaddr].\TIELEM[o + i]` with :math:`x_i`.
 
@@ -996,10 +982,10 @@ Table Instructions
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
    S; F; \INITELEM~\tableaddr~o~\epsilon &\stepto& S; F; \epsilon & \\
-   S; F; \INITELEM~\tableaddr~o~(x_0~x^\ast) &\stepto& S'; F; \INITELEM~\tableaddr~(o+1)~x^\ast
+   S; F; \INITELEM~\tableaddr~o~(a_0~a^\ast) &\stepto& S'; F; \INITELEM~\tableaddr~(o+1)~a^\ast
    \end{array}
    \\ \qquad
-     (\iff S' = S \with \STABLES[\tableaddr].\TIELEM[o] = x_0) \\
+     (\iff S' = S \with \STABLES[\tableaddr].\TIELEM[o] = a_0) \\
    \end{array}
 
 
