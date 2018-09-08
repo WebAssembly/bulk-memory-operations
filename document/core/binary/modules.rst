@@ -99,6 +99,7 @@ Id  Section
  9  :ref:`element section <binary-elemsec>` 
 10  :ref:`code section <binary-codesec>`    
 11  :ref:`data section <binary-datasec>`    
+12  :ref:`data declaration section <binary-datadeclsec>`
 ==  ========================================
 
 
@@ -338,6 +339,30 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
    element segments have a |ETABLE| value of :math:`0`.
 
 
+.. index:: ! data declaration section, data declaration, memory, memory index, expression, byte
+   pair: binary format; data declaration
+   pair: section; data declaration
+   single: memory; data declaration
+   single: data declaration; segment
+.. _binary-datadecl:
+.. _binary-datadeclsec:
+
+Data Declaration Section
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The *data declaration section* has the id 12.
+
+It decodes into a vector of |segtype| that represent the choice between the passive or active form of the :ref:`data segments <syntax-data>` in the |MDATA| component of a :ref:`module <syntax-module>`.
+
+.. math::
+   \begin{array}{llclll}
+   \production{data declaration section} & \Bdatadeclsec &::=&
+     \X{segdecl}^\ast{:}\Bsection_{12}(\Bvec(\Bsegtype)) &\Rightarrow& \X{segdecl}^\ast \\
+   \production{segment type} & \Bsegtype &::=& \hex{00} &\Rightarrow& \SACTIVE \\
+                             &           &|&   \hex{01} &\Rightarrow& \SPASSIVE \\
+   \end{array}
+
+
 .. index:: ! code section, function, local, type index, function type
    pair: binary format; function
    pair: binary format; local
@@ -402,6 +427,8 @@ Any code for which the length of the resulting sequence is out of bounds of the 
    single: data; segment
 .. _binary-data:
 .. _binary-datasec:
+.. _binary-datasecbody:
+.. _binary-datavec:
 
 Data Section
 ~~~~~~~~~~~~
@@ -410,22 +437,33 @@ The *data section* has the id 11.
 It decodes into a vector of :ref:`data segments <syntax-data>` that represent the |MDATA| component of a :ref:`module <syntax-module>`.
 
 .. math::
-   \begin{array}{llclll}
-   \production{data section} & \Bdatasec &::=&
-     \X{seg}^\ast{:}\Bsection_{11}(\Bvec(\Bdata)) &\Rightarrow& \X{seg} \\
-   \production{data segment} & \Bdata &::=&
-     \hex{00}~~e{:}\Bexpr~~b^\ast{:}\Bvec(\Bbyte)
-       &\Rightarrow& \{ \DMEM~0, \DOFFSET~e, \DINIT~b^\ast \} \\
-   \production{data segment} & \Bdata &::=&
-     \hex{01}~~b^\ast{:}\Bvec(\Bbyte)
-       &\Rightarrow& \{ \DINIT~b^\ast \} \\
-   \end{array}
+    \begin{array}{llcllll}
+    \production{data section} & \Bdatasec(\X{decl}^m) &::=&
+      \X{seg}^n{:}\Bsection_{11}(\Bdatasecbody(\X{decl}^m)) &\Rightarrow& \X{seg}^n \\
+    \production{data section body} & \Bdatasecbody(\X{decl}^m)
+      &::=& n{:}\Bu32~~\X{seg}^n{:}\Bdatavec(\SACTIVE^n) &\Rightarrow& \X{seg}^n
+        & (\iff m=0) \\
+      &&|& m{:}\Bu32~~\X{seg}^m{:}\Bdatavec(\X{decl}^m) &\Rightarrow& \X{seg}^m \\
+    \production{data segment vector} & \Bdatavec(\X{decl}^m) &::=& \Bdata^m
+    \end{array}
+
+where for each :math:`t_i` in :math:`\X{decl}^m`,
+
+.. math::
+    \begin{array}{llcllll}
+    \production{data segment} & \Bdata^m[i]
+      &::=& b^\ast{:}\Bvec(\Bbyte)
+        &\Rightarrow& \{ \DINIT~b^\ast \}
+        & (\iff t_i = \SPASSIVE) \\
+      &&|& x{:}\Bu32~~e{:}\Bexpr~~b^\ast{:}\Bvec(\Bbyte)
+        &\Rightarrow& \{ \DMEM~x, \DOFFSET~e, \DINIT~b^\ast \}
+        & (\iff t_i = \SACTIVE) \\
+    \end{array}
 
 .. note::
    In the current version of WebAssembly, at most one memory may be defined or
    imported in a single module, so all valid :ref:`active <syntax-active>` data
    segments have a |DMEM| value of :math:`0`.
-
 
 .. index:: module, section, type definition, function type, function, table, memory, global, element, data, start function, import, export, context, version
    pair: binary format; module
@@ -473,9 +511,11 @@ The lengths of vectors produced by the (possibly empty) :ref:`function <binary-f
      \Bcustomsec^\ast \\ &&&
      \elem^\ast{:\,}\Belemsec \\ &&&
      \Bcustomsec^\ast \\ &&&
+     \X{datadecl}^\ast{:\,}\Bdatadeclsec \\ &&&
+     \Bcustomsec^\ast \\ &&&
      \X{code}^n{:\,}\Bcodesec \\ &&&
      \Bcustomsec^\ast \\ &&&
-     \data^\ast{:\,}\Bdatasec \\ &&&
+     \data^\ast{:\,}\Bdatasec(\X{datadecl}^\ast) \\ &&&
      \Bcustomsec^\ast
      \quad\Rightarrow\quad \{~
        \begin{array}[t]{@{}l@{}}

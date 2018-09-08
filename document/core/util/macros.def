@@ -503,6 +503,7 @@
 .. |Belemsec| mathdef:: \xref{binary/modules}{binary-elemsec}{\B{elemsec}}
 .. |Bdatasec| mathdef:: \xref{binary/modules}{binary-datasec}{\B{datasec}}
 .. |Bstartsec| mathdef:: \xref{binary/modules}{binary-startsec}{\B{startsec}}
+.. |Bdatadeclsec| mathdef:: \xref{binary/modules}{binary-datadeclsec}{\B{datadeclsec}}
 
 .. |Bcustom| mathdef:: \xref{binary/modules}{binary-customsec}{\B{custom}}
 .. |Btype| mathdef:: \xref{binary/modules}{binary-typedef}{\B{type}}
@@ -515,9 +516,12 @@
 .. |Bimportdesc| mathdef:: \xref{binary/modules}{binary-importdesc}{\B{importdesc}}
 .. |Bexportdesc| mathdef:: \xref{binary/modules}{binary-exportdesc}{\B{exportdesc}}
 .. |Belem| mathdef:: \xref{binary/modules}{binary-elem}{\B{elem}}
+.. |Bsegtype| mathdef:: \xref{binary/modules}{binary-datadecl}{\B{segtype}}
 .. |Bcode| mathdef:: \xref{binary/modules}{binary-code}{\B{code}}
 .. |Blocal| mathdef:: \xref{binary/modules}{binary-local}{\B{local}}
 .. |Blocals| mathdef:: \xref{binary/modules}{binary-local}{\B{locals}}
+.. |Bdatasecbody| mathdef:: \xref{binary/modules}{binary-datasecbody}{\B{datasecbody}}
+.. |Bdatavec| mathdef:: \xref{binary/modules}{binary-datavec}{\B{datavec}}
 .. |Bdata| mathdef:: \xref{binary/modules}{binary-data}{\B{data}}
 .. |Bstart| mathdef:: \xref{binary/modules}{binary-start}{\B{start}}
 
