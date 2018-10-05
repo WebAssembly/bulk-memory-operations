@@ -162,7 +162,7 @@ Each variant of :ref:`memory instruction <syntax-instr-memory>` is encoded with 
      \hex{3F}~~\hex{00} &\Rightarrow& \MEMORYSIZE \\ &&|&
      \hex{40}~~\hex{00} &\Rightarrow& \MEMORYGROW \\ &&|&
      \hex{FC}~\hex{08}~~\hex{00}~x{:}\Bdataidx &\Rightarrow& \MEMORYINIT~x \\ &&|&
-     \hex{FC}~\hex{09}~~\hex{00}~x{:}\Bdataidx &\Rightarrow& \MEMORYDROP~x \\ &&|&
+     \hex{FC}~\hex{09}~~x{:}\Bdataidx &\Rightarrow& \MEMORYDROP~x \\ &&|&
      \hex{FC}~\hex{0A}~~\hex{00} &\Rightarrow& \MEMORYCOPY \\ &&|&
      \hex{FC}~\hex{0B}~~\hex{00} &\Rightarrow& \MEMORYFILL \\
    \end{array}
@@ -184,7 +184,7 @@ Each variant of :ref:`table instruction <syntax-instr-table>` is encoded with a 
    \begin{array}{llclll}
    \production{instruction} & \Binstr &::=& \dots \\ &&|&
      \hex{FC}~\hex{0C}~~\hex{00}~x{:}\Belemidx &\Rightarrow& \TABLEINIT~x \\ &&|&
-     \hex{FC}~\hex{0D}~~\hex{00}~x{:}\Belemidx &\Rightarrow& \TABLEDROP~x \\ &&|&
+     \hex{FC}~\hex{0D}~~x{:}\Belemidx &\Rightarrow& \TABLEDROP~x \\ &&|&
      \hex{FC}~\hex{0E}~~\hex{00} &\Rightarrow& \TABLECOPY \\
    \end{array}
 
