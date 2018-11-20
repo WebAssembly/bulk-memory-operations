@@ -202,7 +202,11 @@ The new encoding of a data segment is now:
 
 Another way of looking at it:
 
-| Flags | Index Field | Offset | 
+| Flags | Active? | index | offset |
+| - | - | - | - |
+| 0 | Active | Always 0 | Present |
+| 1 | Passive | - | -  |
+| 2 | Active | Present | Present |
 
 ### Element segments
 
@@ -219,6 +223,14 @@ of `expr`s instead of function indices.
 | count | `varuint32` | always | number of elements |
 | elems | `varuint32*` | flags != 1 | sequence of function indices |
 | elems | `elem_expr*` | flags = 1 | sequence of element expressions |
+
+Another way of looking at it:
+
+| Flags | Active? | index | element_type | offset |
+| - | - | - | - | - |
+| 0 | Active | Always 0 | Always `anyfunc` | Present |
+| 1 | Passive | - | Present | - |
+| 2 | Active | Present | Always `anyfunc` | Present |
 
 An `elem_expr` is like an `init_expr`, but can only contain expressions of the following sequences:
 
