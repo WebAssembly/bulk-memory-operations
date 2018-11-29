@@ -353,13 +353,13 @@ instr ::= ...
 
 | Name | Opcode | Immediate | Description |
 | ---- | ---- | ---- | ---- |
-| `memory.init` | `0xfc 0x08` | `memory:varuint32`, `segment:varuint32` | :thinking: copy from a passive data segment to linear memory |
+| `memory.init` | `0xfc 0x08` | `memory:0x00`, `segment:varuint32` | :thinking: copy from a passive data segment to linear memory |
 | `memory.drop` | `0xfc 0x09` | `segment:varuint32` | :thinking: prevent further use of passive data segment |
-| `memory.copy` | `0xfc 0x0a` | `memory_src:varuint32` `memory_dst:varuint32` | :thinking: copy from one region of linear memory to another region |
-| `memory.fill` | `0xfc 0x0b` | `memory:varuint32` | :thinking: fill a region of linear memory with a given byte value |
-| `table.init` | `0xfc 0x0c` | `table:varuint32`, `segment:varuint32` | :thinking: copy from a passive element segment to a table |
+| `memory.copy` | `0xfc 0x0a` | `memory_src:0x00` `memory_dst:0x00` | :thinking: copy from one region of linear memory to another region |
+| `memory.fill` | `0xfc 0x0b` | `memory:0x00` | :thinking: fill a region of linear memory with a given byte value |
+| `table.init` | `0xfc 0x0c` | `table:0x00`, `segment:varuint32` | :thinking: copy from a passive element segment to a table |
 | `table.drop` | `0xfc 0x0d` | `segment:varuint32` | :thinking: prevent further use of a passive element segment |
-| `table.copy` | `0xfc 0x0e` | `table_src:varuint32` `table_dst:varuint32` | :thinking: copy from one region of a table to another region |
+| `table.copy` | `0xfc 0x0e` | `table_src:0x00` `table_dst:0x00` | :thinking: copy from one region of a table to another region |
 
 ### `DataCount` section
 
