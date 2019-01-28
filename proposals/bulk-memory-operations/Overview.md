@@ -277,10 +277,14 @@ segment or target memory only occurs once the first byte that is
 outside the source or target is reached.  Bytes written before the
 trap stay written.
 
+(Data are read and written as-if individual bytes were read and
+written, but various optimizations are possible that avoid reading and
+writing only individual bytes.)
+
 Note that the semantics require bytewise accesses, so a trap that
 might result from, say, reading a sequence of several words before
 writing any, will have to be handled carefully: the reads that
-succeeded will have to be written, if possibe.
+succeeded will have to be written, if possible.
 
 ### `data.drop` instruction
 
@@ -345,6 +349,9 @@ Filling takes place bytewise from lower addresses toward higher
 addresses.  A trap resulting from an access outside the target memory
 only occurs once the first byte that is outside the target is reached.
 Bytes written before the trap stay written.
+
+(Data are written as-if individual bytes were written, but various
+optimizations are possible that avoid writing only individual bytes.)
 
 ### `table.init`, `elem.drop`, and `table.copy` instructions
 
