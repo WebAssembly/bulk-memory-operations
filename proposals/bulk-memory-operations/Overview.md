@@ -243,8 +243,9 @@ TODO: coordinate with other proposals to determine the binary encoding for `ref.
 
 ### `memory.init` instruction
 
-The `memory.init` instruction copies data from a given passive segment into a target
-memory. The target memory and source segment are given as immediates.
+The `memory.init` instruction copies data from a given segment into a target
+memory. The specified segment can be either active or passive. The target memory
+and source segment are given as immediates.
 
 The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in order:
 
