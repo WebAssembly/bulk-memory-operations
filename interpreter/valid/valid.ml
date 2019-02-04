@@ -14,8 +14,6 @@ let require b at s = if not b then error at s
 
 (* Context *)
 
-type segment_type = Seg
-
 type context =
 {
   types : func_type list;
@@ -29,6 +27,7 @@ type context =
   results : value_type list;
   labels : stack_type list;
 }
+and segment_type = Seg
 
 let empty_context =
   { types = []; funcs = []; tables = []; memories = [];
