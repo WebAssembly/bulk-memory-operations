@@ -297,10 +297,10 @@ let memory off i mem =
   Node ("memory $" ^ nat (off + i) ^ " " ^ limits nat32 lim, [])
 
 let segment head dat seg =
-  let {stype; init} = seg.it in
-  match stype with
+  let {desc; init} = seg.it in
+  match desc with
   | Active {index; offset} ->
-      Node (head, atom var index :: Node ("offset", const offset) :: dat init)
+    Node (head, atom var index :: Node ("offset", const offset) :: dat init)
   | Passive -> Node (head, dat init)
 
 let elems seg =

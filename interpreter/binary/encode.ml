@@ -478,16 +478,16 @@ let encode m =
 
     (* Element section *)
     let segment dat seg =
-      let {stype; init} = seg.it in
-      match stype with
+      let {desc; init} = seg.it in
+      match desc with
       | Active {index; offset} ->
-          if index.it = 0l then
-            u8 0x00
-          else begin
-            u8 0x02; var index
-          end;
-          const offset;
-          dat init
+        if index.it = 0l then
+          u8 0x00
+        else begin
+          u8 0x02; var index
+        end;
+        const offset;
+        dat init
       | Passive ->
           u8 0x01; dat init
 

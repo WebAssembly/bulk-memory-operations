@@ -607,23 +607,23 @@ let code_section s =
 (* Element section *)
 
 let segment dat s =
-  let flag = u8 s in
-  match flag with
-  | 0x00 ->
+  match vu32 s with
+  | 0l ->
+    let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
-    let stype = Active {index = Source.((0l) @@ Source.no_region); offset} in
+    let desc = Active {index; offset} in
     let init = dat s in
-    {stype; init}
-  | 0x01 ->
-    let stype = Passive in
+    {desc; init}
+  | 1l ->
+    let desc = Passive in
     let init = dat s in
-    {stype; init}
-  | 0x02 ->
+    {desc; init}
+  | 2l ->
     let index = at var s in
     let offset = const s in
-    let stype = Active {index; offset} in
+    let desc = Active {index; offset} in
     let init = dat s in
-    {stype; init}
+    {desc; init}
   | _ -> error s (pos s - 1) "invalid segment flags"
 
 let table_segment s =

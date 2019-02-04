@@ -14,6 +14,8 @@ let require b at s = if not b then error at s
 
 (* Context *)
 
+type segment_type = Seg
+
 type context =
 {
   types : func_type list;
@@ -428,17 +430,17 @@ let check_memory (c : context) (mem : memory) =
   check_memory_type mtype mem.at
 
 let check_elem (c : context) (seg : table_segment) =
-  let {stype; init} = seg.it in
+  let {desc; init} = seg.it in
   ignore (List.map (func c) init);
-  match stype with
+  match desc with
   | Active {index; offset} ->
     check_const c offset I32Type;
     ignore (table c index)
   | Passive -> ()
 
 let check_data (c : context) (seg : memory_segment) =
-  let {stype; init} = seg.it in
-  match stype with
+  let {desc; init} = seg.it in
+  match desc with
   | Active {index; offset} ->
     check_const c offset I32Type;
     ignore (memory c index)
@@ -506,8 +508,8 @@ let check_module (m : module_) =
       funcs = c0.funcs @ List.map (fun f -> type_ c0 f.it.ftype) funcs;
       tables = c0.tables @ List.map (fun tab -> tab.it.ttype) tables;
       memories = c0.memories @ List.map (fun mem -> mem.it.mtype) memories;
-      elems = List.map (fun elem -> elem.it.stype) elems;
-      data = List.map (fun data -> data.it.stype) data;
+      elems = List.map (fun elem -> Seg) elems;
+      data = List.map (fun data -> Seg) data;
     }
   in
   let c =

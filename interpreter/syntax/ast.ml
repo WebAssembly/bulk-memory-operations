@@ -110,7 +110,7 @@ and instr' =
 
 type const = instr list Source.phrase
 
-type segment_type =
+type segment_desc =
   | Active of {index : var; offset : const}
   | Passive
 
@@ -147,7 +147,7 @@ and memory' =
 type 'data segment = 'data segment' Source.phrase
 and 'data segment' =
 {
-  stype : segment_type;
+  desc : segment_desc;
   init : 'data;
 }
 
