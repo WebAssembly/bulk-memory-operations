@@ -27,7 +27,6 @@ type context =
   results : value_type list;
   labels : stack_type list;
 }
-and segment_type = Seg
 
 let empty_context =
   { types = []; funcs = []; tables = []; memories = [];
@@ -429,17 +428,17 @@ let check_memory (c : context) (mem : memory) =
   check_memory_type mtype mem.at
 
 let check_elem (c : context) (seg : table_segment) =
-  let {desc; init} = seg.it in
+  let {sdesc; init} = seg.it in
   ignore (List.map (func c) init);
-  match desc with
+  match sdesc with
   | Active {index; offset} ->
     check_const c offset I32Type;
     ignore (table c index)
   | Passive -> ()
 
 let check_data (c : context) (seg : memory_segment) =
-  let {desc; init} = seg.it in
-  match desc with
+  let {sdesc; init} = seg.it in
+  match sdesc with
   | Active {index; offset} ->
     check_const c offset I32Type;
     ignore (memory c index)

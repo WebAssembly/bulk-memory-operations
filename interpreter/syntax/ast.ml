@@ -147,7 +147,7 @@ and memory' =
 type 'data segment = 'data segment' Source.phrase
 and 'data segment' =
 {
-  desc : segment_desc;
+  sdesc : segment_desc;
   init : 'data;
 }
 

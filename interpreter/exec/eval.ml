@@ -388,8 +388,8 @@ let init_func (inst : module_inst) (func : func_inst) =
   | _ -> assert false
 
 let init_table (inst : module_inst) (seg : table_segment) =
-  let {desc; init} = seg.it in
-  match desc with
+  let {sdesc; init} = seg.it in
+  match sdesc with
   | Active {index; offset = const} ->
     let tab = table inst index in
     let offset = i32 (eval_const inst const) const.at in
@@ -402,8 +402,8 @@ let init_table (inst : module_inst) (seg : table_segment) =
   | Passive -> fun () -> ()
 
 let init_memory (inst : module_inst) (seg : memory_segment) =
-  let {desc; init} = seg.it in
-  match desc with
+  let {sdesc; init} = seg.it in
+  match sdesc with
   | Active {index; offset = const} ->
     let mem = memory inst index in
     let offset' = i32 (eval_const inst const) const.at in

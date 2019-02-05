@@ -611,19 +611,19 @@ let segment dat s =
   | 0l ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
-    let desc = Active {index; offset} in
+    let sdesc = Active {index; offset} in
     let init = dat s in
-    {desc; init}
+    {sdesc; init}
   | 1l ->
-    let desc = Passive in
+    let sdesc = Passive in
     let init = dat s in
-    {desc; init}
+    {sdesc; init}
   | 2l ->
     let index = at var s in
     let offset = const s in
-    let desc = Active {index; offset} in
+    let sdesc = Active {index; offset} in
     let init = dat s in
-    {desc; init}
+    {sdesc; init}
   | _ -> error s (pos s - 1) "invalid segment flags"
 
 let table_segment s =

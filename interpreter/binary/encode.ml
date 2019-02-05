@@ -478,8 +478,8 @@ let encode m =
 
     (* Element section *)
     let segment dat seg =
-      let {desc; init} = seg.it in
-      match desc with
+      let {sdesc; init} = seg.it in
+      match sdesc with
       | Active {index; offset} ->
         if index.it = 0l then
           u8 0x00

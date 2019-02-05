@@ -572,21 +572,21 @@ elem :
   | LPAR ELEM bind_var_opt PASSIVE var_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem @@ at);
-      fun () -> {desc = Passive; init = $5 c func} @@ at }
+      fun () -> {sdesc = Passive; init = $5 c func} @@ at }
   | LPAR ELEM bind_var var offset var_list RPAR
     { let at = at () in
       fun c -> ignore ((bind_elem c $3) @@ at);
-      fun () -> {desc = Active {index = $4 c table; offset = $5 c};
+      fun () -> {sdesc = Active {index = $4 c table; offset = $5 c};
                  init = $6 c func} @@ at }
   | LPAR ELEM var offset var_list RPAR
     { let at = at () in
       fun c -> ignore (anon_elem c @@ at);
-      fun () -> {desc = Active {index = $3 c table; offset = $4 c};
+      fun () -> {sdesc = Active {index = $3 c table; offset = $4 c};
                  init = $5 c func} @@ at }
   | LPAR ELEM offset var_list RPAR /* Sugar */
     { let at = at () in
       fun c -> ignore (anon_elem c @@ at);
-      fun () -> {desc = Active {index = 0l @@ at; offset = $3 c};
+      fun () -> {sdesc = Active {index = 0l @@ at; offset = $3 c};
                  init = $4 c func} @@ at }
 
 table :
@@ -609,31 +609,31 @@ table_fields :
   | elem_type LPAR ELEM var_list RPAR  /* Sugar */
     { fun c x at ->
       let init = $4 c func in let size = Int32.of_int (List.length init) in
-      let desc =
+      let sdesc =
         Active {index = x; offset = [i32_const (0l @@ at) @@ at] @@ at} in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
-      [{desc; init} @@ at],
+      [{sdesc; init} @@ at],
       [], [] }
 
 data :
   | LPAR DATA bind_var_opt PASSIVE string_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_data bind_data @@ at);
-      fun () -> {desc = Passive; init = $5} @@ at }
+      fun () -> {sdesc = Passive; init = $5} @@ at }
  | LPAR DATA bind_var var offset string_list RPAR
    { let at = at () in
      fun c -> ignore ((bind_data c $3) @@ at);
-     fun () -> {desc = Active {index = $4 c memory;
+     fun () -> {sdesc = Active {index = $4 c memory;
                 offset = $5 c}; init = $6} @@ at }
  | LPAR DATA var offset string_list RPAR
    { let at = at () in
      fun c -> ignore (anon_data c @@ at);
-     fun () -> {desc = Active {index = $3 c memory;
+     fun () -> {sdesc = Active {index = $3 c memory;
                 offset = $4 c}; init = $5} @@ at }
  | LPAR DATA offset string_list RPAR /* Sugar */
    { let at = at () in
      fun c -> ignore (anon_data c @@ at);
-     fun () -> {desc = Active {index = 0l @@ at;
+     fun () -> {sdesc = Active {index = 0l @@ at;
                 offset = $3 c}; init = $4} @@ at }
 
 memory :
@@ -656,10 +656,10 @@ memory_fields :
   | LPAR DATA string_list RPAR  /* Sugar */
     { fun c x at ->
       let size = Int32.(div (add (of_int (String.length $3)) 65535l) 65536l) in
-      let desc =
+      let sdesc =
         Active {index = x; offset = [i32_const (0l @@ at) @@ at] @@ at} in
       [{mtype = MemoryType {min = size; max = Some size}} @@ at],
-      [{desc; init = $3} @@ at],
+      [{sdesc; init = $3} @@ at],
       [], [] }
 
 global :
