@@ -149,25 +149,24 @@ let check_bounds mem a = if I64.ge_u a (bound mem) then raise Bounds
 
 let fill mem a v n =
   let rec loop a n =
-    if n = 0l then () else begin
+    if n > 0l then begin
       store_byte mem a v;
       loop (Int64.add a 1L) (Int32.sub n 1l)
     end
-  in if n = 0l then check_bounds mem a
-  else loop a n
+  in check_bounds mem a; loop a n
 
 let copy mem d s n =
   let n' = Int64.of_int32 n in
   let overlap = I64.lt_s Int64.(abs (sub d s)) n' in
   let rec loop d s n dx =
-    if n = 0l then () else begin
+    if n > 0l then begin
       store_byte mem d (load_byte mem s);
       loop (Int64.add d dx) (Int64.add s dx) (Int32.sub n 1l) dx
     end
-  in if n = 0l then begin
-    check_bounds mem d;
-    check_bounds mem s
-  end else if overlap && s < d then
+  in
+  check_bounds mem d;
+  check_bounds mem s;
+  if overlap && s < d then
     loop Int64.(add d (sub n' 1L)) Int64.(add s (sub n' 1L)) n (-1L)
   else
     loop d s n 1L

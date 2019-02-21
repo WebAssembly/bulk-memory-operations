@@ -226,11 +226,10 @@ let rec step (c : config) : config =
           with Memory.SizeOverflow | Memory.SizeLimit | Memory.OutOfMemory -> -1l
         in I32 result :: vs', []
 
-      | MemoryFill, I32 n :: I32 v :: I32 i :: vs' ->
+      | MemoryFill, I32 n :: I32 b :: I32 i :: vs' ->
         let mem = memory frame.inst (0l @@ e.at) in
         let addr = I64_convert.extend_u_i32 i in
-        let v' = Int32.to_int v in
-        (try Memory.fill mem addr v' n; vs', []
+        (try Memory.fill mem addr (Int32.to_int b) n; vs', []
         with exn -> vs', [Trapping (memory_error e.at exn) @@ e.at])
 
       | MemoryCopy, I32 n :: I32 s :: I32 d :: vs' ->
