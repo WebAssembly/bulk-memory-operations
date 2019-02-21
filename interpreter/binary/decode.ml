@@ -695,8 +695,8 @@ let module_ s =
   require (pos s = len s) s (len s) "junk after last section";
   require (List.length func_types = List.length func_bodies)
     s (len s) "function and code section have inconsistent lengths";
-  require (data_count = None ||
-           data_count = Some (Int32.of_int (List.length data)))
+  require
+    (data_count = None || data_count = Some (Int32.of_int (List.length data)))
     s (len s) "data count and data section have inconsistent lengths";
   let funcs =
     List.map2 Source.(fun t f -> {f.it with ftype = t} @@ f.at)
