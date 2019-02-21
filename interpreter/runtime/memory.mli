@@ -30,8 +30,6 @@ val grow : memory -> size -> unit
 
 val load_byte : memory -> address -> int (* raises Bounds *)
 val store_byte : memory -> address -> int -> unit (* raises Bounds *)
-val load_bytes : memory -> address -> int -> string (* raises Bounds *)
-val store_bytes : memory -> address -> string -> unit (* raises Bounds *)
 
 val load_value :
   memory -> address -> offset -> value_type -> value (* raises Bounds *)
@@ -44,5 +42,6 @@ val store_packed :
   pack_size -> memory -> address -> offset -> value -> unit
     (* raises Type, Bounds *)
 
-val fill : memory -> address -> int -> count -> unit (* raises Bounds *)
+val init : memory -> address -> string -> unit (* raises Bounds *)
 val copy : memory -> address -> address -> count -> unit (* raises Bounds *)
+val fill : memory -> address -> int -> count -> unit (* raises Bounds *)

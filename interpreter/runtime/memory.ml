@@ -70,18 +70,6 @@ let load_byte mem a =
 let store_byte mem a b =
   try Array1_64.set mem.content a b with Invalid_argument _ -> raise Bounds
 
-let load_bytes mem a n =
-  let buf = Buffer.create n in
-  for i = 0 to n - 1 do
-    Buffer.add_char buf (Char.chr (load_byte mem Int64.(add a (of_int i))))
-  done;
-  Buffer.contents buf
-
-let store_bytes mem a bs =
-  for i = String.length bs - 1 downto 0 do
-    store_byte mem Int64.(add a (of_int i)) (Char.code bs.[i])
-  done
-
 let effective_address a o =
   let ea = Int64.(add a (of_int32 o)) in
   if I64.lt_u ea a then raise Bounds;
@@ -147,14 +135,11 @@ let store_packed sz mem a o v =
 
 let check_bounds mem a = if I64.gt_u a (bound mem) then raise Bounds
 
-let fill mem a v n =
-  let rec loop a n =
-    if n > 0l then begin
-      store_byte mem a v;
-      loop (Int64.add a 1L) (Int32.sub n 1l)
-    end
-  in loop a n;
-  check_bounds mem Int64.(add a (of_int32 n))
+let init mem a bs =
+  for i = 0 to String.length bs - 1 do
+    store_byte mem Int64.(add a (of_int i)) (Char.code bs.[i])
+  done;
+  check_bounds mem Int64.(add a (of_int (String.length bs)))
 
 let copy mem d s n =
   let n' = Int64.of_int32 n in
@@ -170,3 +155,12 @@ let copy mem d s n =
     loop d s n 1L);
   check_bounds mem (Int64.add d n');
   check_bounds mem (Int64.add s n')
+
+let fill mem a v n =
+  let rec loop a n =
+    if n > 0l then begin
+      store_byte mem a v;
+      loop (Int64.add a 1L) (Int32.sub n 1l)
+    end
+  in loop a n;
+  check_bounds mem Int64.(add a (of_int32 n))
