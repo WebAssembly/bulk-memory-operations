@@ -70,6 +70,18 @@ let load_byte mem a =
 let store_byte mem a b =
   try Array1_64.set mem.content a b with Invalid_argument _ -> raise Bounds
 
+let load_bytes mem a n =
+  let buf = Buffer.create n in
+  for i = 0 to n - 1 do
+    Buffer.add_char buf (Char.chr (load_byte mem Int64.(add a (of_int i))))
+  done;
+  Buffer.contents buf
+
+let store_bytes mem a bs =
+  for i = String.length bs - 1 downto 0 do
+    store_byte mem Int64.(add a (of_int i)) (Char.code bs.[i])
+  done
+
 let effective_address a o =
   let ea = Int64.(add a (of_int32 o)) in
   if I64.lt_u ea a then raise Bounds;

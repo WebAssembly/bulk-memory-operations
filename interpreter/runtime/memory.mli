@@ -30,6 +30,8 @@ val grow : memory -> size -> unit
 
 val load_byte : memory -> address -> int (* raises Bounds *)
 val store_byte : memory -> address -> int -> unit (* raises Bounds *)
+val load_bytes : memory -> address -> int -> string (* raises Bounds *)
+val store_bytes : memory -> address -> string -> unit (* raises Bounds *)
 
 val load_value :
   memory -> address -> offset -> value_type -> value (* raises Bounds *)
