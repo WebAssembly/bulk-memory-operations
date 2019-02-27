@@ -114,3 +114,81 @@ tab_test("(table.copy (i32.const 10) (i32.const 12) (i32.const 7))",
 tab_test("(table.copy (i32.const 12) (i32.const 10) (i32.const 7))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,e,e,7, 5,2,3,6,e, e,e,e,e,e, e,e,e,e,e]);
 
+// Out-of-bounds checks.
+
+function do_test(insn1, insn2, errText)
+{
+    print(`
+(module
+  (table 30 30 funcref)
+  (elem (i32.const 2) 3 1 4 1)
+  (elem passive 2 7 1 8)
+  (elem (i32.const 12) 7 5 2 3 6)
+  (elem passive 5 9 2 7 6)
+  (func (result i32) (i32.const 0))
+  (func (result i32) (i32.const 1))
+  (func (result i32) (i32.const 2))
+  (func (result i32) (i32.const 3))
+  (func (result i32) (i32.const 4))
+  (func (result i32) (i32.const 5))
+  (func (result i32) (i32.const 6))
+  (func (result i32) (i32.const 7))
+  (func (result i32) (i32.const 8))
+  (func (result i32) (i32.const 9))
+  (func (export "test")
+    ${insn1}
+    ${insn2}))
+`);
+
+    if (errText !== undefined) {
+        print(`(assert_trap (invoke "test") "${errText}")`);
+    } else {
+        print(`(invoke "test")`);
+    }
+}
+
+function tab_test2(insn1, insn2, errKind, errText) {
+    do_test(insn1, insn2, errKind, errText);
+}
+
+function tab_test_nofail(insn1, insn2) {
+    do_test(insn1, insn2, undefined, undefined);
+}
+
+// Here we test the boundary-failure cases.  The table's valid indices are 0..29
+// inclusive.
+
+// copy: dst range invalid
+tab_test2("(table.copy (i32.const 28) (i32.const 1) (i32.const 3))",
+         "",
+         "out of bounds");
+
+// copy: dst wraparound end of 32 bit offset space
+tab_test2("(table.copy (i32.const 0xFFFFFFFE) (i32.const 1) (i32.const 2))",
+         "",
+         "out of bounds");
+
+// copy: src range invalid
+tab_test2("(table.copy (i32.const 15) (i32.const 25) (i32.const 6))",
+         "",
+         "out of bounds");
+
+// copy: src wraparound end of 32 bit offset space
+tab_test2("(table.copy (i32.const 15) (i32.const 0xFFFFFFFE) (i32.const 2))",
+         "",
+         "out of bounds");
+
+// copy: zero length with both offsets in-bounds is OK
+tab_test_nofail(
+    "(table.copy (i32.const 15) (i32.const 25) (i32.const 0))",
+    "");
+
+// copy: zero length with dst offset out of bounds
+tab_test2("(table.copy (i32.const 30) (i32.const 15) (i32.const 0))",
+         "",
+         "out of bounds");
+
+// copy: zero length with src offset out of bounds
+tab_test2("(table.copy (i32.const 15) (i32.const 30) (i32.const 0))",
+         "",
+         "out of bounds");
