@@ -1,6 +1,11 @@
-// TODO: inline in caller if it is only used one place
+// This program generates .wast code that contains all the spec tests for
+// memory.init.  See `Makefile`.
 
-function gen_mem_mod_t(insn) {
+print_origin("generate_memory_init.js");
+
+// In-bounds tests.
+
+function mem_test(instruction, expected_result_vector) {
     print(
 `
 (module
@@ -9,17 +14,13 @@ function gen_mem_mod_t(insn) {
   (data passive "\\02\\07\\01\\08")
   (data (i32.const 12) "\\07\\05\\02\\03\\06")
   (data passive "\\05\\09\\02\\07\\06")
-  (func (export "testfn")
-    ${insn})
+  (func (export "test")
+    ${instruction})
   (func (export "load8_u") (param i32) (result i32)
-    (i32.load8_u (local.get 0)))
-)
-`);
-};
+    (i32.load8_u (local.get 0))))
 
-function mem_test(instruction, expected_result_vector) {
-    gen_mem_mod_t(instruction);
-    print(`(invoke "testfn")`);
+(invoke "test")
+`);
     for (let i = 0; i < expected_result_vector.length; i++) {
         print(`(assert_return (invoke "load8_u" (i32.const ${i})) (i32.const ${expected_result_vector[i]}))`);
     }
