@@ -40,3 +40,15 @@ mem_test("(memory.init 1 (i32.const 7) (i32.const 0) (i32.const 4))",
 // Passive init that overwrites existing active-init-created entries
 mem_test("(memory.init 3 (i32.const 15) (i32.const 1) (i32.const 3))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 9,2,7,e,e, e,e,e,e,e, e,e,e,e,e]);
+
+// Perform active and passive initialisation and then multiple copies
+mem_test("(memory.init 1 (i32.const 7) (i32.const 0) (i32.const 4)) \n" +
+         "data.drop 1 \n" +
+         "(memory.init 3 (i32.const 15) (i32.const 1) (i32.const 3)) \n" +
+         "data.drop 3 \n" +
+         "(memory.copy (i32.const 20) (i32.const 15) (i32.const 5)) \n" +
+         "(memory.copy (i32.const 21) (i32.const 29) (i32.const 1)) \n" +
+         "(memory.copy (i32.const 24) (i32.const 10) (i32.const 1)) \n" +
+         "(memory.copy (i32.const 13) (i32.const 11) (i32.const 4)) \n" +
+         "(memory.copy (i32.const 19) (i32.const 20) (i32.const 5))",
+         [e,e,3,1,4, 1,e,2,7,1, 8,e,7,e,7, 5,2,7,e,9, e,7,e,8,8, e,e,e,e,e]);

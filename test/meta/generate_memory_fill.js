@@ -91,3 +91,34 @@ checkRange(0x12+3,  0x12+7,  0xAA);
 checkRange(0x12+7,  0x12+10, 0x55);
 checkRange(0x12+10, 0x10000, 0x00);
 
+// Sundry compilation failures.
+
+// Module doesn't have a memory.
+print(
+`
+(assert_invalid
+  (module
+    (func (export "testfn")
+      (memory.fill (i32.const 10) (i32.const 20) (i32.const 30))))
+  "unknown memory 0")
+`);
+
+// Invalid argument types.  TODO: We can add anyref, funcref, etc here.
+{
+    const tys = ['i32', 'f32', 'i64', 'f64'];
+    for (let ty1 of tys) {
+    for (let ty2 of tys) {
+    for (let ty3 of tys) {
+        if (ty1 == 'i32' && ty2 == 'i32' && ty3 == 'i32')
+            continue;  // this is the only valid case
+        print(
+`
+(assert_invalid
+  (module
+    (memory 1 1)
+    (func (export "testfn")
+      (memory.fill (${ty1}.const 10) (${ty2}.const 20) (${ty3}.const 30))))
+  "type mismatch")
+`);
+    }}}
+}
