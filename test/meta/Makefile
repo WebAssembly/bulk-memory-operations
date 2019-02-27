@@ -1,12 +1,6 @@
-# CONFIG can be one of:
-#
-#   reference   denoting the reference interpreter
-#   firefox     denoting Firefox and the SpiderMonkey shell
-#
-# and is used to select implementation-dependent error messages.  Do
-# add more.
+# SpiderMonkey shell
+JSSHELL=~/m-i/js/src/build-debug/dist/bin/js -e 'const WITH_SHARED_MEMORY=false;'
 
-JSSHELL=~/m-i/js/src/build-debug/dist/bin/js -e 'const CONFIG="reference";'
 TARGETDIR=../core
 
 .PHONY: all

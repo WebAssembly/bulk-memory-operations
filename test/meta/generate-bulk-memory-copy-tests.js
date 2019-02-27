@@ -1,10 +1,14 @@
 // This program generates .wast code that contains all the spec tests for
 // memory.copy.  See `Makefile`.
 
-// Set WITH_SHARED_MEMORY to true once we have shared memory, to get additional
-// testing on memory backed by SharedArrayBuffer.
+// WITH_SHARED_MEMORY can be overridden in a preamble, see `Makefile`.
 
-const WITH_SHARED_MEMORY = false;
+// Set WITH_SHARED_MEMORY to true to get additional testing on memory backed by
+// SharedArrayBuffer.
+if (typeof this.WITH_SHARED_MEMORY == "undefined") {
+    this.WITH_SHARED_MEMORY = false;
+}
+
 const PAGESIZE = 65536;
 
 print(";;");
@@ -201,11 +205,6 @@ mem_copy(1, 1, "", PAGESIZE-0x1000, PAGESIZE-20, 0xFFFFFF00, true);
 
 // Sundry compilation failures.
 
-var no_memory = {
-    reference: "unknown memory 0",
-    firefox:   "can't touch memory without memory"
-};
-
 // Module doesn't have a memory.
 print(
 `
@@ -213,5 +212,25 @@ print(
   (module
     (func (export "testfn")
       (memory.copy (i32.const 10) (i32.const 20) (i32.const 30))))
-  "${no_memory[CONFIG]}")
+  "unknown memory 0")
 `);
+
+// Invalid argument types.  TODO: We can add anyref, funcref, etc here.
+{
+    const tys = ['i32', 'f32', 'i64', 'f64'];
+    for (let ty1 of tys) {
+    for (let ty2 of tys) {
+    for (let ty3 of tys) {
+        if (ty1 == 'i32' && ty2 == 'i32' && ty3 == 'i32')
+            continue;  // this is the only valid case
+        print(
+`
+(assert_invalid
+  (module
+    (memory 1 1)
+    (func (export "testfn")
+      (memory.copy (${ty1}.const 10) (${ty2}.const 20) (${ty3}.const 30))))
+  "type mismatch")
+`);
+    }}}
+}
