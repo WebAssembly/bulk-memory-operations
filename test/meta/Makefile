@@ -5,7 +5,7 @@ TARGETDIR=../core
 
 .PHONY: all
 
-all: $(TARGETDIR)/bulk-memory-copy.wast
+all: $(TARGETDIR)/memory_copy.wast
 
-$(TARGETDIR)/bulk-memory-copy.wast: generate-bulk-memory-copy-tests.js
+$(TARGETDIR)/memory_copy.wast: generate_memory_copy.js
 	$(JSSHELL) $< > $@
