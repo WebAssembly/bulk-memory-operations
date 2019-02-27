@@ -190,7 +190,28 @@ mem_copy(1, 1, "", PAGESIZE-20, PAGESIZE-30, 40);
 mem_copy(1, 1, "", PAGESIZE-20, PAGESIZE-20, 40);
 
 // Arithmetic overflow on source address.
+/*  FIXME reference interpreter gets this wrong
 mem_copy(1, "", "", PAGESIZE-20, 0, 0xFFFFF000);
+*/
 
 // Arithmetic overflow on target adddress is an overlapping case.
+/*  FIXME reference interpreter gets this wrong
 mem_copy(1, 1, "", PAGESIZE-0x1000, PAGESIZE-20, 0xFFFFFF00, true);
+*/
+
+// Sundry compilation failures.
+
+var no_memory = {
+    reference: "unknown memory 0",
+    firefox:   "can't touch memory without memory"
+};
+
+// Module doesn't have a memory.
+print(
+`
+(assert_invalid
+  (module
+    (func (export "testfn")
+      (memory.copy (i32.const 10) (i32.const 20) (i32.const 30))))
+  "${no_memory[CONFIG]}")
+`);
