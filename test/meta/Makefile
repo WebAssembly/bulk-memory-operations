@@ -8,7 +8,8 @@ TARGETDIR=../core
 all: $(TARGETDIR)/memory_copy.wast \
 	$(TARGETDIR)/memory_init.wast \
 	$(TARGETDIR)/memory_fill.wast \
-	$(TARGETDIR)/table_copy.wast
+	$(TARGETDIR)/table_copy.wast \
+	$(TARGETDIR)/table_init.wast
 
 $(TARGETDIR)/memory_copy.wast: generate_memory_copy.js common.js Makefile
 	$(JSSHELL) $< > $@
@@ -20,4 +21,7 @@ $(TARGETDIR)/memory_fill.wast: generate_memory_fill.js common.js Makefile
 	$(JSSHELL) $< > $@
 
 $(TARGETDIR)/table_copy.wast: generate_table_copy.js common.js Makefile
+	$(JSSHELL) $< > $@
+
+$(TARGETDIR)/table_init.wast: generate_table_init.js common.js Makefile
 	$(JSSHELL) $< > $@

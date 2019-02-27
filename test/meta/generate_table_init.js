@@ -1,7 +1,13 @@
+// This program generates .wast code that contains all the spec tests for
+// table.init.  See `Makefile`.
+
+print_origin("generate_table_init.js");
+
 // This module "a" exports 5 functions ...
 
 function emit_a() {
-    emit(`
+    print(
+`
 (module
   (func (export "ef0") (result i32) (i32.const 0))
   (func (export "ef1") (result i32) (i32.const 1))
@@ -13,7 +19,6 @@ function emit_a() {
 `);
 }
 
-
 // ... and this one imports those 5 functions.  It adds 5 of its own, creates a
 // 30 element table using both active and passive initialisers, with a mixture
 // of the imported and local functions.  |testfn| is exported.  It uses the
@@ -23,7 +28,8 @@ function emit_a() {
 // table entry is empty.
 
 function emit_b(insn) {
-    emit(`
+    print(
+`
 (module
   (type (func (result i32)))  ;; type #0
   (import "a" "ef0" (func (result i32)))    ;; index 0
@@ -62,9 +68,9 @@ function tab_test(instruction, expected_result_vector) {
     for (let i = 0; i < expected_result_vector.length; i++) {
         let expected = expected_result_vector[i];
         if (expected === undefined) {
-            emit(`(assert_trap (invoke "testfn" (i32.const ${i})) "${indirect_call_to_null}")`);
+            print(`(assert_trap (invoke "testfn" (i32.const ${i})) "${indirect_call_to_null}")`);
         } else {
-            emit(`(assert_return (invoke "testfn" (i32.const ${i})) (i32.const ${expected}))`);
+            print(`(assert_return (invoke "testfn" (i32.const ${i})) (i32.const ${expected}))`);
         }
     }
 }
@@ -75,39 +81,6 @@ emit_a();
 // to count through the vector entries when debugging.
 let e = undefined;
 
-// This just gives the initial state of the table, with its active
-// initialisers applied
-tab_test("nop",
-         [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 3,6,e,e,e, e,e,e,e,e, e,e,e,e,e]);
-
-// Copy non-null over non-null
-tab_test("(table.copy (i32.const 13) (i32.const 2) (i32.const 3))",
-         [e,e,3,1,4, 1,e,e,e,e, e,e,7,3,1, 4,6,e,e,e, e,e,e,e,e, e,e,e,e,e]);
-
-// Copy non-null over null
-tab_test("(table.copy (i32.const 25) (i32.const 15) (i32.const 2))",
-         [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 3,6,e,e,e, e,e,e,e,e, 3,6,e,e,e]);
-
-// Copy null over non-null
-tab_test("(table.copy (i32.const 13) (i32.const 25) (i32.const 3))",
-         [e,e,3,1,4, 1,e,e,e,e, e,e,7,e,e, e,6,e,e,e, e,e,e,e,e, e,e,e,e,e]);
-
-// Copy null over null
-tab_test("(table.copy (i32.const 20) (i32.const 22) (i32.const 4))",
-         [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 3,6,e,e,e, e,e,e,e,e, e,e,e,e,e]);
-
-// Copy null and non-null entries, non overlapping
-tab_test("(table.copy (i32.const 25) (i32.const 1) (i32.const 3))",
-         [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 3,6,e,e,e, e,e,e,e,e, e,3,1,e,e]);
-
-// Copy null and non-null entries, overlapping, backwards
-tab_test("(table.copy (i32.const 10) (i32.const 12) (i32.const 7))",
-         [e,e,3,1,4, 1,e,e,e,e, 7,5,2,3,6, e,e,e,e,e, e,e,e,e,e, e,e,e,e,e]);
-
-// Copy null and non-null entries, overlapping, forwards
-tab_test("(table.copy (i32.const 12) (i32.const 10) (i32.const 7))",
-         [e,e,3,1,4, 1,e,e,e,e, e,e,e,e,7, 5,2,3,6,e, e,e,e,e,e, e,e,e,e,e]);
-
 // Passive init that overwrites all-null entries
 tab_test("(table.init 1 (i32.const 7) (i32.const 0) (i32.const 4))",
          [e,e,3,1,4, 1,e,2,7,1, 8,e,7,5,2, 3,6,e,e,e, e,e,e,e,e, e,e,e,e,e]);
@@ -115,19 +88,3 @@ tab_test("(table.init 1 (i32.const 7) (i32.const 0) (i32.const 4))",
 // Passive init that overwrites existing active-init-created entries
 tab_test("(table.init 3 (i32.const 15) (i32.const 1) (i32.const 3))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 9,2,7,e,e, e,e,e,e,e, e,e,e,e,e]);
-
-// Perform active and passive initialisation and then multiple copies
-tab_test("(table.init 1 (i32.const 7) (i32.const 0) (i32.const 4)) \n" +
-         "elem.drop 1 \n" +
-         "(table.init 3 (i32.const 15) (i32.const 1) (i32.const 3)) \n" +
-         "elem.drop 3 \n" +
-         "(table.copy (i32.const 20) (i32.const 15) (i32.const 5)) \n" +
-         "(table.copy (i32.const 21) (i32.const 29) (i32.const 1)) \n" +
-         "(table.copy (i32.const 24) (i32.const 10) (i32.const 1)) \n" +
-         "(table.copy (i32.const 13) (i32.const 11) (i32.const 4)) \n" +
-         "(table.copy (i32.const 19) (i32.const 20) (i32.const 5))",
-         [e,e,3,1,4, 1,e,2,7,1, 8,e,7,e,7, 5,2,7,e,9, e,7,e,8,8, e,e,e,e,e]);
-
-function emit(s) {
-    print(s);
-}
