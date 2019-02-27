@@ -1,5 +1,5 @@
 // This program generates .wast code that contains all the spec tests for
-// memory.init.  See `Makefile`.
+// memory.init and data.drop.  See `Makefile`.
 
 print_origin("generate_memory_init.js");
 
@@ -55,27 +55,47 @@ mem_test("(memory.init 1 (i32.const 7) (i32.const 0) (i32.const 4)) \n" +
 
 // Miscellaneous
 
-// init with no memory
-print(
-`(assert_invalid
-  (module
-    (func (export "test")
-      (memory.init 1 (i32.const 1234) (i32.const 1) (i32.const 1))))
-  "can't touch memory without memory")
-`);
-
 let PREAMBLE =
     `(memory 1)
      (data passive "\\37")`;
 
-// init with data seg ix out of range
+// drop with no memory
+print(
+`(assert_invalid
+   (module
+     (func (export "test")
+       (data.drop 0)))
+   "can't touch memory without memory")
+`);
+
+// drop with data seg ix out of range
 print(
 `(assert_invalid
   (module
     ${PREAMBLE}
     (func (export "test")
-      (memory.init 1 (i32.const 1234) (i32.const 1) (i32.const 1))))
-  "memory.init segment index out of range")
+      (data.drop 4)))
+  "data.drop segment index out of range")
+`);
+
+// drop, then drop
+print(
+`(module
+  ${PREAMBLE}
+  (func (export "test")
+    (data.drop 0)
+    (data.drop 0)))
+(assert_trap (invoke "test") "use of dropped data segment")
+`);
+
+// drop, then init
+print(
+`(module
+  ${PREAMBLE}
+  (func (export "test")
+    (data.drop 0)
+    (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
+(assert_trap (invoke "test") "use of dropped data segment")
 `);
 
 // drop with data seg ix indicating an active segment
@@ -89,6 +109,25 @@ print(
   "use of dropped data segment")
 `);
 
+// init with no memory
+print(
+`(assert_invalid
+  (module
+    (func (export "test")
+      (memory.init 1 (i32.const 1234) (i32.const 1) (i32.const 1))))
+  "can't touch memory without memory")
+`);
+
+// init with data seg ix out of range
+print(
+`(assert_invalid
+  (module
+    ${PREAMBLE}
+    (func (export "test")
+      (memory.init 1 (i32.const 1234) (i32.const 1) (i32.const 1))))
+  "memory.init segment index out of range")
+`);
+
 // init, using a data seg ix more than once is OK
 print(
 `(module
@@ -97,16 +136,6 @@ print(
     (memory.init 0 (i32.const 1) (i32.const 0) (i32.const 1))
     (memory.init 0 (i32.const 1) (i32.const 0) (i32.const 1))))
 (invoke "test")
-`);
-
-// drop, then init
-print(
-`(module
-  ${PREAMBLE}
-  (func (export "test")
-    (data.drop 0)
-    (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
-(assert_trap (invoke "test") "use of dropped data segment")
 `);
 
 // init: seg ix is valid passive, but length to copy > len of seg
