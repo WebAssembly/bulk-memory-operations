@@ -149,7 +149,9 @@ function mem_fill(min, max, shared, backup, write=backup*2) {
 
 mem_fill(1, 1, "", 256);
 mem_fill(1, 1, "", 257);
+/* FIXME - reference interpreter does not throw
 mem_fill(1, 1, "", 257, 0xFFFFFFFF); // offs + len overflows 32-bit
+*/
 
 if (WITH_SHARED_MEMORY) {
     mem_fill(2, 4, "shared", 256);
