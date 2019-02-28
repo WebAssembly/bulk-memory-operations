@@ -249,3 +249,71 @@ tab_test2("",
 `);
     }}}
 }
+
+// table.init: out of bounds of the table or the element segment, but should
+// perform the operation up to the appropriate bound.
+//
+// Arithmetic overflow of tableoffset + len or of segmentoffset + len should not
+// affect the behavior.
+
+// Note, the length of the element segment is 16.
+const tbl_init_len = 16;
+
+function tbl_init(min, max, backup, write, segoffs=0) {
+    print(
+        `(module
+           (type (func (result i32)))
+           (table ${min} ${max} funcref)
+           (elem passive $f0 $f1 $f2 $f3 $f4 $f5 $f6 $f7 $f8 $f9 $f10 $f11 $f12 $f13 $f14 $f15)
+           (func $f0 (export "f0") (result i32) (i32.const 0))
+           (func $f1 (export "f1") (result i32) (i32.const 1))
+           (func $f2 (export "f2") (result i32) (i32.const 2))
+           (func $f3 (export "f3") (result i32) (i32.const 3))
+           (func $f4 (export "f4") (result i32) (i32.const 4))
+           (func $f5 (export "f5") (result i32) (i32.const 5))
+           (func $f6 (export "f6") (result i32) (i32.const 6))
+           (func $f7 (export "f7") (result i32) (i32.const 7))
+           (func $f8 (export "f8") (result i32) (i32.const 8))
+           (func $f9 (export "f9") (result i32) (i32.const 9))
+           (func $f10 (export "f10") (result i32) (i32.const 10))
+           (func $f11 (export "f11") (result i32) (i32.const 11))
+           (func $f12 (export "f12") (result i32) (i32.const 12))
+           (func $f13 (export "f13") (result i32) (i32.const 13))
+           (func $f14 (export "f14") (result i32) (i32.const 14))
+           (func $f15 (export "f15") (result i32) (i32.const 15))
+           (func (export "test") (param $n i32) (result i32)
+             (call_indirect (type 0) (local.get $n)))
+           (func (export "run") (param $offs i32) (param $len i32)
+             (table.init 0 (local.get $offs) (i32.const ${segoffs}) (local.get $len))))`);
+    // A fill writing past the end of the table should throw *and* have filled
+    // all the way up to the end.
+    //
+    // A fill reading past the end of the segment should throw *and* have filled
+    // table with as much data as was available.
+    let offs = min - backup;
+    print(`(assert_trap (invoke "run" (i32.const ${offs}) (i32.const ${write})) "out of bounds")`);
+    for (let i=0; i < Math.min(backup, tbl_init_len - segoffs); i++) {
+        print(`(assert_return (invoke "test" (i32.const ${offs + i})) (i32.const ${i + segoffs}))`);
+    }
+    for (let i=Math.min(backup, tbl_init_len); i < backup; i++) {
+        print(`(assert_trap (invoke "test" (i32.const ${offs + i})) "uninitialized element")`);
+    }
+    for (let i=0; i < offs; i++) {
+        print(`(assert_trap (invoke "test" (i32.const ${i})) "uninitialized element")`);
+    }
+}
+
+// We exceed the bounds of the table but not of the element segment
+tbl_init(tbl_init_len*2, tbl_init_len*4, Math.floor(tbl_init_len/2), tbl_init_len);
+tbl_init(tbl_init_len*2, tbl_init_len*4, Math.floor(tbl_init_len/2)-1, tbl_init_len);
+
+// We exceed the bounds of the element segment but not the table
+tbl_init(tbl_init_len*10, tbl_init_len*20, tbl_init_len*4, tbl_init_len*2);
+tbl_init(tbl_init_len*10, tbl_init_len*20, tbl_init_len*4-1, tbl_init_len*2-1);
+
+// We arithmetically overflow the table limit but not the segment limit
+tbl_init(tbl_init_len*4, tbl_init_len*4, tbl_init_len, 0xFFFFFFF0);
+
+// We arithmetically overflow the segment limit but not the table limit
+tbl_init(tbl_init_len, tbl_init_len, tbl_init_len, 0xFFFFFFFC, Math.floor(tbl_init_len/2));
+
