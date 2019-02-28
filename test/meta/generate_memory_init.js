@@ -208,3 +208,65 @@ print(
 `);
     }}}
 }
+
+// memory.init: out of bounds of the memory or the segment, but should perform
+// the operation up to the appropriate bound.
+//
+// Arithmetic overflow of memoffset + len or of bufferoffset + len should not
+// affect the behavior.
+
+// Note, the length of the data segment is 16.
+const mem_init_len = 16;
+
+function mem_init(min, max, shared, backup, write) {
+    print(
+`(module
+   (memory ${min} ${max} ${shared})
+   (data passive "\\42\\42\\42\\42\\42\\42\\42\\42\\42\\42\\42\\42\\42\\42\\42\\42")
+   ${checkRangeCode()}
+   (func (export "run") (param $offs i32) (param $len i32)
+     (memory.init 0 (local.get $offs) (i32.const 0) (local.get $len))))
+`);
+    // A fill writing past the end of the memory should throw *and* have filled
+    // all the way up to the end.
+    //
+    // A fill reading past the end of the segment should throw *and* have filled
+    // memory with as much data as was available.
+    let offs = min*PAGESIZE - backup;
+    print(
+`(assert_trap (invoke "run" (i32.const ${offs}) (i32.const ${write}))
+              "out of bounds")
+`);
+    checkRange(0, offs, 0);
+    checkRange(offs, offs+Math.min(backup, mem_init_len), 0x42);
+    checkRange(offs+Math.min(backup, mem_init_len), offs+backup, 0);
+}
+
+// We exceed the bounds of the memory but not of the data segment
+mem_init(1, 1, "", Math.floor(mem_init_len/2), mem_init_len);
+mem_init(1, 1, "", Math.floor(mem_init_len/2)+1, mem_init_len);
+if (WITH_SHARED_MEMORY) {
+    mem_init(2, 4, "shared", Math.floor(mem_init_len/2), mem_init_len);
+    mem_init(2, 4, "shared", Math.floor(mem_init_len/2)+1, mem_init_len);
+}
+
+// We exceed the bounds of the data segment but not the memory
+/* FIXME - the reference interpreter throws
+mem_init(1, 1, "", mem_init_len*4, mem_init_len*2-2);
+mem_init(1, 1, "", mem_init_len*4-1, mem_init_len*2-1);
+*/
+if (WITH_SHARED_MEMORY) {
+    mem_init(2, 4, "shared", mem_init_len*4, mem_init_len*2-2);
+    mem_init(2, 4, "shared", mem_init_len*4-1, mem_init_len*2-1);
+}
+
+// We arithmetically overflow the memory limit but not the segment limit
+/* FIXME - the reference interpreter fails the checkRange()
+mem_init(1, "", "", Math.floor(mem_init_len/2), 0xFFFFFF00);
+*/
+
+// We arithmetically overflow the segment limit but not the memory limit
+/* FIXME - the reference interpreter fails the checkRange()
+mem_init(1, "", "", PAGESIZE, 0xFFFFFFFC);
+*/
+
