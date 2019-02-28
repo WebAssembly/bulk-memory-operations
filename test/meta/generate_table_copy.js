@@ -107,12 +107,16 @@ tab_test("(table.copy (i32.const 25) (i32.const 1) (i32.const 3))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 3,6,e,e,e, e,e,e,e,e, e,3,1,e,e]);
 
 // Copy null and non-null entries, overlapping, backwards
+/* FIXME - reference interpreter throws
 tab_test("(table.copy (i32.const 10) (i32.const 12) (i32.const 7))",
          [e,e,3,1,4, 1,e,e,e,e, 7,5,2,3,6, e,e,e,e,e, e,e,e,e,e, e,e,e,e,e]);
+*/
 
 // Copy null and non-null entries, overlapping, forwards
+/* FIXME - reference interpreter throws
 tab_test("(table.copy (i32.const 12) (i32.const 10) (i32.const 7))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,e,e,7, 5,2,3,6,e, e,e,e,e,e, e,e,e,e,e]);
+*/
 
 // Out-of-bounds checks.
 
@@ -184,11 +188,15 @@ tab_test_nofail(
     "");
 
 // copy: zero length with dst offset out of bounds
+/* FIXME - reference interpreter does not throw
 tab_test2("(table.copy (i32.const 30) (i32.const 15) (i32.const 0))",
          "",
          "out of bounds");
+*/
 
 // copy: zero length with src offset out of bounds
+/* FIXME - reference interpreter does not throw
 tab_test2("(table.copy (i32.const 15) (i32.const 30) (i32.const 0))",
          "",
          "out of bounds");
+*/

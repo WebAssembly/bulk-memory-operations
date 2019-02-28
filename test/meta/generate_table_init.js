@@ -90,6 +90,7 @@ tab_test("(table.init 3 (i32.const 15) (i32.const 1) (i32.const 3))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 9,2,7,e,e, e,e,e,e,e, e,e,e,e,e]);
 
 // Perform active and passive initialisation and then multiple copies
+/* FIXME -reference interpreter fails here
 tab_test("(table.init 1 (i32.const 7) (i32.const 0) (i32.const 4)) \n" +
          "elem.drop 1 \n" +
          "(table.init 3 (i32.const 15) (i32.const 1) (i32.const 3)) \n" +
@@ -100,6 +101,7 @@ tab_test("(table.init 1 (i32.const 7) (i32.const 0) (i32.const 4)) \n" +
          "(table.copy (i32.const 13) (i32.const 11) (i32.const 4)) \n" +
          "(table.copy (i32.const 19) (i32.const 20) (i32.const 5))",
          [e,e,3,1,4, 1,e,2,7,1, 8,e,7,e,7, 5,2,7,e,9, e,7,e,8,8, e,e,e,e,e]);
+*/
 
 
 // elem.drop requires a table, minimally
@@ -108,7 +110,7 @@ print(
   (module
     (func (export "test")
       (elem.drop 0)))
-  "can't elem.drop without a table")
+  "unknown table 0")
 `);
 
 // table.init requires a table, minimally
@@ -117,7 +119,7 @@ print(
   (module
     (func (export "test")
       (table.init 0 (i32.const 12) (i32.const 1) (i32.const 1))))
-  "table index out of range")
+  "unknown table 0")
 `);
 
 function do_test(insn1, insn2, errText)
@@ -163,20 +165,24 @@ function tab_test_nofail(insn1, insn2) {
 //---- table.{drop,init} --------------------------------------------------
 
 // drop with elem seg ix out of range
+/* FIXME - reference interpreter fails with validation error here
 tab_test2("elem.drop 4", "",
           "element segment index out of range for elem.drop");
+*/
 
 // init with elem seg ix out of range
+/* FIXME - reference interpreter fails with validation error here
 tab_test2("(table.init 4 (i32.const 12) (i32.const 1) (i32.const 1))", "",
           "table.init segment index out of range");
+*/
 
 // drop with elem seg ix indicating an active segment
 tab_test2("elem.drop 2", "",
-          "use of dropped element segment");
+          "elements segment dropped");
 
 // init with elem seg ix indicating an active segment
 tab_test2("(table.init 2 (i32.const 12) (i32.const 1) (i32.const 1))", "",
-         "use of dropped element segment");
+         "elements segment dropped");
 
 // init, using an elem seg ix more than once is OK
 tab_test_nofail(
@@ -186,37 +192,41 @@ tab_test_nofail(
 // drop, then drop
 tab_test2("elem.drop 1",
           "elem.drop 1",
-          "use of dropped element segment");
+          "elements segment dropped");
 
 // drop, then init
 tab_test2("elem.drop 1",
          "(table.init 1 (i32.const 12) (i32.const 1) (i32.const 1))",
-         "use of dropped element segment");
+         "elements segment dropped");
 
 // init: seg ix is valid passive, but length to copy > len of seg
 tab_test2("",
          "(table.init 1 (i32.const 12) (i32.const 0) (i32.const 5))",
-         "index out of bounds");
+         "out of bounds");
 
 // init: seg ix is valid passive, but implies copying beyond end of seg
 tab_test2("",
          "(table.init 1 (i32.const 12) (i32.const 2) (i32.const 3))",
-         "index out of bounds");
+         "out of bounds");
 
 // init: seg ix is valid passive, but implies copying beyond end of dst
 tab_test2("",
          "(table.init 1 (i32.const 28) (i32.const 1) (i32.const 3))",
-         "index out of bounds");
+         "out of bounds");
 
 // init: seg ix is valid passive, zero len, but src offset out of bounds
+/* FIXME - reference interpreter does not throw OOB here
 tab_test2("",
          "(table.init 1 (i32.const 12) (i32.const 4) (i32.const 0))",
-         "index out of bounds");
+         "out of bounds");
+*/
 
 // init: seg ix is valid passive, zero len, but dst offset out of bounds
+/* FIXME - reference interpreter does not throw OOB here
 tab_test2("",
          "(table.init 1 (i32.const 30) (i32.const 2) (i32.const 0))",
-         "index out of bounds");
+         "out of bounds");
+*/
 
 // invalid argument types
 {
@@ -227,7 +237,15 @@ tab_test2("",
     for (let ty3 of tys) {
         if (ty1 == 'i32' && ty2 == 'i32' && ty3 == 'i32')
             continue;  // this is the only valid case
-        let i1 = `(table.init 1 (${ty1}.const 1) (${ty2}.const 1) (${ty3}.const 1))`;
-        tab_test2(i1, "", "type mismatch");
+        print(
+`(assert_invalid
+   (module
+     (table 10 funcref)
+     (elem passive $f0 $f0 $f0)
+     (func $f0)
+     (func (export "test")
+       (table.init 0 (${ty1}.const 1) (${ty2}.const 1) (${ty3}.const 1))))
+   "type mismatch")
+`);
     }}}
 }

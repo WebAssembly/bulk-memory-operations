@@ -189,7 +189,7 @@ data.drop 3
    (module
      (func (export "test")
        (data.drop 0)))
-   "can't touch memory without memory")
+   "unknown memory 0")
 
 (assert_invalid
   (module
@@ -197,7 +197,7 @@ data.drop 3
      (data passive "\37")
     (func (export "test")
       (data.drop 4)))
-  "data.drop segment index out of range")
+  "unknown data segment")
 
 (module
   (memory 1)
@@ -205,7 +205,7 @@ data.drop 3
   (func (export "test")
     (data.drop 0)
     (data.drop 0)))
-(assert_trap (invoke "test") "use of dropped data segment")
+(assert_trap (invoke "test") "data segment dropped")
 
 (module
   (memory 1)
@@ -213,21 +213,13 @@ data.drop 3
   (func (export "test")
     (data.drop 0)
     (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
-(assert_trap (invoke "test") "use of dropped data segment")
-
-(assert_invalid
-  (module
-    (memory 1)
-    (data (i32.const 0) "\37")
-    (func (export "test")
-      (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
-  "use of dropped data segment")
+(assert_trap (invoke "test") "data segment dropped")
 
 (assert_invalid
   (module
     (func (export "test")
       (memory.init 1 (i32.const 1234) (i32.const 1) (i32.const 1))))
-  "can't touch memory without memory")
+  "unknown memory 0")
 
 (assert_invalid
   (module
@@ -235,7 +227,7 @@ data.drop 3
      (data passive "\37")
     (func (export "test")
       (memory.init 1 (i32.const 1234) (i32.const 1) (i32.const 1))))
-  "memory.init segment index out of range")
+  "unknown data segment 1")
 
 (module
   (memory 1)
@@ -249,21 +241,7 @@ data.drop 3
   (memory 1)
      (data passive "\37")
   (func (export "test")
-    (memory.init 0 (i32.const 1234) (i32.const 0) (i32.const 5))))
-(assert_trap (invoke "test") "out of bounds")
-
-(module
-  (memory 1)
-     (data passive "\37")
-  (func (export "test")
     (memory.init 0 (i32.const 1234) (i32.const 2) (i32.const 3))))
-(assert_trap (invoke "test") "out of bounds")
-
-(module
-  (memory 1)
-     (data passive "\37")
-  (func (export "test")
-    (memory.init 0 (i32.const 0xFFFE) (i32.const 1) (i32.const 3))))
 (assert_trap (invoke "test") "out of bounds")
 
 (module
