@@ -655,3 +655,75 @@
       (memory.fill (f64.const 10) (f64.const 20) (f64.const 30))))
   "type mismatch")
 
+(module
+  (memory 1 1 )
+  
+  (func (export "checkRange") (param $from i32) (param $to i32) (param $expected i32) (result i32)
+   (loop $cont
+     (if (i32.eq (local.get $from) (local.get $to))
+         (then
+           (return (i32.const -1))))
+     (if (i32.eq (i32.load8_u (local.get $from)) (local.get $expected))
+         (then
+           (local.set $from (i32.add (local.get $from) (i32.const 1)))
+           (br $cont))))
+   (return (local.get $from)))
+
+  (func (export "run") (param $offs i32) (param $val i32) (param $len i32)
+    (memory.fill (local.get $offs) (local.get $val) (local.get $len))))
+
+(assert_trap (invoke "run" (i32.const 65280) (i32.const 37) (i32.const 512))
+              "out of bounds")
+
+(assert_return (invoke "checkRange" (i32.const 65280) (i32.const 65536) (i32.const 37))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 65280) (i32.const 0))
+               (i32.const -1))
+(module
+  (memory 1 1 )
+  
+  (func (export "checkRange") (param $from i32) (param $to i32) (param $expected i32) (result i32)
+   (loop $cont
+     (if (i32.eq (local.get $from) (local.get $to))
+         (then
+           (return (i32.const -1))))
+     (if (i32.eq (i32.load8_u (local.get $from)) (local.get $expected))
+         (then
+           (local.set $from (i32.add (local.get $from) (i32.const 1)))
+           (br $cont))))
+   (return (local.get $from)))
+
+  (func (export "run") (param $offs i32) (param $val i32) (param $len i32)
+    (memory.fill (local.get $offs) (local.get $val) (local.get $len))))
+
+(assert_trap (invoke "run" (i32.const 65279) (i32.const 37) (i32.const 514))
+              "out of bounds")
+
+(assert_return (invoke "checkRange" (i32.const 65279) (i32.const 65536) (i32.const 37))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 65279) (i32.const 0))
+               (i32.const -1))
+(module
+  (memory 1 1 )
+  
+  (func (export "checkRange") (param $from i32) (param $to i32) (param $expected i32) (result i32)
+   (loop $cont
+     (if (i32.eq (local.get $from) (local.get $to))
+         (then
+           (return (i32.const -1))))
+     (if (i32.eq (i32.load8_u (local.get $from)) (local.get $expected))
+         (then
+           (local.set $from (i32.add (local.get $from) (i32.const 1)))
+           (br $cont))))
+   (return (local.get $from)))
+
+  (func (export "run") (param $offs i32) (param $val i32) (param $len i32)
+    (memory.fill (local.get $offs) (local.get $val) (local.get $len))))
+
+(assert_trap (invoke "run" (i32.const 65279) (i32.const 37) (i32.const 4294967295))
+              "out of bounds")
+
+(assert_return (invoke "checkRange" (i32.const 65279) (i32.const 65536) (i32.const 37))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 65279) (i32.const 0))
+               (i32.const -1))

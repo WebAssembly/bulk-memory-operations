@@ -122,3 +122,37 @@ print(
 `);
     }}}
 }
+
+// memory.fill: out of bounds, but should perform a partial fill.
+//
+// Arithmetic overflow of memory offset + len should not affect the behavior, we
+// should still fill up to the limit.
+
+function mem_fill(min, max, shared, backup, write=backup*2) {
+    print(
+`(module
+  (memory ${min} ${max} ${shared})
+  ${checkRangeCode()}
+  (func (export "run") (param $offs i32) (param $val i32) (param $len i32)
+    (memory.fill (local.get $offs) (local.get $val) (local.get $len))))
+`);
+    // A fill past the end should throw *and* have filled all the way up to the end
+    let offs = min*PAGESIZE - backup;
+    let val = 37;
+    print(
+`(assert_trap (invoke "run" (i32.const ${offs}) (i32.const ${val}) (i32.const ${write}))
+              "out of bounds")
+`);
+    checkRange(offs, offs+backup, val);
+    checkRange(0, offs, 0);
+}
+
+mem_fill(1, 1, "", 256);
+mem_fill(1, 1, "", 257);
+mem_fill(1, 1, "", 257, 0xFFFFFFFF); // offs + len overflows 32-bit
+
+if (WITH_SHARED_MEMORY) {
+    mem_fill(2, 4, "shared", 256);
+    mem_fill(2, 4, "shared", 257);
+    mem_fill(2, 4, "shared", 257, 0xFFFFFFFF); // offs + len overflows 32-bit
+}
