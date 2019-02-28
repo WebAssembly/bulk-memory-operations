@@ -200,3 +200,132 @@ tab_test2("(table.copy (i32.const 15) (i32.const 30) (i32.const 0))",
          "",
          "out of bounds");
 */
+
+// table.copy: out of bounds of the table for the source or target, but should
+// perform the operation up to the appropriate bound.  Major cases:
+//
+// - non-overlapping regions
+// - overlapping regions with src > dest
+// - overlapping regions with src == dest
+// - overlapping regions with src < dest
+// - arithmetic overflow on src addresses
+// - arithmetic overflow on target addresses
+//
+// for each of those,
+//
+// - src address oob
+// - target address oob
+// - both oob
+//
+// Note we do not test the multi-table case here because that is part of the
+// reftypes proposal; tests are in the gc/ subdirectory.
+
+const tbl_copy_len = 16;
+
+function tbl_copy(min, max, srcOffs, targetOffs, len, copyDown=false) {
+    let tblLength = min;
+
+    let targetAvail = tblLength - targetOffs;
+    let srcAvail = tblLength - srcOffs;
+    let targetLim = targetOffs + Math.min(len, targetAvail, srcAvail);
+    let srcLim = srcOffs + Math.min(len, targetAvail, srcAvail);
+
+    print(
+        `(module
+           (type (func (result i32)))
+           (table ${min} ${max} funcref)
+           (elem (i32.const ${srcOffs})
+                 ${(function () {
+                        var s = "";
+                        for (let i=srcOffs, j=0; i < srcLim; i++, j++)
+                            s += " $f" + j;
+                        return s;
+                     })()})
+           (func $f0 (export "f0") (result i32) (i32.const 0))
+           (func $f1 (export "f1") (result i32) (i32.const 1))
+           (func $f2 (export "f2") (result i32) (i32.const 2))
+           (func $f3 (export "f3") (result i32) (i32.const 3))
+           (func $f4 (export "f4") (result i32) (i32.const 4))
+           (func $f5 (export "f5") (result i32) (i32.const 5))
+           (func $f6 (export "f6") (result i32) (i32.const 6))
+           (func $f7 (export "f7") (result i32) (i32.const 7))
+           (func $f8 (export "f8") (result i32) (i32.const 8))
+           (func $f9 (export "f9") (result i32) (i32.const 9))
+           (func $f10 (export "f10") (result i32) (i32.const 10))
+           (func $f11 (export "f11") (result i32) (i32.const 11))
+           (func $f12 (export "f12") (result i32) (i32.const 12))
+           (func $f13 (export "f13") (result i32) (i32.const 13))
+           (func $f14 (export "f14") (result i32) (i32.const 14))
+           (func $f15 (export "f15") (result i32) (i32.const 15))
+           (func (export "test") (param $n i32) (result i32)
+             (call_indirect (type 0) (local.get $n)))
+           (func (export "run") (param $targetOffs i32) (param $srcOffs i32) (param $len i32)
+             (table.copy (local.get $targetOffs) (local.get $srcOffs) (local.get $len))))`);
+
+    let immediateOOB = copyDown && (srcOffs + len > tblLength || targetOffs + len > tblLength);
+
+    print(`(assert_trap (invoke "run" (i32.const ${targetOffs}) (i32.const ${srcOffs}) (i32.const ${len}))
+                        "out of bounds")`);
+
+    var t = 0;
+    var s = 0;
+    var i = 0;
+    function checkTarget() {
+        if (i >= targetOffs && i < targetLim) {
+            print(`(assert_return (invoke "test" (i32.const ${i})) (i32.const ${t++}))`);
+            if (i >= srcOffs && i < srcLim)
+                s++;
+            return true;
+        }
+        return false;
+    }
+    function checkSource() {
+        if (i >= srcOffs && i < srcLim) {
+            print(`(assert_return (invoke "test" (i32.const ${i})) (i32.const ${s++}))`);
+            if (i >= targetOffs && i < targetLim)
+                t++;
+            return true;
+        }
+        return false;
+    }
+
+    for (i=0; i < tblLength; i++ ) {
+        if (immediateOOB) {
+            if (checkSource())
+                continue;
+        } else {
+            if (copyDown && (checkSource() || checkTarget()))
+                continue;
+            if (!copyDown && (checkTarget() || checkSource()))
+                continue;
+        }
+        print(`(assert_trap (invoke "test" (i32.const ${i})) "uninitialized element")`);
+    }
+}
+
+// OOB target address, nonoverlapping
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, 0, Math.floor(1.5*tbl_copy_len), tbl_copy_len);
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, 0, Math.floor(1.5*tbl_copy_len)-1, tbl_copy_len-1);
+
+// OOB source address, nonoverlapping
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, Math.floor(1.5*tbl_copy_len), 0, tbl_copy_len);
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, Math.floor(1.5*tbl_copy_len)-1, 0, tbl_copy_len-1);
+
+// OOB target address, overlapping, src < target
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, tbl_copy_len-5, Math.floor(1.5*tbl_copy_len), tbl_copy_len, true);
+
+// OOB source address, overlapping, target < src
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, Math.floor(1.5*tbl_copy_len), tbl_copy_len-5, tbl_copy_len);
+
+// OOB both, overlapping, including src == target
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, tbl_copy_len+5, Math.floor(1.5*tbl_copy_len), tbl_copy_len, true);
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, Math.floor(1.5*tbl_copy_len), tbl_copy_len+5, tbl_copy_len);
+tbl_copy(tbl_copy_len*2, tbl_copy_len*4, tbl_copy_len+5, tbl_copy_len+5, tbl_copy_len);
+
+// Arithmetic overflow on source address.
+/* FIXME - reference interpreter bails out too early
+tbl_copy(tbl_copy_len*8, tbl_copy_len*8, tbl_copy_len*7, 0, 0xFFFFFFE0);
+*/
+
+// Arithmetic overflow on target adddress is an overlapping case.
+tbl_copy(tbl_copy_len*8, tbl_copy_len*8, 0, tbl_copy_len*7, 0xFFFFFFE0, true);
