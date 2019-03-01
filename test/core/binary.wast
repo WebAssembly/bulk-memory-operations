@@ -641,3 +641,60 @@
   "\00asm" "\01\00\00\00"
   "\0a\01\00"  ;; Code section with 0 functions
 )
+
+;; Fewer passive segments than datacount
+(assert_malformed
+  (module binary
+    "\00asm" "\01\00\00\00"
+    "\0c\01\03"                   ;; Datacount section with value "3"
+    "\0b\05\02"                   ;; Data section with two entries
+    "\01\00"                      ;; Passive data section
+    "\01\00")                     ;; Passive data section
+  "data count and data section have inconsistent lengths")
+
+;; More passive segments than datacount
+(assert_malformed
+  (module binary
+    "\00asm" "\01\00\00\00"
+    "\0c\01\01"                   ;; Datacount section with value "1"
+    "\0b\05\02"                   ;; Data section with two entries
+    "\01\00"                      ;; Passive data section
+    "\01\00")                     ;; Passive data section
+  "data count and data section have inconsistent lengths")
+
+;; memory.init requires a datacount section
+;; FIXME - reference interpreter gets this wrong
+;; (assert_malformed
+;;   (module binary
+;;     "\00asm" "\01\00\00\00"
+
+;;     "\01\04\01\60\00\00"       ;; Type section
+;;     "\03\02\01\00"             ;; Function section
+;;     "\05\03\01\00\00"          ;; Memory section
+;;     "\0a\0e\01"                ;; Code section
+
+;;     ;; function 0
+;;     "\0c\00"
+;;     "\41\00"                   ;; zero args
+;;     "\41\00"
+;;     "\41\00"
+;;     "\fc\08\00\00"             ;; memory.init
+;;     "\0b")                     ;; end
+;;   "memory.init requires datacount section")
+
+;; data.drop requires a datacount section
+;; FIXME - reference interpreter gets this wrong
+;; (assert_malformed
+;;   (module binary
+;;     "\00asm" "\01\00\00\00"
+
+;;     "\01\04\01\60\00\00"       ;; Type section
+;;     "\03\02\01\00"             ;; Function section
+;;     "\05\03\01\00\00"          ;; Memory section
+;;     "\0a\07\01"                ;; Code section
+
+;;     ;; function 0
+;;     "\05\00"
+;;     "\fc\09\00"                ;; data.drop
+;;     "\0b")                     ;; end
+;;   "data.drop requires datacount section")
