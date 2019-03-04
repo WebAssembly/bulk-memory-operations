@@ -645,8 +645,16 @@ let passive_elem s =
     Func x
   | _ -> error s (pos s - 1) "invalid elem"
 
+let active_elem_segment s =
+  FuncRefType, vec (at active_elem) s
+
+let passive_elem_segment s =
+  let etype = elem_type s in
+  let init = vec (at passive_elem) s in
+  etype, init
+
 let table_segment s =
-  segment (vec (at active_elem)) (vec (at passive_elem)) s
+  segment active_elem_segment passive_elem_segment s
 
 let elem_section s =
   section `ElemSection (vec (at table_segment)) [] s
