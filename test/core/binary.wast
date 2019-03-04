@@ -663,38 +663,36 @@
   "data count and data section have inconsistent lengths")
 
 ;; memory.init requires a datacount section
-;; FIXME - reference interpreter gets this wrong
-;; (assert_malformed
-;;   (module binary
-;;     "\00asm" "\01\00\00\00"
+(assert_malformed
+  (module binary
+    "\00asm" "\01\00\00\00"
 
-;;     "\01\04\01\60\00\00"       ;; Type section
-;;     "\03\02\01\00"             ;; Function section
-;;     "\05\03\01\00\00"          ;; Memory section
-;;     "\0a\0e\01"                ;; Code section
+    "\01\04\01\60\00\00"       ;; Type section
+    "\03\02\01\00"             ;; Function section
+    "\05\03\01\00\00"          ;; Memory section
+    "\0a\0e\01"                ;; Code section
 
-;;     ;; function 0
-;;     "\0c\00"
-;;     "\41\00"                   ;; zero args
-;;     "\41\00"
-;;     "\41\00"
-;;     "\fc\08\00\00"             ;; memory.init
-;;     "\0b")                     ;; end
-;;   "memory.init requires datacount section")
+    ;; function 0
+    "\0c\00"
+    "\41\00"                   ;; zero args
+    "\41\00"
+    "\41\00"
+    "\fc\08\00\00"             ;; memory.init
+    "\0b")                     ;; end
+  "data count section required")
 
 ;; data.drop requires a datacount section
-;; FIXME - reference interpreter gets this wrong
-;; (assert_malformed
-;;   (module binary
-;;     "\00asm" "\01\00\00\00"
+(assert_malformed
+  (module binary
+    "\00asm" "\01\00\00\00"
 
-;;     "\01\04\01\60\00\00"       ;; Type section
-;;     "\03\02\01\00"             ;; Function section
-;;     "\05\03\01\00\00"          ;; Memory section
-;;     "\0a\07\01"                ;; Code section
+    "\01\04\01\60\00\00"       ;; Type section
+    "\03\02\01\00"             ;; Function section
+    "\05\03\01\00\00"          ;; Memory section
+    "\0a\07\01"                ;; Code section
 
-;;     ;; function 0
-;;     "\05\00"
-;;     "\fc\09\00"                ;; data.drop
-;;     "\0b")                     ;; end
-;;   "data.drop requires datacount section")
+    ;; function 0
+    "\05\00"
+    "\fc\09\00"                ;; data.drop
+    "\0b")                     ;; end
+  "data count section required")

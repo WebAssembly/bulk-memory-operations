@@ -176,14 +176,10 @@ mem_copy(1, 1, "", PAGESIZE-20, PAGESIZE-30, 40);
 mem_copy(1, 1, "", PAGESIZE-20, PAGESIZE-20, 40);
 
 // Arithmetic overflow on source address.
-/*  FIXME reference interpreter gets this wrong
 mem_copy(1, "", "", PAGESIZE-20, 0, 0xFFFFF000);
-*/
 
 // Arithmetic overflow on target adddress is an overlapping case.
-/*  FIXME reference interpreter gets this wrong
 mem_copy(1, 1, "", PAGESIZE-0x1000, PAGESIZE-20, 0xFFFFFF00, true);
-*/
 
 // Sundry compilation failures.
 

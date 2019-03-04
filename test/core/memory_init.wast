@@ -241,7 +241,21 @@ data.drop 3
   (memory 1)
      (data passive "\37")
   (func (export "test")
+    (memory.init 0 (i32.const 1234) (i32.const 0) (i32.const 5))))
+(assert_trap (invoke "test") "out of bounds")
+
+(module
+  (memory 1)
+     (data passive "\37")
+  (func (export "test")
     (memory.init 0 (i32.const 1234) (i32.const 2) (i32.const 3))))
+(assert_trap (invoke "test") "out of bounds")
+
+(module
+  (memory 1)
+     (data passive "\37")
+  (func (export "test")
+    (memory.init 0 (i32.const 0xFFFE) (i32.const 1) (i32.const 3))))
 (assert_trap (invoke "test") "out of bounds")
 
 (module
@@ -815,4 +829,112 @@ data.drop 3
 (assert_return (invoke "checkRange" (i32.const 65527) (i32.const 65536) (i32.const 66))
                (i32.const -1))
 (assert_return (invoke "checkRange" (i32.const 65536) (i32.const 65536) (i32.const 0))
+               (i32.const -1))
+(module
+   (memory 1 1 )
+   (data passive "\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42")
+   
+  (func (export "checkRange") (param $from i32) (param $to i32) (param $expected i32) (result i32)
+   (loop $cont
+     (if (i32.eq (local.get $from) (local.get $to))
+         (then
+           (return (i32.const -1))))
+     (if (i32.eq (i32.load8_u (local.get $from)) (local.get $expected))
+         (then
+           (local.set $from (i32.add (local.get $from) (i32.const 1)))
+           (br $cont))))
+   (return (local.get $from)))
+
+   (func (export "run") (param $offs i32) (param $len i32)
+     (memory.init 0 (local.get $offs) (i32.const 0) (local.get $len))))
+
+(assert_trap (invoke "run" (i32.const 65472) (i32.const 30))
+              "out of bounds")
+
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 65472) (i32.const 0))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 65472) (i32.const 65488) (i32.const 66))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 65488) (i32.const 65536) (i32.const 0))
+               (i32.const -1))
+(module
+   (memory 1 1 )
+   (data passive "\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42")
+   
+  (func (export "checkRange") (param $from i32) (param $to i32) (param $expected i32) (result i32)
+   (loop $cont
+     (if (i32.eq (local.get $from) (local.get $to))
+         (then
+           (return (i32.const -1))))
+     (if (i32.eq (i32.load8_u (local.get $from)) (local.get $expected))
+         (then
+           (local.set $from (i32.add (local.get $from) (i32.const 1)))
+           (br $cont))))
+   (return (local.get $from)))
+
+   (func (export "run") (param $offs i32) (param $len i32)
+     (memory.init 0 (local.get $offs) (i32.const 0) (local.get $len))))
+
+(assert_trap (invoke "run" (i32.const 65473) (i32.const 31))
+              "out of bounds")
+
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 65473) (i32.const 0))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 65473) (i32.const 65489) (i32.const 66))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 65489) (i32.const 65536) (i32.const 0))
+               (i32.const -1))
+(module
+   (memory 1  )
+   (data passive "\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42")
+   
+  (func (export "checkRange") (param $from i32) (param $to i32) (param $expected i32) (result i32)
+   (loop $cont
+     (if (i32.eq (local.get $from) (local.get $to))
+         (then
+           (return (i32.const -1))))
+     (if (i32.eq (i32.load8_u (local.get $from)) (local.get $expected))
+         (then
+           (local.set $from (i32.add (local.get $from) (i32.const 1)))
+           (br $cont))))
+   (return (local.get $from)))
+
+   (func (export "run") (param $offs i32) (param $len i32)
+     (memory.init 0 (local.get $offs) (i32.const 0) (local.get $len))))
+
+(assert_trap (invoke "run" (i32.const 65528) (i32.const 4294967040))
+              "out of bounds")
+
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 65528) (i32.const 0))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 65528) (i32.const 65536) (i32.const 66))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 65536) (i32.const 65536) (i32.const 0))
+               (i32.const -1))
+(module
+   (memory 1  )
+   (data passive "\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42\42")
+   
+  (func (export "checkRange") (param $from i32) (param $to i32) (param $expected i32) (result i32)
+   (loop $cont
+     (if (i32.eq (local.get $from) (local.get $to))
+         (then
+           (return (i32.const -1))))
+     (if (i32.eq (i32.load8_u (local.get $from)) (local.get $expected))
+         (then
+           (local.set $from (i32.add (local.get $from) (i32.const 1)))
+           (br $cont))))
+   (return (local.get $from)))
+
+   (func (export "run") (param $offs i32) (param $len i32)
+     (memory.init 0 (local.get $offs) (i32.const 0) (local.get $len))))
+
+(assert_trap (invoke "run" (i32.const 0) (i32.const 4294967292))
+              "out of bounds")
+
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 0) (i32.const 0))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 16) (i32.const 66))
+               (i32.const -1))
+(assert_return (invoke "checkRange" (i32.const 16) (i32.const 65536) (i32.const 0))
                (i32.const -1))

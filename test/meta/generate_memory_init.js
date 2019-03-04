@@ -141,7 +141,6 @@ print(
 `);
 
 // init: seg ix is valid passive, but length to copy > len of seg
-/* FIXME - reference interpreter crashes here
 print(
 `(module
   ${PREAMBLE}
@@ -149,7 +148,6 @@ print(
     (memory.init 0 (i32.const 1234) (i32.const 0) (i32.const 5))))
 (assert_trap (invoke "test") "out of bounds")
 `);
-*/
 
 // init: seg ix is valid passive, but implies copying beyond end of seg
 print(
@@ -161,7 +159,6 @@ print(
 `);
 
 // init: seg ix is valid passive, but implies copying beyond end of dst
-/* FIXME - reference interpreter crashes here
 print(
 `(module
   ${PREAMBLE}
@@ -169,7 +166,6 @@ print(
     (memory.init 0 (i32.const 0xFFFE) (i32.const 1) (i32.const 3))))
 (assert_trap (invoke "test") "out of bounds")
 `);
-*/
 
 // init: seg ix is valid passive, zero len, but src offset out of bounds
 print(
@@ -251,22 +247,16 @@ if (WITH_SHARED_MEMORY) {
 }
 
 // We exceed the bounds of the data segment but not the memory
-/* FIXME - the reference interpreter throws
 mem_init(1, 1, "", mem_init_len*4, mem_init_len*2-2);
 mem_init(1, 1, "", mem_init_len*4-1, mem_init_len*2-1);
-*/
 if (WITH_SHARED_MEMORY) {
     mem_init(2, 4, "shared", mem_init_len*4, mem_init_len*2-2);
     mem_init(2, 4, "shared", mem_init_len*4-1, mem_init_len*2-1);
 }
 
 // We arithmetically overflow the memory limit but not the segment limit
-/* FIXME - the reference interpreter fails the checkRange()
 mem_init(1, "", "", Math.floor(mem_init_len/2), 0xFFFFFF00);
-*/
 
 // We arithmetically overflow the segment limit but not the memory limit
-/* FIXME - the reference interpreter fails the checkRange()
 mem_init(1, "", "", PAGESIZE, 0xFFFFFFFC);
-*/
 

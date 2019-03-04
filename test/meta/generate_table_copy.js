@@ -323,9 +323,7 @@ tbl_copy(tbl_copy_len*2, tbl_copy_len*4, Math.floor(1.5*tbl_copy_len), tbl_copy_
 tbl_copy(tbl_copy_len*2, tbl_copy_len*4, tbl_copy_len+5, tbl_copy_len+5, tbl_copy_len);
 
 // Arithmetic overflow on source address.
-/* FIXME - reference interpreter bails out too early
 tbl_copy(tbl_copy_len*8, tbl_copy_len*8, tbl_copy_len*7, 0, 0xFFFFFFE0);
-*/
 
 // Arithmetic overflow on target adddress is an overlapping case.
 tbl_copy(tbl_copy_len*8, tbl_copy_len*8, 0, tbl_copy_len*7, 0xFFFFFFE0, true);
