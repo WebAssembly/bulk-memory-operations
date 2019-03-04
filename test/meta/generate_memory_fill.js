@@ -50,17 +50,15 @@ print(
 `);
 checkRange(0x00000, 0x10000, 0x00);
 
-// Zero len with offset out-of-bounds gets an exception
-/* FIXME - reference interpreter fails this
+// Zero len with offset out-of-bounds at the end of memory is allowed
 print(
 `
 (module
   ${PREAMBLE}
   (func (export "test")
     (memory.fill (i32.const 0x10000) (i32.const 0x55) (i32.const 0))))
-(assert_trap (invoke "test") "out of bounds memory access")
+(invoke "test")
 `);
-*/
 
 // Very large range
 print(

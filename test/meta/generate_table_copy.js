@@ -21,11 +21,11 @@ function emit_a() {
 
 // ... and this one imports those 5 functions.  It adds 5 of its own, creates a
 // 30 element table using both active and passive initialisers, with a mixture
-// of the imported and local functions.  |testfn| is exported.  It uses the
-// supplied |insn| to modify the table somehow, and then will indirect-call the
-// table entry number specified as a parameter.  That will either return a value
-// 0 to 9 indicating the function called, or will throw an exception if the
-// table entry is empty.
+// of the imported and local functions.  |test| is exported.  It uses the
+// supplied |insn| to modify the table somehow.  |check| will then indirect-call
+// the table entry number specified as a parameter.  That will either return a
+// value 0 to 9 indicating the function called, or will throw an exception if
+// the table entry is empty.
 
 function emit_b(insn) {
     print(
@@ -47,10 +47,11 @@ function emit_b(insn) {
   (func (result i32) (i32.const 7))
   (func (result i32) (i32.const 8))
   (func (result i32) (i32.const 9))  ;; index 9
-  (func (export "testfn") (param i32) (result i32)
-    ${insn}
-    (call_indirect (type 0) (local.get 0))
-))
+  (func (export "test")
+    ${insn})
+  (func (export "check") (param i32) (result i32)
+    (call_indirect (type 0) (local.get 0)))
+)
 `);
 }
 
@@ -59,18 +60,15 @@ function emit_b(insn) {
 // indirect calls, one for each element of |expected_result_vector|.  The
 // results are compared to those in the vector.
 
-var indirect_call_to_null = "uninitialized element"; // Reference interpreter
-// var indirect_call_to_null = "indirect call to null"; // SpiderMonkey shell / Firefox
-
 function tab_test(instruction, expected_result_vector) {
     emit_b(instruction);
-
+    print(`(invoke "test")`);
     for (let i = 0; i < expected_result_vector.length; i++) {
         let expected = expected_result_vector[i];
         if (expected === undefined) {
-            print(`(assert_trap (invoke "testfn" (i32.const ${i})) "${indirect_call_to_null}")`);
+            print(`(assert_trap (invoke "check" (i32.const ${i})) "uninitialized element")`);
         } else {
-            print(`(assert_return (invoke "testfn" (i32.const ${i})) (i32.const ${expected}))`);
+            print(`(assert_return (invoke "check" (i32.const ${i})) (i32.const ${expected}))`);
         }
     }
 }
@@ -107,16 +105,12 @@ tab_test("(table.copy (i32.const 25) (i32.const 1) (i32.const 3))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 3,6,e,e,e, e,e,e,e,e, e,3,1,e,e]);
 
 // Copy null and non-null entries, overlapping, backwards
-/* FIXME - reference interpreter throws
 tab_test("(table.copy (i32.const 10) (i32.const 12) (i32.const 7))",
          [e,e,3,1,4, 1,e,e,e,e, 7,5,2,3,6, e,e,e,e,e, e,e,e,e,e, e,e,e,e,e]);
-*/
 
 // Copy null and non-null entries, overlapping, forwards
-/* FIXME - reference interpreter throws
 tab_test("(table.copy (i32.const 12) (i32.const 10) (i32.const 7))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,e,e,7, 5,2,3,6,e, e,e,e,e,e, e,e,e,e,e]);
-*/
 
 // Out-of-bounds checks.
 
@@ -187,19 +181,15 @@ tab_test_nofail(
     "(table.copy (i32.const 15) (i32.const 25) (i32.const 0))",
     "");
 
-// copy: zero length with dst offset out of bounds
-/* FIXME - reference interpreter does not throw
+// copy: zero length with dst offset out of bounds at the end of the table is allowed
 tab_test2("(table.copy (i32.const 30) (i32.const 15) (i32.const 0))",
          "",
-         "out of bounds");
-*/
+         undefined);
 
-// copy: zero length with src offset out of bounds
-/* FIXME - reference interpreter does not throw
+// copy: zero length with src offset out of bounds at the end of the table is allowed
 tab_test2("(table.copy (i32.const 15) (i32.const 30) (i32.const 0))",
          "",
-         "out of bounds");
-*/
+         undefined);
 
 // table.copy: out of bounds of the table for the source or target, but should
 // perform the operation up to the appropriate bound.  Major cases:

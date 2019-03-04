@@ -98,10 +98,10 @@ print(
 (assert_trap (invoke "test") "data segment dropped")
 `);
 
-// drop with data seg ix indicating an active segment
-/* FIXME - not reference interpreter
+// init with data seg ix indicating an active segment
+/* FIXME -- reference interpreter does not trap
 print(
-`(assert_invalid
+`(assert_trap
   (module
     (memory 1)
     (data (i32.const 0) "\\37")

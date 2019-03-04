@@ -5060,6 +5060,20 @@
                (i32.const -1))
 
 (module
+  (memory 1 1)
+  (func (export "test")
+    (memory.copy (i32.const 0x10000) (i32.const 0x7000) (i32.const 0))))
+(invoke "test")
+
+
+(module
+  (memory 1 1)
+  (func (export "test")
+    (memory.copy (i32.const 0x9000) (i32.const 0x10000) (i32.const 0))))
+(invoke "test")
+
+
+(module
        (memory 1 1)
        (func (export "test")
          (memory.fill (i32.const 17767) (i32.const 1) (i32.const 1344))

@@ -21,11 +21,11 @@ function emit_a() {
 
 // ... and this one imports those 5 functions.  It adds 5 of its own, creates a
 // 30 element table using both active and passive initialisers, with a mixture
-// of the imported and local functions.  |testfn| is exported.  It uses the
-// supplied |insn| to modify the table somehow, and then will indirect-call the
-// table entry number specified as a parameter.  That will either return a value
-// 0 to 9 indicating the function called, or will throw an exception if the
-// table entry is empty.
+// of the imported and local functions.  |test| is exported.  It uses the
+// supplied |insn| to modify the table somehow.  |check| will then indirect-call
+// the table entry number specified as a parameter.  That will either return a
+// value 0 to 9 indicating the function called, or will throw an exception if
+// the table entry is empty.
 
 function emit_b(insn) {
     print(
@@ -47,10 +47,11 @@ function emit_b(insn) {
   (func (result i32) (i32.const 7))
   (func (result i32) (i32.const 8))
   (func (result i32) (i32.const 9))  ;; index 9
-  (func (export "testfn") (param i32) (result i32)
-    ${insn}
-    (call_indirect (type 0) (local.get 0))
-))
+  (func (export "test")
+    ${insn})
+  (func (export "check") (param i32) (result i32)
+    (call_indirect (type 0) (local.get 0)))
+)
 `);
 }
 
@@ -59,18 +60,15 @@ function emit_b(insn) {
 // indirect calls, one for each element of |expected_result_vector|.  The
 // results are compared to those in the vector.
 
-var indirect_call_to_null = "uninitialized element"; // Reference interpreter
-// var indirect_call_to_null = "indirect call to null"; // SpiderMonkey shell / Firefox
-
 function tab_test(instruction, expected_result_vector) {
     emit_b(instruction);
-
+    print(`(invoke "test")`);
     for (let i = 0; i < expected_result_vector.length; i++) {
         let expected = expected_result_vector[i];
         if (expected === undefined) {
-            print(`(assert_trap (invoke "testfn" (i32.const ${i})) "${indirect_call_to_null}")`);
+            print(`(assert_trap (invoke "check" (i32.const ${i})) "uninitialized element")`);
         } else {
-            print(`(assert_return (invoke "testfn" (i32.const ${i})) (i32.const ${expected}))`);
+            print(`(assert_return (invoke "check" (i32.const ${i})) (i32.const ${expected}))`);
         }
     }
 }
@@ -90,7 +88,6 @@ tab_test("(table.init 3 (i32.const 15) (i32.const 1) (i32.const 3))",
          [e,e,3,1,4, 1,e,e,e,e, e,e,7,5,2, 9,2,7,e,e, e,e,e,e,e, e,e,e,e,e]);
 
 // Perform active and passive initialisation and then multiple copies
-/* FIXME -reference interpreter fails here
 tab_test("(table.init 1 (i32.const 7) (i32.const 0) (i32.const 4)) \n" +
          "elem.drop 1 \n" +
          "(table.init 3 (i32.const 15) (i32.const 1) (i32.const 3)) \n" +
@@ -101,7 +98,6 @@ tab_test("(table.init 1 (i32.const 7) (i32.const 0) (i32.const 4)) \n" +
          "(table.copy (i32.const 13) (i32.const 11) (i32.const 4)) \n" +
          "(table.copy (i32.const 19) (i32.const 20) (i32.const 5))",
          [e,e,3,1,4, 1,e,2,7,1, 8,e,7,e,7, 5,2,7,e,9, e,7,e,8,8, e,e,e,e,e]);
-*/
 
 
 // elem.drop requires a table, minimally
@@ -119,6 +115,28 @@ print(
   (module
     (func (export "test")
       (table.init 0 (i32.const 12) (i32.const 1) (i32.const 1))))
+  "unknown table 0")
+`);
+
+// elem.drop with elem seg ix out of range
+print(
+`(assert_invalid
+  (module
+    (elem passive 0)
+    (func (result i32) (i32.const 0))
+    (func (export "test")
+      (elem.drop 4)))
+  "unknown table 0")
+`);
+
+// init with elem seg ix out of range
+print(
+`(assert_invalid
+  (module
+    (elem passive 0)
+    (func (result i32) (i32.const 0))
+    (func (export "test")
+      (table.init 4 (i32.const 12) (i32.const 1) (i32.const 1))))
   "unknown table 0")
 `);
 
@@ -161,21 +179,6 @@ function tab_test_nofail(insn1, insn2) {
     do_test(insn1, insn2, undefined);
 }
 
-//
-//---- table.{drop,init} --------------------------------------------------
-
-// drop with elem seg ix out of range
-/* FIXME - reference interpreter fails with validation error here
-tab_test2("elem.drop 4", "",
-          "element segment index out of range for elem.drop");
-*/
-
-// init with elem seg ix out of range
-/* FIXME - reference interpreter fails with validation error here
-tab_test2("(table.init 4 (i32.const 12) (i32.const 1) (i32.const 1))", "",
-          "table.init segment index out of range");
-*/
-
 // drop with elem seg ix indicating an active segment
 tab_test2("elem.drop 2", "",
           "elements segment dropped");
@@ -214,19 +217,17 @@ tab_test2("",
          "(table.init 1 (i32.const 28) (i32.const 1) (i32.const 3))",
          "out of bounds");
 
-// init: seg ix is valid passive, zero len, but src offset out of bounds
-/* FIXME - reference interpreter does not throw OOB here
+// init: seg ix is valid passive, zero len, and src offset out of bounds at the
+// end of the table - this is allowed
 tab_test2("",
          "(table.init 1 (i32.const 12) (i32.const 4) (i32.const 0))",
-         "out of bounds");
-*/
+         undefined);
 
-// init: seg ix is valid passive, zero len, but dst offset out of bounds
-/* FIXME - reference interpreter does not throw OOB here
+// init: seg ix is valid passive, zero len, and dst offset out of bounds at the
+// end of the table - this is allowed
 tab_test2("",
          "(table.init 1 (i32.const 30) (i32.const 2) (i32.const 0))",
-         "out of bounds");
-*/
+         undefined);
 
 // invalid argument types
 {

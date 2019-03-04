@@ -300,29 +300,25 @@ print(
 checkRange(0x00000, 0x08000, 0x55);
 checkRange(0x08000, 0x10000, 0xAA);
 
-// Zero len with dest offset out-of-bounds is an exception
-/* FIXME - reference interpreter gets this wrong
+// Zero len with dest offset out-of-bounds at the end of memory is allowed
 print(
 `
 (module
   (memory 1 1)
   (func (export "test")
     (memory.copy (i32.const 0x10000) (i32.const 0x7000) (i32.const 0))))
-(assert_trap (invoke "test") "out of bounds")
+(invoke "test")
 `);
-*/
 
-// Zero len with src offset out-of-bounds is an exception
-/* FIXME - reference interpreter gets this wrong
+// Zero len with src offset out-of-bounds at the end of memory is allowed
 print(
 `
 (module
   (memory 1 1)
   (func (export "test")
     (memory.copy (i32.const 0x9000) (i32.const 0x10000) (i32.const 0))))
-(assert_trap (invoke "test") "out of bounds")
+(invoke "test")
 `);
-*/
 
 // 100 random fills followed by 100 random copies, in a single-page buffer,
 // followed by verification of the (now heavily mashed-around) buffer.
