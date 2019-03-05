@@ -99,17 +99,14 @@ print(
 `);
 
 // init with data seg ix indicating an active segment
-/* FIXME -- reference interpreter does not trap
 print(
-`(assert_trap
-  (module
-    (memory 1)
-    (data (i32.const 0) "\\37")
-    (func (export "test")
-      (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
-  "data segment dropped")
+`(module
+   (memory 1)
+   (data (i32.const 0) "\\37")
+   (func (export "test")
+     (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
+(assert_trap (invoke "test") "data segment dropped")
 `);
-*/
 
 // init with no memory
 print(

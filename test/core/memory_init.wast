@@ -215,6 +215,13 @@ data.drop 3
     (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
 (assert_trap (invoke "test") "data segment dropped")
 
+(module
+   (memory 1)
+   (data (i32.const 0) "\37")
+   (func (export "test")
+     (memory.init 0 (i32.const 1234) (i32.const 1) (i32.const 1))))
+(assert_trap (invoke "test") "data segment dropped")
+
 (assert_invalid
   (module
     (func (export "test")

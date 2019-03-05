@@ -697,7 +697,7 @@
     "\0b")                     ;; end
   "data count section required")
 
-;; passive element segment containing something other than ref.func or ref.null
+;; passive element segment containing opcode other than ref.func or ref.null
 (assert_malformed
   (module binary
     "\00asm" "\01\00\00\00"
@@ -723,7 +723,7 @@
     "\0b")                     ;; end
   "invalid elem")
 
-;; passive element segment containing something other than funcref
+;; passive element segment containing type other than funcref
 (assert_malformed
   (module binary
     "\00asm" "\01\00\00\00"
@@ -749,7 +749,7 @@
     "\0b")                     ;; end
   "invalid element type")
 
-;; passive element segment containing ref.func
+;; passive element segment containing opcode ref.func
 (module binary
   "\00asm" "\01\00\00\00"
 
@@ -773,7 +773,7 @@
   "\02\00"
   "\0b")                     ;; end
 
-;; passive element segment containing ref.null
+;; passive element segment containing opcode ref.null
 (module binary
   "\00asm" "\01\00\00\00"
 
