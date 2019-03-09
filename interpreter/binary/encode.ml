@@ -516,7 +516,7 @@ let encode m =
 
     (* Data count section *)
     let data_count_section datas m =
-      section 12 len (List.length datas) (module_has_data_var m)
+      section 12 len (List.length datas) Free.((module_ m).datas <> Set.empty)
 
     (* Module *)
 

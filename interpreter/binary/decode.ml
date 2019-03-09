@@ -725,7 +725,8 @@ let module_ s =
     s (len s) "function and code section have inconsistent lengths";
   require (data_count = None || data_count = Some (Lib.List32.length datas))
     s (len s) "data count and data section have inconsistent lengths";
-  require (not (List.exists func_has_data_var func_bodies) || data_count <> None)
+  require (data_count <> None ||
+    List.for_all Free.(fun f -> (func f).datas = Set.empty) func_bodies)
     s (len s) "data count section required";
   let funcs =
     List.map2 Source.(fun t f -> {f.it with ftype = t} @@ f.at)

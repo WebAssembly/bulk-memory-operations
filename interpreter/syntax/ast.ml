@@ -264,19 +264,3 @@ let string_of_name n =
   in
   List.iter escape n;
   Buffer.contents b
-
-
-(* Predicate *)
-
-let rec instr_has_data_var (e : instr) : bool =
-  match e.it with
-  | DataDrop _ | MemoryInit _ -> true
-  | Block (_, es) | Loop (_, es) -> List.exists instr_has_data_var es
-  | If (_, es1, es2) -> List.exists instr_has_data_var (es1 @ es2)
-  | _ -> false
-
-let func_has_data_var (f : func) : bool =
-  List.exists instr_has_data_var f.it.body
-
-let module_has_data_var (m : module_) : bool =
-  List.exists func_has_data_var m.it.funcs
