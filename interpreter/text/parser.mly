@@ -154,8 +154,10 @@ let inline_type_explicit (c : context) x ft at =
 
 %}
 
-%token NAT INT FLOAT STRING VAR VALUE_TYPE FUNCREF MUT LPAR RPAR
-%token NOP UNREACHABLE DROP SELECT
+%token LPAR RPAR
+%token NAT INT FLOAT STRING VAR
+%token FUNCREF VALUE_TYPE MUT
+%token UNREACHABLE NOP DROP SELECT
 %token BLOCK END IF THEN ELSE LOOP BR BR_IF BR_TABLE
 %token CALL CALL_INDIRECT RETURN
 %token LOCAL_GET LOCAL_SET LOCAL_TEE GLOBAL_GET GLOBAL_SET
@@ -569,9 +571,9 @@ offset :
   | expr { let at = at () in fun c -> $1 c @@ at }  /* Sugar */
 
 elemref :
-  | LPAR REF_NULL RPAR { let at = at () in fun c -> Null @@ at }
-  | LPAR REF_FUNC var RPAR { let at = at () in fun c -> Func ($3 c func) @@ at }
-  | var { let at = at () in fun c -> Func ($1 c func) @@ at }
+  | LPAR REF_NULL RPAR { let at = at () in fun c -> ref_null @@ at }
+  | LPAR REF_FUNC var RPAR { let at = at () in fun c -> ref_func ($3 c func) @@ at }
+  | var { let at = at () in fun c -> ref_func ($1 c func) @@ at }
 
 passive_elemref_list :
   | /* empty */ { fun c -> [] }
@@ -579,7 +581,7 @@ passive_elemref_list :
 
 active_elemref_list :
   | var_list
-    { let f = function {at; _} as x -> Func x @@ at in
+    { let f = function {at; _} as x -> ref_func x @@ at in
       fun c lookup -> List.map f ($1 c lookup) }
 
 elem :

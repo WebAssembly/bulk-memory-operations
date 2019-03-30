@@ -631,15 +631,15 @@ let segment active passive s =
   | _ -> error s (pos s - 1) "invalid segment kind"
 
 let active_elem s =
-  Func (at var s)
+  ref_func (at var s)
 
 let passive_elem s =
   match u8 s with
-  | 0xd0 -> end_ s; Null
+  | 0xd0 -> end_ s; ref_null
   | 0xd2 ->
     let x = at var s in
     end_ s;
-    Func x
+    ref_func x
   | _ -> error s (pos s - 1) "invalid elem"
 
 let active_elem_segment s =

@@ -491,13 +491,13 @@ let encode m =
 
     let active_elem el =
       match el.it with
-      | Null -> assert false
-      | Func x -> var x
+      | RefNull -> assert false
+      | RefFunc x -> var x
 
     let passive_elem el =
       match el.it with
-      | Null -> u8 0xd0; end_ ()
-      | Func x -> u8 0xd2; var x; end_ ()
+      | RefNull -> u8 0xd0; end_ ()
+      | RefFunc x -> u8 0xd2; var x; end_ ()
 
     let table_segment seg =
       let active init = vec active_elem init in

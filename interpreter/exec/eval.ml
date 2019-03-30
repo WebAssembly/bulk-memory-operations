@@ -442,8 +442,8 @@ let create_export (inst : module_inst) (ex : export) : export_inst =
 let elem_list inst init =
   let to_elem el =
     match el.it with
-    | Null -> Table.Uninitialized
-    | Func x -> FuncElem (func inst x)
+    | RefNull -> Table.Uninitialized
+    | RefFunc x -> FuncElem (func inst x)
   in List.map to_elem init
 
 let create_elem (inst : module_inst) (seg : table_segment) : elem_inst =

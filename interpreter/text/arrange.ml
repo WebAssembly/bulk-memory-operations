@@ -304,13 +304,13 @@ let segment head active passive seg =
 
 let active_elem el =
   match el.it with
-  | Null -> assert false
-  | Func x -> atom var x
+  | RefNull -> assert false
+  | RefFunc x -> atom var x
 
 let passive_elem el =
   match el.it with
-  | Null -> Node ("ref.null", [])
-  | Func x -> Node ("ref.func", [atom var x])
+  | RefNull -> Node ("ref.null", [])
+  | RefFunc x -> Node ("ref.func", [atom var x])
 
 let elems seg =
   let active init = list active_elem init in

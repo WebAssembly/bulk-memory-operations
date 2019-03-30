@@ -160,7 +160,10 @@ rule token = parse
   | '"'character*'\\'_
     { error_nest (Lexing.lexeme_end_p lexbuf) lexbuf "illegal escape" }
 
+  | "funcref" { FUNCREF }
   | (nxx as t) { VALUE_TYPE (value_type t) }
+  | "mut" { MUT }
+
   | (nxx as t)".const"
     { let open Source in
       CONST (numop t
@@ -173,8 +176,8 @@ rule token = parse
         (fun s -> let n = F64.of_string s.it in
           f64_const (n @@ s.at), Values.F64 n))
     }
-  | "funcref" { FUNCREF }
-  | "mut" { MUT }
+  | "ref.null" { REF_NULL }
+  | "ref.func" { REF_FUNC }
 
   | "nop" { NOP }
   | "unreachable" { UNREACHABLE }
@@ -324,9 +327,6 @@ rule token = parse
   | "f64.reinterpret_i64" { CONVERT f64_reinterpret_i64 }
   | "i32.reinterpret_f32" { CONVERT i32_reinterpret_f32 }
   | "i64.reinterpret_f64" { CONVERT i64_reinterpret_f64 }
-
-  | "ref.null" { REF_NULL }
-  | "ref.func" { REF_FUNC }
 
   | "type" { TYPE }
   | "func" { FUNC }

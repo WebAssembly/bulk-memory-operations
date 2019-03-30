@@ -147,8 +147,8 @@ and ('data, 'ty) segment' =
 
 type elem = elem' Source.phrase
 and elem' =
-  | Null
-  | Func of var
+  | RefNull
+  | RefFunc of var
 
 type table_segment = (elem list, elem_type) segment
 type memory_segment = (string, unit) segment

@@ -424,8 +424,8 @@ let check_memory (c : context) (mem : memory) =
 
 let check_elemref (c : context) (el : elem) =
   match el.it with
-  | Null -> ()
-  | Func x -> ignore (func c x)
+  | RefNull -> ()
+  | RefFunc x -> ignore (func c x)
 
 let check_elem (c : context) (seg : table_segment) =
   match seg.it with
