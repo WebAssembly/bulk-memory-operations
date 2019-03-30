@@ -199,6 +199,17 @@ rule token = parse
   | "global.get" { GLOBAL_GET }
   | "global.set" { GLOBAL_SET }
 
+  | "table.copy" { TABLE_COPY }
+  | "table.init" { TABLE_INIT }
+  | "elem.drop" { ELEM_DROP }
+
+  | "memory.size" { MEMORY_SIZE }
+  | "memory.grow" { MEMORY_GROW }
+  | "memory.fill" { MEMORY_FILL }
+  | "memory.copy" { MEMORY_COPY }
+  | "memory.init" { MEMORY_INIT }
+  | "data.drop" { DATA_DROP }
+
   | (nxx as t)".load"
     { LOAD (fun a o ->
         numop t (i32_load (opt a 2)) (i64_load (opt a 3))
@@ -314,21 +325,8 @@ rule token = parse
   | "i32.reinterpret_f32" { CONVERT i32_reinterpret_f32 }
   | "i64.reinterpret_f64" { CONVERT i64_reinterpret_f64 }
 
-  | "memory.size" { MEMORY_SIZE }
-  | "memory.grow" { MEMORY_GROW }
-
-  | "memory.init" { MEMORY_INIT }
-  | "data.drop" { DATA_DROP }
-  | "memory.copy" { MEMORY_COPY }
-  | "memory.fill" { MEMORY_FILL }
-  | "table.init" { TABLE_INIT }
-  | "elem.drop" { ELEM_DROP }
-  | "table.copy" { TABLE_COPY }
-
   | "ref.null" { REF_NULL }
   | "ref.func" { REF_FUNC }
-
-  | "passive" { PASSIVE }
 
   | "type" { TYPE }
   | "func" { FUNC }
@@ -341,6 +339,7 @@ rule token = parse
   | "memory" { MEMORY }
   | "elem" { ELEM }
   | "data" { DATA }
+  | "passive" { PASSIVE }
   | "offset" { OFFSET }
   | "import" { IMPORT }
   | "export" { EXPORT }
