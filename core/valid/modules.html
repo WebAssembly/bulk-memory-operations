@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -436,7 +436,7 @@ with the import’s <a class="reference internal" href="../syntax/types.html#syn
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{globals}}\)</span> is <span class="math">\(\href{../syntax/types.html#syntax-externtype}{\mathrm{globals}}(\mathit{it}^\ast)\)</span> concatenated with <span class="math">\(\mathit{gt}^\ast\)</span>,
 with the import’s <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> <span class="math">\(\mathit{it}^\ast\)</span> and the internal <a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">global types</span></a> <span class="math">\(\mathit{gt}^\ast\)</span> as determined below,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{elem}}\)</span> is <span class="math">\(\mathit{est}^\ast\)</span>, with <a class="reference internal" href="../syntax/types.html#syntax-segtype"><span class="std std-ref">segment types</span></a> <span class="math">\(\mathit{est}^\ast\)</span> as determined below,</li>
-<li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{datacount}}\)</span> is <span class="math">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{datacount}}\)</span>,</li>
+<li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{data}}\)</span> is <span class="math">\(\mathit{dst}^\ast\)</span>, with <a class="reference internal" href="../syntax/types.html#syntax-segtype"><span class="std std-ref">segment types</span></a> <span class="math">\(\mathit{dst}^\ast\)</span> as determined below,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{locals}}\)</span> is empty,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{labels}}\)</span> is empty,</li>
 <li><span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{return}}\)</span> is empty.</li>
@@ -513,7 +513,7 @@ the segment <span class="math">\(\href{../syntax/modules.html#syntax-export}{\ma
   \qquad
   \mathit{igt}^\ast = \href{../syntax/types.html#syntax-externtype}{\mathrm{globals}}(\mathit{it}^\ast)
   \\
-  C = \{ \href{../valid/conventions.html#context}{\mathsf{types}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast, \href{../valid/conventions.html#context}{\mathsf{funcs}}~\mathit{ift}^\ast~\mathit{ft}^\ast, \href{../valid/conventions.html#context}{\mathsf{tables}}~\mathit{itt}^\ast~\mathit{tt}^\ast, \href{../valid/conventions.html#context}{\mathsf{mems}}~\mathit{imt}^\ast~\mathit{mt}^\ast, \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast~\mathit{gt}^\ast, \href{../valid/conventions.html#context}{\mathsf{elem}}~\mathit{est}^\ast, \href{../valid/conventions.html#context}{\mathsf{datacount}}~\mathit{dc}^? \}
+  C = \{ \href{../valid/conventions.html#context}{\mathsf{types}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast, \href{../valid/conventions.html#context}{\mathsf{funcs}}~\mathit{ift}^\ast~\mathit{ft}^\ast, \href{../valid/conventions.html#context}{\mathsf{tables}}~\mathit{itt}^\ast~\mathit{tt}^\ast, \href{../valid/conventions.html#context}{\mathsf{mems}}~\mathit{imt}^\ast~\mathit{mt}^\ast, \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast~\mathit{gt}^\ast, \href{../valid/conventions.html#context}{\mathsf{elem}}~\mathit{est}^\ast, \href{../valid/conventions.html#context}{\mathsf{data}}~\mathit{dst}^\ast \}
   \\
   C' = \{ \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast \}
   \qquad
@@ -533,7 +533,6 @@ the segment <span class="math">\(\href{../syntax/modules.html#syntax-export}{\ma
       \href{../syntax/modules.html#syntax-module}{\mathsf{globals}}~\href{../syntax/modules.html#syntax-global}{\mathit{global}}^\ast, \\
       \href{../syntax/modules.html#syntax-module}{\mathsf{elem}}~\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}^\ast,
       \href{../syntax/modules.html#syntax-module}{\mathsf{data}}~\href{../syntax/modules.html#syntax-data}{\mathit{data}}^\ast,
-      \href{../syntax/modules.html#syntax-module}{\mathsf{datacount}}~\mathit{dc}^?,
       \href{../syntax/modules.html#syntax-module}{\mathsf{start}}~\href{../syntax/modules.html#syntax-start}{\mathit{start}}^?,
       \href{../syntax/modules.html#syntax-module}{\mathsf{imports}}~\href{../syntax/modules.html#syntax-import}{\mathit{import}}^\ast,
       \href{../syntax/modules.html#syntax-module}{\mathsf{exports}}~\href{../syntax/modules.html#syntax-export}{\mathit{export}}^\ast \} : \mathit{it}^\ast \href{../syntax/types.html#syntax-functype}{\rightarrow} \mathit{et}^\ast \\

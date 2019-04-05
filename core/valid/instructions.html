@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -472,14 +472,14 @@ In contrast,</p>
 <span id="id25"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x\)</span><a class="headerlink" href="#valid-memory-init" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The memory <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{mems}}[0]\)</span> must be defined in the context.</li>
-<li>The data segment index <span class="math">\(x\)</span> must be less than <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{datacount}}\)</span>.</li>
+<li>The data segment <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{data}}[x]\)</span> must be defined in the context.</li>
 <li>Then the instruction is valid with type <span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span>.</li>
 </ul>
 <div class="math">
 \[\frac{
   C.\href{../valid/conventions.html#context}{\mathsf{mems}}[0] = \href{../syntax/types.html#syntax-memtype}{\mathit{memtype}}
   \qquad
-  x &lt; C.\href{../valid/conventions.html#context}{\mathsf{datacount}}
+  C.\href{../valid/conventions.html#context}{\mathsf{data}}[x] = \href{../syntax/types.html#syntax-segtype}{\mathit{segtype}}
 }{
   C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x : [\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} []
 }\]</div>
@@ -487,12 +487,12 @@ In contrast,</p>
 <div class="section" id="valid-data-drop">
 <span id="id26"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}}~x\)</span><a class="headerlink" href="#valid-data-drop" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>The data segment index <span class="math">\(x\)</span> must be less than <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{datacount}}\)</span>.</li>
+<li>The data segment <span class="math">\(C.\href{../valid/conventions.html#context}{\mathsf{data}}[x]\)</span> must be defined in the context.</li>
 <li>Then the instruction is valid with type <span class="math">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span>.</li>
 </ul>
 <div class="math">
 \[\frac{
-  x &lt; C.\href{../valid/conventions.html#context}{\mathsf{datacount}}
+  C.\href{../valid/conventions.html#context}{\mathsf{data}}[x] = \href{../syntax/types.html#syntax-segtype}{\mathit{segtype}}
 }{
   C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}}~x : [] \href{../syntax/types.html#syntax-functype}{\rightarrow} []
 }\]</div>

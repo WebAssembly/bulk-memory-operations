@@ -439,7 +439,8 @@ The current version of the WebAssembly binary format is 1.</p>
 while other sections must occur at most once and in the prescribed order.
 All sections can be empty.
 The lengths of vectors produced by the (possibly empty) <a class="reference internal" href="#binary-funcsec"><span class="std std-ref">function</span></a> and <a class="reference internal" href="#binary-codesec"><span class="std std-ref">code</span></a> section must match up.
-Similarly, the data count must match the length of the <a class="reference internal" href="#binary-datasec"><span class="std std-ref">data segment</span></a> vector.</p>
+Similarly, the data count must match the length of the <a class="reference internal" href="#binary-datasec"><span class="std std-ref">data segment</span></a> vector.
+The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}\)</span> and <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}}\)</span> instructions can only be used if the data count section is present.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llcllll}
 \def\mathdef1#1{{}}\mathdef1{magic} &amp; \href{../binary/modules.html#binary-magic}{\mathtt{magic}} &amp;::=&amp;
@@ -468,11 +469,11 @@ Similarly, the data count must match the length of the <a class="reference inter
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast \\ &amp;&amp;&amp;
   \href{../syntax/modules.html#syntax-elem}{\mathit{elem}}^\ast{:\,}\href{../binary/modules.html#binary-elemsec}{\mathtt{elemsec}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast \\ &amp;&amp;&amp;
-  \mathit{dc}^?{:\,}\href{../binary/modules.html#binary-datacountsec}{\mathtt{datacountsec}} \\ &amp;&amp;&amp;
+  \mathit{m}^?{:\,}\href{../binary/modules.html#binary-datacountsec}{\mathtt{datacountsec}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast \\ &amp;&amp;&amp;
   \mathit{code}^n{:\,}\href{../binary/modules.html#binary-codesec}{\mathtt{codesec}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast \\ &amp;&amp;&amp;
-  \href{../syntax/modules.html#syntax-data}{\mathit{data}}^{\mathit{dc'}}{:\,}\href{../binary/modules.html#binary-datasec}{\mathtt{datasec}} \\ &amp;&amp;&amp;
+  \href{../syntax/modules.html#syntax-data}{\mathit{data}}^{\mathit{m'}}{:\,}\href{../binary/modules.html#binary-datasec}{\mathtt{datasec}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast
   \quad\Rightarrow\quad \{~
     \begin{array}[t]{&#64;{}l&#64;{}}
@@ -482,11 +483,14 @@ Similarly, the data count must match the length of the <a class="reference inter
     \href{../syntax/modules.html#syntax-module}{\mathsf{mems}}~\href{../syntax/modules.html#syntax-mem}{\mathit{mem}}^\ast, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{globals}}~\href{../syntax/modules.html#syntax-global}{\mathit{global}}^\ast, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{elem}}~\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}^\ast, \\
-    \href{../syntax/modules.html#syntax-module}{\mathsf{data}}~\href{../syntax/modules.html#syntax-data}{\mathit{data}}^\ast, \\
-    \href{../syntax/modules.html#syntax-module}{\mathsf{datacount}}~\mathit{dc}^?, \\
+    \href{../syntax/modules.html#syntax-module}{\mathsf{data}}~\href{../syntax/modules.html#syntax-data}{\mathit{data}}^{\mathit{m'}}, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{start}}~\href{../syntax/modules.html#syntax-start}{\mathit{start}}^?, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{imports}}~\href{../syntax/modules.html#syntax-import}{\mathit{import}}^\ast, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{exports}}~\href{../syntax/modules.html#syntax-export}{\mathit{export}}^\ast ~\} \\
+   \end{array} \\ &amp;&amp;&amp;
+  (\begin{array}[t]{&#64;{}c&#64;{~}l&#64;{}}
+   \mathrel{\mbox{if}} &amp; \mathit{m}^? \neq \epsilon \\
+   \vee &amp; \forall (t^\ast, e) \in \mathit{code}^n, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}} \notin e \wedge \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}} \notin e) \\
    \end{array} \\
 \end{array}\end{split}\]</div>
 <p>where for each <span class="math">\(t_i^\ast, e_i\)</span> in <span class="math">\(\mathit{code}^n\)</span>,</p>
@@ -495,8 +499,8 @@ Similarly, the data count must match the length of the <a class="reference inter
 <p>and where,</p>
 <div class="math">
 \[\begin{split}\begin{array}{lcl&#64;{\qquad}l}
-\mathit{dc'} &amp;=&amp; \mathit{dc} &amp; (\mathrel{\mbox{if}} \mathit{dc}^? \neq \epsilon) \\
-\mathit{dc'} &amp;=&amp; 0 &amp; (\mathrel{\mbox{otherwise}})
+\mathit{m'} &amp;=&amp; \mathit{m} &amp; (\mathrel{\mbox{if}} \mathit{m}^? \neq \epsilon) \\
+\mathit{m'} &amp;=&amp; 0 &amp; (\mathrel{\mbox{otherwise}})
 \end{array}\end{split}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
