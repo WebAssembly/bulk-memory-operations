@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -87,10 +87,10 @@
 <table border="1" class="docutils">
 <colgroup>
 <col width="19%" />
-<col width="8%" />
+<col width="9%" />
 <col width="21%" />
 <col width="20%" />
-<col width="32%" />
+<col width="31%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Instruction</th>
@@ -1252,6 +1252,48 @@
 <td><span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i64}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-valtype}{\mathsf{f64}}]\)</span></td>
 <td><a class="reference internal" href="../valid/instructions.html#valid-cvtop"><span class="std std-ref">validation</span></a></td>
 <td><a class="reference internal" href="../exec/instructions.html#exec-cvtop"><span class="std std-ref">execution</span></a>, <a class="reference internal" href="../exec/numerics.html#op-reinterpret"><span class="std std-ref">operator</span></a></td>
+</tr>
+<tr class="row-even"><td><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}\)</span></td>
+<td><span class="math">\(\def\mathdef537#1{\mathtt{0x#1}}\mathdef537{FC08}\)</span></td>
+<td><span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span></td>
+<td><a class="reference internal" href="../valid/instructions.html#valid-memory-init"><span class="std std-ref">validation</span></a></td>
+<td><span class="xref std std-ref">execution</span></td>
+</tr>
+<tr class="row-odd"><td><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}}\)</span></td>
+<td><span class="math">\(\def\mathdef538#1{\mathtt{0x#1}}\mathdef538{FC09}\)</span></td>
+<td><span class="math">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span></td>
+<td><a class="reference internal" href="../valid/instructions.html#valid-data-drop"><span class="std std-ref">validation</span></a></td>
+<td><span class="xref std std-ref">execution</span></td>
+</tr>
+<tr class="row-even"><td><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}}\)</span></td>
+<td><span class="math">\(\def\mathdef539#1{\mathtt{0x#1}}\mathdef539{FC0A}\)</span></td>
+<td><span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span></td>
+<td><a class="reference internal" href="../valid/instructions.html#valid-memory-copy"><span class="std std-ref">validation</span></a></td>
+<td><span class="xref std std-ref">execution</span></td>
+</tr>
+<tr class="row-odd"><td><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}\)</span></td>
+<td><span class="math">\(\def\mathdef540#1{\mathtt{0x#1}}\mathdef540{FC0B}\)</span></td>
+<td><span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span></td>
+<td><a class="reference internal" href="../valid/instructions.html#valid-memory-fill"><span class="std std-ref">validation</span></a></td>
+<td><span class="xref std std-ref">execution</span></td>
+</tr>
+<tr class="row-even"><td><span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}\)</span></td>
+<td><span class="math">\(\def\mathdef541#1{\mathtt{0x#1}}\mathdef541{FC0C}\)</span></td>
+<td><span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span></td>
+<td><a class="reference internal" href="../valid/instructions.html#valid-table-init"><span class="std std-ref">validation</span></a></td>
+<td><span class="xref std std-ref">execution</span></td>
+</tr>
+<tr class="row-odd"><td><span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{elem.drop}}\)</span></td>
+<td><span class="math">\(\def\mathdef542#1{\mathtt{0x#1}}\mathdef542{FC0D}\)</span></td>
+<td><span class="math">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span></td>
+<td><a class="reference internal" href="../valid/instructions.html#valid-elem-drop"><span class="std std-ref">validation</span></a></td>
+<td><span class="xref std std-ref">execution</span></td>
+</tr>
+<tr class="row-even"><td><span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}}\)</span></td>
+<td><span class="math">\(\def\mathdef543#1{\mathtt{0x#1}}\mathdef543{FC0E}\)</span></td>
+<td><span class="math">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span></td>
+<td><a class="reference internal" href="../valid/instructions.html#valid-table-copy"><span class="std std-ref">validation</span></a></td>
+<td><span class="xref std std-ref">execution</span></td>
 </tr>
 </tbody>
 </table>
