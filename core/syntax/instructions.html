@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -47,16 +47,7 @@
 <li class="toctree-l2"><a class="reference internal" href="conventions.html">Conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="values.html">Values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="types.html">Types</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Instructions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#numeric-instructions">Numeric Instructions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#parametric-instructions">Parametric Instructions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#variable-instructions">Variable Instructions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#memory-instructions">Memory Instructions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#table-instructions">Table Instructions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#control-instructions">Control Instructions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#expressions">Expressions</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>
 </li>
@@ -120,13 +111,13 @@ which are part of the instruction itself.</p>
 These operations closely match respective operations available in hardware.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llcl}
-\def\mathdef2034#1{{}}\mathdef2034{width} &amp; \mathit{nn}, \mathit{mm} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{width} &amp; \mathit{nn}, \mathit{mm} &amp;::=&amp;
   \mathsf{32} ~|~ \mathsf{64} \\
-\def\mathdef2034#1{{}}\mathdef2034{signedness} &amp; \href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{signedness} &amp; \href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} &amp;::=&amp;
   \mathsf{u} ~|~ \mathsf{s} \\
-\def\mathdef2034#1{{}}\mathdef2034{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
-  \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~\href{../syntax/values.html#syntax-int}{\def\mathdef2091#1{{\mathit{i}#1}}\mathdef2091{\mathit{nn}}} ~|~
-  \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~\href{../syntax/values.html#syntax-float}{\def\mathdef2092#1{{\mathit{f}#1}}\mathdef2092{\mathit{nn}}} \\&amp;&amp;|&amp;
+\def\mathdef2043#1{{}}\mathdef2043{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
+  \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~\href{../syntax/values.html#syntax-int}{\def\mathdef2100#1{{\mathit{i}#1}}\mathdef2100{\mathit{nn}}} ~|~
+  \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~\href{../syntax/values.html#syntax-float}{\def\mathdef2101#1{{\mathit{f}#1}}\mathdef2101{\mathit{nn}}} \\&amp;&amp;|&amp;
   \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-iunop}{\mathit{iunop}} ~|~
   \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-funop}{\mathit{funop}} \\&amp;&amp;|&amp;
   \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-ibinop}{\mathit{ibinop}} ~|~
@@ -134,20 +125,20 @@ These operations closely match respective operations available in hardware.</p>
   \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-itestop}{\mathit{itestop}} \\&amp;&amp;|&amp;
   \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-irelop}{\mathit{irelop}} ~|~
   \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-frelop}{\mathit{frelop}} \\&amp;&amp;|&amp;
-  \mathsf{i32.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{wrap}}\mathsf{/i64} ~|~
-  \mathsf{i64.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{extend}}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}}/\mathsf{i32} ~|~
-  \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{trunc}}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}}/\mathsf{f}\mathit{mm} \\&amp;&amp;|&amp;
-  \mathsf{f32.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{demote}}\mathsf{/f64} ~|~
-  \mathsf{f64.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{promote}}\mathsf{/f32} ~|~
-  \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{convert}}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}}/\mathsf{i}\mathit{mm} \\&amp;&amp;|&amp;
-  \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{reinterpret}}\mathsf{/f}\mathit{nn} ~|~
-  \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{reinterpret}}\mathsf{/i}\mathit{nn} \\&amp;&amp;|&amp;
+  \mathsf{i32.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{wrap}}\mathsf{\_i64} ~|~
+  \mathsf{i64.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{extend}}\mathsf{\_i32}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
+  \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{trunc}}\mathsf{\_f}\mathit{mm}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} \\&amp;&amp;|&amp;
+  \mathsf{f32.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{demote}}\mathsf{\_f64} ~|~
+  \mathsf{f64.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{promote}}\mathsf{\_f32} ~|~
+  \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{convert}}\mathsf{\_i}\mathit{mm}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} \\&amp;&amp;|&amp;
+  \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{reinterpret}}\mathsf{\_f}\mathit{nn} ~|~
+  \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{reinterpret}}\mathsf{\_i}\mathit{nn} \\&amp;&amp;|&amp;
   \dots \\
-\def\mathdef2034#1{{}}\mathdef2034{integer unary operator} &amp; \href{../syntax/instructions.html#syntax-iunop}{\mathit{iunop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{integer unary operator} &amp; \href{../syntax/instructions.html#syntax-iunop}{\mathit{iunop}} &amp;::=&amp;
   \mathsf{clz} ~|~
   \mathsf{ctz} ~|~
   \mathsf{popcnt} \\
-\def\mathdef2034#1{{}}\mathdef2034{integer binary operator} &amp; \href{../syntax/instructions.html#syntax-ibinop}{\mathit{ibinop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{integer binary operator} &amp; \href{../syntax/instructions.html#syntax-ibinop}{\mathit{ibinop}} &amp;::=&amp;
   \mathsf{add} ~|~
   \mathsf{sub} ~|~
   \mathsf{mul} ~|~
@@ -160,7 +151,7 @@ These operations closely match respective operations available in hardware.</p>
   \mathsf{shr\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
   \mathsf{rotl} ~|~
   \mathsf{rotr} \\
-\def\mathdef2034#1{{}}\mathdef2034{floating-point unary operator} &amp; \href{../syntax/instructions.html#syntax-funop}{\mathit{funop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{floating-point unary operator} &amp; \href{../syntax/instructions.html#syntax-funop}{\mathit{funop}} &amp;::=&amp;
   \mathsf{abs} ~|~
   \mathsf{neg} ~|~
   \mathsf{sqrt} ~|~
@@ -168,7 +159,7 @@ These operations closely match respective operations available in hardware.</p>
   \mathsf{floor} ~|~
   \mathsf{trunc} ~|~
   \mathsf{nearest} \\
-\def\mathdef2034#1{{}}\mathdef2034{floating-point binary operator} &amp; \href{../syntax/instructions.html#syntax-fbinop}{\mathit{fbinop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{floating-point binary operator} &amp; \href{../syntax/instructions.html#syntax-fbinop}{\mathit{fbinop}} &amp;::=&amp;
   \mathsf{add} ~|~
   \mathsf{sub} ~|~
   \mathsf{mul} ~|~
@@ -176,16 +167,16 @@ These operations closely match respective operations available in hardware.</p>
   \mathsf{min} ~|~
   \mathsf{max} ~|~
   \mathsf{copysign} \\
-\def\mathdef2034#1{{}}\mathdef2034{integer test operator} &amp; \href{../syntax/instructions.html#syntax-itestop}{\mathit{itestop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{integer test operator} &amp; \href{../syntax/instructions.html#syntax-itestop}{\mathit{itestop}} &amp;::=&amp;
   \mathsf{eqz} \\
-\def\mathdef2034#1{{}}\mathdef2034{integer relational operator} &amp; \href{../syntax/instructions.html#syntax-irelop}{\mathit{irelop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{integer relational operator} &amp; \href{../syntax/instructions.html#syntax-irelop}{\mathit{irelop}} &amp;::=&amp;
   \mathsf{eq} ~|~
   \mathsf{ne} ~|~
   \mathsf{lt\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
   \mathsf{gt\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
   \mathsf{le\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
   \mathsf{ge\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} \\
-\def\mathdef2034#1{{}}\mathdef2034{floating-point relational operator} &amp; \href{../syntax/instructions.html#syntax-frelop}{\mathit{frelop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{floating-point relational operator} &amp; \href{../syntax/instructions.html#syntax-frelop}{\mathit{frelop}} &amp;::=&amp;
   \mathsf{eq} ~|~
   \mathsf{ne} ~|~
   \mathsf{lt} ~|~
@@ -202,7 +193,7 @@ For each type, several subcategories can be distinguished:</p>
 <li><em>Tests</em>: consume one operand of the respective type and produce a Boolean integer result.</li>
 <li><em>Comparisons</em>: consume two operands of the respective type and produce a Boolean integer result.</li>
 <li><em>Conversions</em>: consume a value of one type and produce a result of another
-(the source type of the conversion is the one after the “<span class="math">\(\mathsf{/}\)</span>”).</li>
+(the source type of the conversion is the one after the “<span class="math">\(\mathsf{\_}\)</span>”).</li>
 </ul>
 <p>Some integer instructions come in two flavors,
 where a signedness annotation <span class="math">\(\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}}\)</span> distinguishes whether the operands are to be <a class="reference internal" href="../exec/numerics.html#aux-signed"><span class="std std-ref">interpreted</span></a> as <a class="reference internal" href="values.html#syntax-uint"><span class="std std-ref">unsigned</span></a> or <a class="reference internal" href="values.html#syntax-sint"><span class="std std-ref">signed</span></a> integers.
@@ -212,15 +203,15 @@ For the other integer instructions, the use of two’s complement for the signed
 <p>Occasionally, it is convenient to group operators together according to the following grammar shorthands:</p>
 <div class="math">
 \[\begin{split}\begin{array}{llll}
-\def\mathdef2034#1{{}}\mathdef2034{unary operator} &amp; \href{../syntax/instructions.html#syntax-unop}{\mathit{unop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-iunop}{\mathit{iunop}} ~|~ \href{../syntax/instructions.html#syntax-funop}{\mathit{funop}} \\
-\def\mathdef2034#1{{}}\mathdef2034{binary operator} &amp; \href{../syntax/instructions.html#syntax-binop}{\mathit{binop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-ibinop}{\mathit{ibinop}} ~|~ \href{../syntax/instructions.html#syntax-fbinop}{\mathit{fbinop}} \\
-\def\mathdef2034#1{{}}\mathdef2034{test operator} &amp; \href{../syntax/instructions.html#syntax-testop}{\mathit{testop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-itestop}{\mathit{itestop}} \\
-\def\mathdef2034#1{{}}\mathdef2034{relational operator} &amp; \href{../syntax/instructions.html#syntax-relop}{\mathit{relop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-irelop}{\mathit{irelop}} ~|~ \href{../syntax/instructions.html#syntax-frelop}{\mathit{frelop}} \\
-\def\mathdef2034#1{{}}\mathdef2034{conversion operator} &amp; \href{../syntax/instructions.html#syntax-cvtop}{\mathit{cvtop}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{unary operator} &amp; \href{../syntax/instructions.html#syntax-unop}{\mathit{unop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-iunop}{\mathit{iunop}} ~|~ \href{../syntax/instructions.html#syntax-funop}{\mathit{funop}} \\
+\def\mathdef2043#1{{}}\mathdef2043{binary operator} &amp; \href{../syntax/instructions.html#syntax-binop}{\mathit{binop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-ibinop}{\mathit{ibinop}} ~|~ \href{../syntax/instructions.html#syntax-fbinop}{\mathit{fbinop}} \\
+\def\mathdef2043#1{{}}\mathdef2043{test operator} &amp; \href{../syntax/instructions.html#syntax-testop}{\mathit{testop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-itestop}{\mathit{itestop}} \\
+\def\mathdef2043#1{{}}\mathdef2043{relational operator} &amp; \href{../syntax/instructions.html#syntax-relop}{\mathit{relop}} &amp;::=&amp; \href{../syntax/instructions.html#syntax-irelop}{\mathit{irelop}} ~|~ \href{../syntax/instructions.html#syntax-frelop}{\mathit{frelop}} \\
+\def\mathdef2043#1{{}}\mathdef2043{conversion operator} &amp; \href{../syntax/instructions.html#syntax-cvtop}{\mathit{cvtop}} &amp;::=&amp;
   \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{wrap}} ~|~
-  \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{extend}}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
-  \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{trunc}}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
-  \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{convert}}\mathsf{\_}\href{../syntax/instructions.html#syntax-sx}{\mathit{sx}} ~|~
+  \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{extend}} ~|~
+  \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{trunc}} ~|~
+  \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{convert}} ~|~
   \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{demote}} ~|~
   \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{promote}} ~|~
   \href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{reinterpret}} \\
@@ -232,7 +223,7 @@ For the other integer instructions, the use of two’s complement for the signed
 <p>Instructions in this group can operate on operands of any <a class="reference internal" href="types.html#syntax-valtype"><span class="std std-ref">value type</span></a>.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llcl}
-\def\mathdef2034#1{{}}\mathdef2034{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
   \dots \\&amp;&amp;|&amp;
   \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{drop}} \\&amp;&amp;|&amp;
   \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}
@@ -245,25 +236,46 @@ For the other integer instructions, the use of two’s complement for the signed
 <p>Variable instructions are concerned with access to <a class="reference internal" href="modules.html#syntax-local"><span class="std std-ref">local</span></a> or <a class="reference internal" href="modules.html#syntax-global"><span class="std std-ref">global</span></a> variables.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llcl}
-\def\mathdef2034#1{{}}\mathdef2034{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
   \dots \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{get\_local}}~\href{../syntax/modules.html#syntax-localidx}{\mathit{localidx}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{set\_local}}~\href{../syntax/modules.html#syntax-localidx}{\mathit{localidx}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{tee\_local}}~\href{../syntax/modules.html#syntax-localidx}{\mathit{localidx}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{get\_global}}~\href{../syntax/modules.html#syntax-globalidx}{\mathit{globalidx}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{set\_global}}~\href{../syntax/modules.html#syntax-globalidx}{\mathit{globalidx}} \\
+  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{local.get}}~\href{../syntax/modules.html#syntax-localidx}{\mathit{localidx}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{local.set}}~\href{../syntax/modules.html#syntax-localidx}{\mathit{localidx}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{local.tee}}~\href{../syntax/modules.html#syntax-localidx}{\mathit{localidx}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{global.get}}~\href{../syntax/modules.html#syntax-globalidx}{\mathit{globalidx}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{global.set}}~\href{../syntax/modules.html#syntax-globalidx}{\mathit{globalidx}} \\
 \end{array}\end{split}\]</div>
 <p>These instructions get or set the values of variables, respectively.
-The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{tee\_local}}\)</span> instruction is like <span class="math">\(\href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{set\_local}}\)</span> but also returns its argument.</p>
+The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{local.tee}}\)</span> instruction is like <span class="math">\(\href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{local.set}}\)</span> but also returns its argument.</p>
+</div>
+<div class="section" id="table-instructions">
+<span id="syntax-instr-table"></span><span id="index-4"></span><h2>Table Instructions<a class="headerlink" href="#table-instructions" title="Permalink to this headline">¶</a></h2>
+<p>Instructions in this group are concerned with tables <a class="reference internal" href="modules.html#syntax-table"><span class="std std-ref">table</span></a>.</p>
+<div class="math">
+\[\begin{split}\begin{array}{llcl}
+\def\mathdef2043#1{{}}\mathdef2043{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
+  \dots \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}~\href{../syntax/modules.html#syntax-elemidx}{\mathit{elemidx}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-table}{\mathsf{elem.drop}}~\href{../syntax/modules.html#syntax-elemidx}{\mathit{elemidx}} \\
+\end{array}\end{split}\]</div>
+<p>The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}}\)</span> instruction copies elements from a source table region to a possibly overlapping destination region.
+The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}\)</span> instruction copies elements from a <a class="reference internal" href="modules.html#syntax-elem"><span class="std std-ref">passive element segment</span></a> into a table.
+The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{elem.drop}}\)</span> instruction prevents further use of a passive element segment. This instruction is intended to be used as an optimization hint. After an element segment is dropped its elements can no longer be retrieved, so the memory used by this segment may be freed.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the current version of WebAssembly,
+all table instructions implicitly operate on <a class="reference internal" href="modules.html#syntax-table"><span class="std std-ref">table</span></a> <a class="reference internal" href="modules.html#syntax-tableidx"><span class="std std-ref">index</span></a> <span class="math">\(0\)</span>.
+This restriction may be lifted in future versions.</p>
+</div>
 </div>
 <div class="section" id="memory-instructions">
-<span id="syntax-instr-memory"></span><span id="syntax-memarg"></span><span id="syntax-storen"></span><span id="syntax-loadn"></span><span id="index-4"></span><h2>Memory Instructions<a class="headerlink" href="#memory-instructions" title="Permalink to this headline">¶</a></h2>
+<span id="syntax-instr-memory"></span><span id="syntax-memarg"></span><span id="syntax-storen"></span><span id="syntax-loadn"></span><span id="index-5"></span><h2>Memory Instructions<a class="headerlink" href="#memory-instructions" title="Permalink to this headline">¶</a></h2>
 <p>Instructions in this group are concerned with linear <a class="reference internal" href="modules.html#syntax-mem"><span class="std std-ref">memory</span></a>.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llcl}
-\def\mathdef2034#1{{}}\mathdef2034{memory immediate} &amp; \href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}} &amp;::=&amp;
-  \{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~\href{../syntax/values.html#syntax-int}{\def\mathdef2040#1{{\mathit{u}#1}}\mathdef2040{\mathit{32}}}, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~\href{../syntax/values.html#syntax-int}{\def\mathdef2040#1{{\mathit{u}#1}}\mathdef2040{\mathit{32}}} \} \\
-\def\mathdef2034#1{{}}\mathdef2034{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{memory immediate} &amp; \href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}} &amp;::=&amp;
+  \{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~\href{../syntax/values.html#syntax-int}{\def\mathdef2049#1{{\mathit{u}#1}}\mathdef2049{\mathit{32}}}, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~\href{../syntax/values.html#syntax-int}{\def\mathdef2049#1{{\mathit{u}#1}}\mathdef2049{\mathit{32}}} \} \\
+\def\mathdef2043#1{{}}\mathdef2043{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
   \dots \\&amp;&amp;|&amp;
   \mathsf{i}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}~\href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}} ~|~
   \mathsf{f}\mathit{nn}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}~\href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}} \\&amp;&amp;|&amp;
@@ -277,10 +289,10 @@ The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-variable
   \mathsf{i64.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{32}~\href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}} \\&amp;&amp;|&amp;
   \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.size}} \\&amp;&amp;|&amp;
   \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.grow}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~\href{../syntax/modules.html#syntax-dataidx}{\mathit{dataidx}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.drop}}~\href{../syntax/modules.html#syntax-dataidx}{\mathit{dataidx}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}} \\&amp;&amp;|&amp;
   \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}} \\
+  \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~\href{../syntax/modules.html#syntax-dataidx}{\mathit{dataidx}} \\&amp;&amp;|&amp;
+  \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}}~\href{../syntax/modules.html#syntax-dataidx}{\mathit{dataidx}} \\
 \end{array}\end{split}\]</div>
 <p>Memory is accessed with <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}\)</span> and <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\)</span> instructions for the different <a class="reference internal" href="types.html#syntax-valtype"><span class="std std-ref">value types</span></a>.
 They all take a <em>memory immediate</em> <span class="math">\(\href{../syntax/instructions.html#syntax-memarg}{\mathit{memarg}}\)</span> that contains an address <em>offset</em> and an <em>alignment</em> hint (in base 2 logarithmic representation).
@@ -296,35 +308,14 @@ A <a class="reference internal" href="../intro/overview.html#trap"><span class="
 <p>The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.size}}\)</span> instruction returns the current size of a memory.
 The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.grow}}\)</span> instruction grows memory by a given delta and returns the previous size, or <span class="math">\(-1\)</span> if enough memory cannot be allocated.
 Both instructions operate in units of <a class="reference internal" href="../exec/runtime.html#page-size"><span class="std std-ref">page size</span></a>.</p>
-<p>The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}\)</span> instruction copies data from a <a class="reference internal" href="modules.html#syntax-data"><span class="std std-ref">passive data segment</span></a> into a memory.
-The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.drop}}\)</span> instruction prevents further use of a passive data segment. This instruction is intended to be used as an optimization hint. After a data segment is dropped its data can no longer be retrieved, so the memory used by this segment may be freed.
+<p>The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}\)</span> instruction sets all values in a region to a given byte.
 The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}}\)</span> instruction copies data from a source memory region to a possibly overlapping destination region.
-The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}\)</span> instruction sets all values in a region to a given byte.</p>
+The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}\)</span> instruction copies data from a <a class="reference internal" href="modules.html#syntax-data"><span class="std std-ref">passive data segment</span></a> into a memory.
+The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}}\)</span> instruction prevents further use of a passive data segment. This instruction is intended to be used as an optimization hint. After a data segment is dropped its data can no longer be retrieved, so the memory used by this segment may be freed.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In the current version of WebAssembly,
 all memory instructions implicitly operate on <a class="reference internal" href="modules.html#syntax-mem"><span class="std std-ref">memory</span></a> <a class="reference internal" href="modules.html#syntax-memidx"><span class="std std-ref">index</span></a> <span class="math">\(0\)</span>.
-This restriction may be lifted in future versions.</p>
-</div>
-</div>
-<div class="section" id="table-instructions">
-<span id="syntax-instr-table"></span><span id="index-5"></span><h2>Table Instructions<a class="headerlink" href="#table-instructions" title="Permalink to this headline">¶</a></h2>
-<p>Instructions in this group are concerned with tables <a class="reference internal" href="modules.html#syntax-table"><span class="std std-ref">table</span></a>.</p>
-<div class="math">
-\[\begin{split}\begin{array}{llcl}
-\def\mathdef2034#1{{}}\mathdef2034{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
-  \dots \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}~\href{../syntax/modules.html#syntax-elemidx}{\mathit{elemidx}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.drop}}~\href{../syntax/modules.html#syntax-elemidx}{\mathit{elemidx}} \\&amp;&amp;|&amp;
-  \href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}} \\
-\end{array}\end{split}\]</div>
-<p>The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}\)</span> instruction copies elements from a <a class="reference internal" href="modules.html#syntax-elem"><span class="std std-ref">passive element segment</span></a> into a table.
-The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.drop}}\)</span> instruction prevents further use of a passive element segment. This instruction is intended to be used as an optimization hint. After an element segment is dropped its elements can no longer be retrieved, so the memory used by this segment may be freed.
-The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}}\)</span> instruction copies elements from a source table region to a possibly overlapping destination region.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In the current version of WebAssembly,
-all table instructions implicitly operate on <a class="reference internal" href="modules.html#syntax-table"><span class="std std-ref">table</span></a> <a class="reference internal" href="modules.html#syntax-tableidx"><span class="std std-ref">index</span></a> <span class="math">\(0\)</span>.
 This restriction may be lifted in future versions.</p>
 </div>
 </div>
@@ -333,7 +324,7 @@ This restriction may be lifted in future versions.</p>
 <p>Instructions in this group affect the flow of control.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llcl}
-\def\mathdef2034#1{{}}\mathdef2034{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{instruction} &amp; \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}} &amp;::=&amp;
   \dots \\&amp;&amp;|&amp;
   \href{../syntax/instructions.html#syntax-instr-control}{\mathsf{nop}} \\&amp;&amp;|&amp;
   \href{../syntax/instructions.html#syntax-instr-control}{\mathsf{unreachable}} \\&amp;&amp;|&amp;
@@ -368,7 +359,7 @@ In case of <span class="math">\(\href{../syntax/instructions.html#syntax-instr-c
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This enforces <em>structured control flow</em>.
-Intuitively, a branch targeting a <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{block}}\)</span> or <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{if}}\)</span> behaves like a <span class="math">\(\mathsf{break}\)</span> statement,
+Intuitively, a branch targeting a <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{block}}\)</span> or <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{if}}\)</span> behaves like a <span class="math">\(\mathsf{break}\)</span> statement in most C-like languages,
 while a branch targeting a <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{loop}}\)</span> behaves like a <span class="math">\(\mathsf{continue}\)</span> statement.</p>
 </div>
 <p>Branch instructions come in several flavors:
@@ -380,7 +371,7 @@ Taking a branch <em>unwinds</em> the operand stack up to the height where the ta
 However, forward branches that target a control instruction with a non-empty result type consume matching operands first and push them back on the operand stack after unwinding, as a result for the terminated structured instruction.</p>
 <p>The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call}}\)</span> instruction invokes another <a class="reference internal" href="modules.html#syntax-func"><span class="std std-ref">function</span></a>, consuming the necessary arguments from the stack and returning the result values of the call.
 The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call\_indirect}}\)</span> instruction calls a function indirectly through an operand indexing into a <a class="reference internal" href="modules.html#syntax-table"><span class="std std-ref">table</span></a>.
-Since tables may contain function elements of heterogeneous type <span class="math">\(\href{../syntax/types.html#syntax-elemtype}{\mathsf{anyfunc}}\)</span>,
+Since tables may contain function elements of heterogeneous type <span class="math">\(\href{../syntax/types.html#syntax-elemtype}{\mathsf{funcref}}\)</span>,
 the callee is dynamically checked against the <a class="reference internal" href="types.html#syntax-functype"><span class="std std-ref">function type</span></a> indexed by the instruction’s immediate, and the call aborted with a <a class="reference internal" href="../intro/overview.html#trap"><span class="std std-ref">trap</span></a> if it does not match.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -394,7 +385,7 @@ This restriction may be lifted in future versions.</p>
 <p><a class="reference internal" href="modules.html#syntax-func"><span class="std std-ref">Function</span></a> bodies, initialization values for <a class="reference internal" href="modules.html#syntax-global"><span class="std std-ref">globals</span></a>, and offsets of <a class="reference internal" href="modules.html#syntax-elem"><span class="std std-ref">element</span></a> or <a class="reference internal" href="modules.html#syntax-data"><span class="std std-ref">data</span></a> segments are given as expressions, which are sequences of <a class="reference internal" href="#syntax-instr"><span class="std std-ref">instructions</span></a> terminated by an <span class="math">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span> marker.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llll}
-\def\mathdef2034#1{{}}\mathdef2034{expression} &amp; \href{../syntax/instructions.html#syntax-expr}{\mathit{expr}} &amp;::=&amp;
+\def\mathdef2043#1{{}}\mathdef2043{expression} &amp; \href{../syntax/instructions.html#syntax-expr}{\mathit{expr}} &amp;::=&amp;
   \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}} \\
 \end{array}\end{split}\]</div>
 <p>In some places, validation <a class="reference internal" href="../valid/instructions.html#valid-constant"><span class="std std-ref">restricts</span></a> expressions to be <em>constant</em>, which limits the set of allowable instructions.</p>

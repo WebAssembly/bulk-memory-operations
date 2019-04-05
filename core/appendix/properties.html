@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -53,15 +53,7 @@
 <li class="toctree-l2"><a class="reference internal" href="implementation.html">Implementation Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="algorithm.html">Validation Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom.html">Custom Sections</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Soundness</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#values-and-results">Values and Results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#store-validity">Store Validity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-validity">Configuration Validity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#administrative-instructions">Administrative Instructions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#store-extension">Store Extension</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#theorems">Theorems</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Soundness</a></li>
 </ul>
 </li>
 </ul>
@@ -267,7 +259,7 @@ That way, the function itself is able to make sufficient assumptions about futur
 </ul>
 </li>
 <li>The <a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">limits</span></a> <span class="math">\(\{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\}\)</span> must be <a class="reference internal" href="../valid/types.html#valid-limits"><span class="std std-ref">valid</span></a>.</li>
-<li>Then the table instance is valid with <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table type</span></a> <span class="math">\(\{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{anyfunc}}\)</span>.</li>
+<li>Then the table instance is valid with <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table type</span></a> <span class="math">\(\{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{funcref}}\)</span>.</li>
 </ul>
 <div class="math">
 \[\frac{
@@ -275,7 +267,7 @@ That way, the function itself is able to make sufficient assumptions about futur
   \qquad
   \href{../valid/types.html#valid-limits}{\vdash} \{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\} \mathrel{\mbox{ok}}
 }{
-  S \href{../appendix/properties.html#valid-tableinst}{\vdash} \{ \href{../exec/runtime.html#syntax-tableinst}{\mathsf{elem}}~(\mathit{fa}^?)^n, \href{../exec/runtime.html#syntax-tableinst}{\mathsf{max}}~m^? \} : \{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{anyfunc}}
+  S \href{../appendix/properties.html#valid-tableinst}{\vdash} \{ \href{../exec/runtime.html#syntax-tableinst}{\mathsf{elem}}~(\mathit{fa}^?)^n, \href{../exec/runtime.html#syntax-tableinst}{\mathsf{max}}~m^? \} : \{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{funcref}}
 }\]</div>
 </div>
 <div class="section" id="memory-instances">
@@ -464,7 +456,7 @@ To that end, all previous typing judgements <span class="math">\(C \vdash \mathi
 <div class="section" id="index-17">
 <span id="id6"></span><h3><span class="math">\(\href{../exec/runtime.html#syntax-init-elem}{\mathsf{init\_elem}}~\href{../exec/runtime.html#syntax-tableaddr}{\mathit{tableaddr}}~o~x^n\)</span><a class="headerlink" href="#index-17" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>The <a class="reference internal" href="../exec/runtime.html#syntax-externval"><span class="std std-ref">external table value</span></a> <span class="math">\(\href{../exec/runtime.html#syntax-externval}{\mathsf{table}}~\href{../exec/runtime.html#syntax-tableaddr}{\mathit{tableaddr}}\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-externval-table"><span class="std std-ref">valid</span></a> with some <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external table type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{anyfunc}}\)</span>.</li>
+<li>The <a class="reference internal" href="../exec/runtime.html#syntax-externval"><span class="std std-ref">external table value</span></a> <span class="math">\(\href{../exec/runtime.html#syntax-externval}{\mathsf{table}}~\href{../exec/runtime.html#syntax-tableaddr}{\mathit{tableaddr}}\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-externval-table"><span class="std std-ref">valid</span></a> with some <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external table type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{funcref}}\)</span>.</li>
 <li>The index <span class="math">\(o + n\)</span> must be smaller than or equal to <span class="math">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}.\href{../syntax/types.html#syntax-limits}{\mathsf{min}}\)</span>.</li>
 <li>The <a class="reference internal" href="../exec/runtime.html#syntax-moduleinst"><span class="std std-ref">module instance</span></a> <span class="math">\(\href{../exec/runtime.html#syntax-moduleinst}{\mathit{moduleinst}}\)</span> must be <a class="reference internal" href="#valid-moduleinst"><span class="std std-ref">valid</span></a> with some <a class="reference internal" href="../valid/conventions.html#context"><span class="std std-ref">context</span></a> <span class="math">\(C\)</span>.</li>
 <li>Each <a class="reference internal" href="../syntax/modules.html#syntax-funcidx"><span class="std std-ref">function index</span></a> <span class="math">\(x_i\)</span> in <span class="math">\(x^n\)</span> must be defined in the context <span class="math">\(C\)</span>.</li>
@@ -472,7 +464,7 @@ To that end, all previous typing judgements <span class="math">\(C \vdash \mathi
 </ul>
 <div class="math">
 \[\frac{
-  S \href{../exec/modules.html#valid-externval}{\vdash} \href{../exec/runtime.html#syntax-externval}{\mathsf{table}}~\href{../exec/runtime.html#syntax-tableaddr}{\mathit{tableaddr}} : \href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{anyfunc}}
+  S \href{../exec/modules.html#valid-externval}{\vdash} \href{../exec/runtime.html#syntax-externval}{\mathsf{table}}~\href{../exec/runtime.html#syntax-tableaddr}{\mathit{tableaddr}} : \href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-elemtype}{\mathsf{funcref}}
   \qquad
   o + n \leq \href{../syntax/types.html#syntax-limits}{\mathit{limits}}.\href{../syntax/types.html#syntax-limits}{\mathsf{min}}
   \qquad

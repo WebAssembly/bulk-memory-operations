@@ -33,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+   <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -46,14 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../syntax/index.html">Structure</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Validation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="conventions.html">Conventions</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Types</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#limits">Limits</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#function-types">Function Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#table-types">Table Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#memory-types">Memory Types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#global-types">Global Types</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="instructions.html">Instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>
@@ -101,18 +94,27 @@
 However, restrictions apply to <a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">function types</span></a> as well as the <a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">limits</span></a> of <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table types</span></a> and <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory types</span></a>, which must be checked during validation.</p>
 <div class="section" id="limits">
 <span id="valid-limits"></span><span id="index-0"></span><h2>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">Limits</span></a> must have meaningful bounds.</p>
+<p><a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">Limits</span></a> must have meaningful bounds that are within a given range.</p>
 <div class="section" id="id1">
 <h3><span class="math">\(\{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^? \}\)</span><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>If the maximum <span class="math">\(m^?\)</span> is not empty, then its value must not be smaller than <span class="math">\(n\)</span>.</li>
-<li>Then the limit is valid.</li>
+<li>The value of <span class="math">\(n\)</span> must not be larger than <span class="math">\(k\)</span>.</li>
+<li>If the maximum <span class="math">\(m^?\)</span> is not empty, then:<ul>
+<li>Its value must not be larger than <span class="math">\(k\)</span>.</li>
+<li>Its value must not be smaller than <span class="math">\(n\)</span>.</li>
+</ul>
+</li>
+<li>Then the limit is valid within range <span class="math">\(k\)</span>.</li>
 </ul>
 <div class="math">
 \[\frac{
+  n \leq k
+  \qquad
+  (m \leq k)^?
+  \qquad
   (n \leq m)^?
 }{
-  \href{../valid/types.html#valid-limits}{\vdash} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^? \} \mathrel{\mbox{ok}}
+  \href{../valid/types.html#valid-limits}{\vdash} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^? \} : k
 }\]</div>
 </div>
 </div>
@@ -141,12 +143,12 @@ However, restrictions apply to <a class="reference internal" href="../syntax/typ
 <div class="section" id="id3">
 <h3><span class="math">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-elemtype}{\mathit{elemtype}}\)</span><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>The limits <span class="math">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> must be <a class="reference internal" href="#valid-limits"><span class="std std-ref">valid</span></a>.</li>
+<li>The limits <span class="math">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> must be <a class="reference internal" href="#valid-limits"><span class="std std-ref">valid</span></a> within range <span class="math">\(2^{32}\)</span>.</li>
 <li>Then the table type is valid.</li>
 </ul>
 <div class="math">
 \[\frac{
-  \href{../valid/types.html#valid-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}} \mathrel{\mbox{ok}}
+  \href{../valid/types.html#valid-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}} : 2^{32}
 }{
   \href{../valid/types.html#valid-tabletype}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-elemtype}{\mathit{elemtype}} \mathrel{\mbox{ok}}
 }\]</div>
@@ -157,12 +159,12 @@ However, restrictions apply to <a class="reference internal" href="../syntax/typ
 <div class="section" id="id4">
 <h3><span class="math">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>The limits <span class="math">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> must be <a class="reference internal" href="#valid-limits"><span class="std std-ref">valid</span></a>.</li>
+<li>The limits <span class="math">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> must be <a class="reference internal" href="#valid-limits"><span class="std std-ref">valid</span></a> within range <span class="math">\(2^{16}\)</span>.</li>
 <li>Then the memory type is valid.</li>
 </ul>
 <div class="math">
 \[\frac{
-  \href{../valid/types.html#valid-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}} \mathrel{\mbox{ok}}
+  \href{../valid/types.html#valid-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}} : 2^{16}
 }{
   \href{../valid/types.html#valid-memtype}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}} \mathrel{\mbox{ok}}
 }\]</div>
