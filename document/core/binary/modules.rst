@@ -452,12 +452,12 @@ It decodes into an optional :ref:`u32 <syntax-uint>` that represents the number 
    \end{array}
 
 .. note::
-  The data count section is used to simplify single-pass validation. Since the
-  data section occurs after the code section, the :math:`\MEMORYINIT` and
-  :math:`\DATADROP` instructions would not be able to check whether the data
-  segment index is valid until the data section is read. The data count section
-  occurs before the code section, so a single-pass validator can use this count
-  instead of deferring validation.
+   The data count section is used to simplify single-pass validation. Since the
+   data section occurs after the code section, the :math:`\MEMORYINIT` and
+   :math:`\DATADROP` instructions would not be able to check whether the data
+   segment index is valid until the data section is read. The data count section
+   occurs before the code section, so a single-pass validator can use this count
+   instead of deferring validation.
 
 
 .. index:: module, section, type definition, function type, function, table, memory, global, element, data, start function, import, export, context, version
@@ -478,6 +478,7 @@ while other sections must occur at most once and in the prescribed order.
 All sections can be empty.
 The lengths of vectors produced by the (possibly empty) :ref:`function <binary-funcsec>` and :ref:`code <binary-codesec>` section must match up.
 Similarly, the data count must match the length of the :ref:`data segment <binary-datasec>` vector.
+The :math:`\MEMORYINIT` and :math:`\DATADROP` instructions can only be used if the data count section is present.
 
 .. math::
    \begin{array}{llcllll}
@@ -507,11 +508,11 @@ Similarly, the data count must match the length of the :ref:`data segment <binar
      \Bcustomsec^\ast \\ &&&
      \elem^\ast{:\,}\Belemsec \\ &&&
      \Bcustomsec^\ast \\ &&&
-     \X{dc}^?{:\,}\Bdatacountsec \\ &&&
+     \X{m}^?{:\,}\Bdatacountsec \\ &&&
      \Bcustomsec^\ast \\ &&&
      \X{code}^n{:\,}\Bcodesec \\ &&&
      \Bcustomsec^\ast \\ &&&
-     \data^{\X{dc'}}{:\,}\Bdatasec \\ &&&
+     \data^{\X{m'}}{:\,}\Bdatasec \\ &&&
      \Bcustomsec^\ast
      \quad\Rightarrow\quad \{~
        \begin{array}[t]{@{}l@{}}
@@ -521,11 +522,14 @@ Similarly, the data count must match the length of the :ref:`data segment <binar
        \MMEMS~\mem^\ast, \\
        \MGLOBALS~\global^\ast, \\
        \MELEM~\elem^\ast, \\
-       \MDATA~\data^\ast, \\
-       \MDATACOUNT~\X{dc}^?, \\
+       \MDATA~\data^{\X{m'}}, \\
        \MSTART~\start^?, \\
        \MIMPORTS~\import^\ast, \\
        \MEXPORTS~\export^\ast ~\} \\
+      \end{array} \\ &&&
+     (\begin{array}[t]{@{}c@{~}l@{}}
+      \iff & \X{m}^? \neq \epsilon \\
+      \vee & \forall (t^\ast, e) \in \X{code}^n, \MEMORYINIT \notin e \wedge \DATADROP \notin e) \\
       \end{array} \\
    \end{array}
 
@@ -538,8 +542,8 @@ and where,
 
 .. math::
    \begin{array}{lcl@{\qquad}l}
-   \X{dc'} &=& \X{dc} & (\iff \X{dc}^? \neq \epsilon) \\
-   \X{dc'} &=& 0 & (\otherwise)
+   \X{m'} &=& \X{m} & (\iff \X{m}^? \neq \epsilon) \\
+   \X{m'} &=& 0 & (\otherwise)
    \end{array}
 
 .. note::

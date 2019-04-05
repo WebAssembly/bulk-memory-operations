@@ -527,7 +527,7 @@ Memory Instructions
 
 * The memory :math:`C.\CMEMS[0]` must be defined in the context.
 
-* The data segment index :math:`x` must be less than :math:`C.\CDATACOUNT`.
+* The data segment :math:`C.\CDATA[x]` must be defined in the context.
 
 * Then the instruction is valid with type :math:`[\I32~\I32~\I32] \to []`.
 
@@ -535,7 +535,7 @@ Memory Instructions
    \frac{
      C.\CMEMS[0] = \memtype
      \qquad
-     x < C.\CDATACOUNT
+     C.\CDATA[x] = \segtype
    }{
      C \vdashinstr \MEMORYINIT~x : [\I32~\I32~\I32] \to []
    }
@@ -546,13 +546,13 @@ Memory Instructions
 :math:`\DATADROP~x`
 ...................
 
-* The data segment index :math:`x` must be less than :math:`C.\CDATACOUNT`.
+* The data segment :math:`C.\CDATA[x]` must be defined in the context.
 
 * Then the instruction is valid with type :math:`[] \to []`.
 
 .. math::
    \frac{
-     x < C.\CDATACOUNT
+     C.\CDATA[x] = \segtype
    }{
      C \vdashinstr \DATADROP~x : [] \to []
    }
