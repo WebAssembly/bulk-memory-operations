@@ -236,6 +236,7 @@
 .. |MIMPORTS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{imports}}
 .. |MEXPORTS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{exports}}
 .. |MDATA| mathdef:: \xref{syntax/modules}{syntax-module}{\K{data}}
+.. |MDATACOUNT| mathdef:: \xref{syntax/modules}{syntax-module}{\K{datacount}}
 .. |MELEM| mathdef:: \xref{syntax/modules}{syntax-module}{\K{elem}}
 .. |MSTART| mathdef:: \xref{syntax/modules}{syntax-module}{\K{start}}
 
@@ -503,6 +504,7 @@
 .. |Belemsec| mathdef:: \xref{binary/modules}{binary-elemsec}{\B{elemsec}}
 .. |Bdatasec| mathdef:: \xref{binary/modules}{binary-datasec}{\B{datasec}}
 .. |Bstartsec| mathdef:: \xref{binary/modules}{binary-startsec}{\B{startsec}}
+.. |Bdatacountsec| mathdef:: \xref{binary/modules}{binary-datacountsec}{\B{datacountsec}}
 
 .. |Bcustom| mathdef:: \xref{binary/modules}{binary-customsec}{\B{custom}}
 .. |Btype| mathdef:: \xref{binary/modules}{binary-typedef}{\B{type}}
@@ -734,7 +736,7 @@
 .. |CMEMS| mathdef:: \xref{valid/conventions}{context}{\K{mems}}
 .. |CGLOBALS| mathdef:: \xref{valid/conventions}{context}{\K{globals}}
 .. |CELEM| mathdef:: \xref{valid/conventions}{context}{\K{elem}}
-.. |CDATA| mathdef:: \xref{valid/conventions}{context}{\K{data}}
+.. |CDATACOUNT| mathdef:: \xref{valid/conventions}{context}{\K{datacount}}
 .. |CLOCALS| mathdef:: \xref{valid/conventions}{context}{\K{locals}}
 .. |CLABELS| mathdef:: \xref{valid/conventions}{context}{\K{labels}}
 .. |CRETURN| mathdef:: \xref{valid/conventions}{context}{\K{return}}

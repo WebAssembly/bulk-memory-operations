@@ -485,7 +485,7 @@ Instead, the context :math:`C` for validation of the module's content is constru
 
   * :math:`C.\CELEM` is :math:`\X{est}^\ast`, with :ref:`segment types <syntax-segtype>` :math:`\X{est}^\ast` as determined below,
 
-  * :math:`C.\CDATA` is :math:`\X{dst}^\ast`, with :ref:`segment types <syntax-segtype>` :math:`\X{dst}^\ast` as determined below,
+  * :math:`C.\CDATACOUNT` is :math:`\module.\MDATACOUNT`,
 
   * :math:`C.\CLOCALS` is empty,
 
@@ -584,7 +584,7 @@ Instead, the context :math:`C` for validation of the module's content is constru
      \qquad
      \X{igt}^\ast = \etglobals(\X{it}^\ast)
      \\
-     C = \{ \CTYPES~\functype^\ast, \CFUNCS~\X{ift}^\ast~\X{ft}^\ast, \CTABLES~\X{itt}^\ast~\X{tt}^\ast, \CMEMS~\X{imt}^\ast~\X{mt}^\ast, \CGLOBALS~\X{igt}^\ast~\X{gt}^\ast, \CELEM~\X{est}^\ast, \CDATA~\X{dst}^\ast \}
+     C = \{ \CTYPES~\functype^\ast, \CFUNCS~\X{ift}^\ast~\X{ft}^\ast, \CTABLES~\X{itt}^\ast~\X{tt}^\ast, \CMEMS~\X{imt}^\ast~\X{mt}^\ast, \CGLOBALS~\X{igt}^\ast~\X{gt}^\ast, \CELEM~\X{est}^\ast, \CDATACOUNT~\X{dc}^? \}
      \\
      C' = \{ \CGLOBALS~\X{igt}^\ast \}
      \qquad
@@ -604,6 +604,7 @@ Instead, the context :math:`C` for validation of the module's content is constru
          \MGLOBALS~\global^\ast, \\
          \MELEM~\elem^\ast,
          \MDATA~\data^\ast,
+         \MDATACOUNT~\X{dc}^?,
          \MSTART~\start^?,
          \MIMPORTS~\import^\ast,
          \MEXPORTS~\export^\ast \} : \X{it}^\ast \to \X{et}^\ast \\

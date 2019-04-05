@@ -84,22 +84,23 @@ In these cases, the empty result :math:`\epsilon` is interpreted as the empty ve
 
 The following section ids are used:
 
-==  ========================================
-Id  Section                                 
-==  ========================================
- 0  :ref:`custom section <binary-customsec>`
- 1  :ref:`type section <binary-typesec>`    
- 2  :ref:`import section <binary-importsec>`
- 3  :ref:`function section <binary-funcsec>`
- 4  :ref:`table section <binary-tablesec>`  
- 5  :ref:`memory section <binary-memsec>`   
- 6  :ref:`global section <binary-globalsec>`
- 7  :ref:`export section <binary-exportsec>`
- 8  :ref:`start section <binary-startsec>`  
- 9  :ref:`element section <binary-elemsec>` 
-10  :ref:`code section <binary-codesec>`    
-11  :ref:`data section <binary-datasec>`    
-==  ========================================
+==  ===============================================
+Id  Section                                        
+==  ===============================================
+ 0  :ref:`custom section <binary-customsec>`       
+ 1  :ref:`type section <binary-typesec>`           
+ 2  :ref:`import section <binary-importsec>`       
+ 3  :ref:`function section <binary-funcsec>`       
+ 4  :ref:`table section <binary-tablesec>`         
+ 5  :ref:`memory section <binary-memsec>`          
+ 6  :ref:`global section <binary-globalsec>`       
+ 7  :ref:`export section <binary-exportsec>`       
+ 8  :ref:`start section <binary-startsec>`         
+ 9  :ref:`element section <binary-elemsec>`        
+10  :ref:`code section <binary-codesec>`           
+11  :ref:`data section <binary-datasec>`           
+12  :ref:`data count section <binary-datacountsec>`
+==  ===============================================
 
 
 .. index:: ! custom section
@@ -433,6 +434,32 @@ It decodes into a vector of :ref:`data segments <syntax-data>` that represent th
    segments have a |DMEM| value of :math:`0`.
 
 
+.. index:: ! data count section, data count, data segment
+   pair: binary format; data count
+   pair: section; data count
+.. _binary-datacountsec:
+
+Data Count Section
+~~~~~~~~~~~~~~~~~~
+
+The *data count section* has the id 12.
+It decodes into an optional :ref:`u32 <syntax-uint>` that represents the number of :ref:`data segments <syntax-data>` in the :ref:`data section <binary-datasec>`. If this count does not match the length of the data segment vector, the module is malformed.
+
+.. math::
+   \begin{array}{llclll}
+   \production{data count section} & \Bdatacountsec &::=&
+     \X{n}^?{:}\Bsection_{12}(\Bu32) &\Rightarrow& \X{n}^? \\
+   \end{array}
+
+.. note::
+  The data count section is used to simplify single-pass validation. Since the
+  data section occurs after the code section, the :math:`\MEMORYINIT` and
+  :math:`\DATADROP` instructions would not be able to check whether the data
+  segment index is valid until the data section is read. The data count section
+  occurs before the code section, so a single-pass validator can use this count
+  instead of deferring validation.
+
+
 .. index:: module, section, type definition, function type, function, table, memory, global, element, data, start function, import, export, context, version
    pair: binary format; module
 .. _binary-magic:
@@ -450,6 +477,7 @@ The preamble is followed by a sequence of :ref:`sections <binary-section>`.
 while other sections must occur at most once and in the prescribed order.
 All sections can be empty.
 The lengths of vectors produced by the (possibly empty) :ref:`function <binary-funcsec>` and :ref:`code <binary-codesec>` section must match up.
+Similarly, the data count must match the length of the :ref:`data segment <binary-datasec>` vector.
 
 .. math::
    \begin{array}{llcllll}
@@ -479,9 +507,11 @@ The lengths of vectors produced by the (possibly empty) :ref:`function <binary-f
      \Bcustomsec^\ast \\ &&&
      \elem^\ast{:\,}\Belemsec \\ &&&
      \Bcustomsec^\ast \\ &&&
+     \X{dc}^?{:\,}\Bdatacountsec \\ &&&
+     \Bcustomsec^\ast \\ &&&
      \X{code}^n{:\,}\Bcodesec \\ &&&
      \Bcustomsec^\ast \\ &&&
-     \data^\ast{:\,}\Bdatasec \\ &&&
+     \data^{\X{dc'}}{:\,}\Bdatasec \\ &&&
      \Bcustomsec^\ast
      \quad\Rightarrow\quad \{~
        \begin{array}[t]{@{}l@{}}
@@ -492,6 +522,7 @@ The lengths of vectors produced by the (possibly empty) :ref:`function <binary-f
        \MGLOBALS~\global^\ast, \\
        \MELEM~\elem^\ast, \\
        \MDATA~\data^\ast, \\
+       \MDATACOUNT~\X{dc}^?, \\
        \MSTART~\start^?, \\
        \MIMPORTS~\import^\ast, \\
        \MEXPORTS~\export^\ast ~\} \\
@@ -502,6 +533,14 @@ where for each :math:`t_i^\ast, e_i` in :math:`\X{code}^n`,
 
 .. math::
    \func^n[i] = \{ \FTYPE~\typeidx^n[i], \FLOCALS~t_i^\ast, \FBODY~e_i \} ) \\
+
+and where,
+
+.. math::
+   \begin{array}{lcl@{\qquad}l}
+   \X{dc'} &=& \X{dc} & (\iff \X{dc}^? \neq \epsilon) \\
+   \X{dc'} &=& 0 & (\otherwise)
+   \end{array}
 
 .. note::
    The version of the WebAssembly binary format may increase in the future

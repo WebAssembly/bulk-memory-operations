@@ -1,4 +1,4 @@
-.. index:: ! module, type definition, function type, function, table, memory, global, element, data, start function, import, export
+.. index:: ! module, type definition, function type, function, table, memory, global, element, data, data count, start function, import, export
    pair: abstract syntax; module
 .. _syntax-module:
 
@@ -10,6 +10,7 @@ which are the unit of deployment, loading, and compilation.
 A module collects definitions for :ref:`types <syntax-type>`, :ref:`functions <syntax-func>`, :ref:`tables <syntax-table>`, :ref:`memories <syntax-mem>`, and :ref:`globals <syntax-global>`.
 In addition, it can declare :ref:`imports <syntax-import>` and :ref:`exports <syntax-export>`
 and provide initialization in the form of :ref:`active <syntax-active>` and :ref:`passive <syntax-passive>` :ref:`data <syntax-data>` and :ref:`element <syntax-elem>` segments, or a :ref:`start function <syntax-start>`.
+Finally, it includes an optional data count which, if present, is the length of the data segment vector.
 
 .. math::
    \begin{array}{lllll}
@@ -21,6 +22,7 @@ and provide initialization in the form of :ref:`active <syntax-active>` and :ref
      \MGLOBALS~\vec(\global), \\&&&&
      \MELEM~\vec(\elem), \\&&&&
      \MDATA~\vec(\data), \\&&&&
+     \MDATACOUNT~\u32^?, \\&&&&
      \MSTART~\start^?, \\&&&&
      \MIMPORTS~\vec(\import), \\&&&&
      \MEXPORTS~\vec(\export) \quad\} \\

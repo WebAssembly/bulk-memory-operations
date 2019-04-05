@@ -357,7 +357,7 @@ Table Instructions
    \frac{
      C.\CELEM[x] = \segtype
    }{
-     C \vdashinstr \DATADROP~x : [] \to []
+     C \vdashinstr \ELEMDROP~x : [] \to []
    }
 
 
@@ -527,7 +527,7 @@ Memory Instructions
 
 * The memory :math:`C.\CMEMS[0]` must be defined in the context.
 
-* The data segment :math:`C.\CDATA[x]` must be defined in the context.
+* The data segment index :math:`x` must be less than :math:`C.\CDATACOUNT`.
 
 * Then the instruction is valid with type :math:`[\I32~\I32~\I32] \to []`.
 
@@ -535,7 +535,7 @@ Memory Instructions
    \frac{
      C.\CMEMS[0] = \memtype
      \qquad
-     C.\CDATA[x] = \segtype
+     x < C.\CDATACOUNT
    }{
      C \vdashinstr \MEMORYINIT~x : [\I32~\I32~\I32] \to []
    }
@@ -546,15 +546,13 @@ Memory Instructions
 :math:`\DATADROP~x`
 ...................
 
-* The data segment :math:`C.\CDATA[x]` must be defined in the context.
-
-* The :ref:`segment type <syntax-segtype>` :math:`C.\CDATA[x]` must be |SPASSIVE|.
+* The data segment index :math:`x` must be less than :math:`C.\CDATACOUNT`.
 
 * Then the instruction is valid with type :math:`[] \to []`.
 
 .. math::
    \frac{
-     C.\CDATA[x] = \segtype
+     x < C.\CDATACOUNT
    }{
      C \vdashinstr \DATADROP~x : [] \to []
    }
