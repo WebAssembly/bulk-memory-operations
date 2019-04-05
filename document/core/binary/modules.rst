@@ -508,7 +508,7 @@ The :math:`\MEMORYINIT` and :math:`\DATADROP` instructions can only be used if t
      \Bcustomsec^\ast \\ &&&
      \elem^\ast{:\,}\Belemsec \\ &&&
      \Bcustomsec^\ast \\ &&&
-     \X{m}^?{:\,}\Bdatacountsec \\ &&&
+     m^?{:\,}\Bdatacountsec \\ &&&
      \Bcustomsec^\ast \\ &&&
      \X{code}^n{:\,}\Bcodesec \\ &&&
      \Bcustomsec^\ast \\ &&&
@@ -528,7 +528,7 @@ The :math:`\MEMORYINIT` and :math:`\DATADROP` instructions can only be used if t
        \MEXPORTS~\export^\ast ~\} \\
       \end{array} \\ &&&
      (\begin{array}[t]{@{}c@{~}l@{}}
-      \iff & \X{m}^? \neq \epsilon \\
+      \iff & m^? \neq \epsilon \\
       \vee & \forall (t^\ast, e) \in \X{code}^n, \MEMORYINIT \notin e \wedge \DATADROP \notin e) \\
       \end{array} \\
    \end{array}
@@ -542,7 +542,7 @@ and where,
 
 .. math::
    \begin{array}{lcl@{\qquad}l}
-   \X{m'} &=& \X{m} & (\iff \X{m}^? \neq \epsilon) \\
+   \X{m'} &=& m & (\iff m^? \neq \epsilon) \\
    \X{m'} &=& 0 & (\otherwise)
    \end{array}
 
