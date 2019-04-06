@@ -161,7 +161,10 @@ Element segments :math:`\elem` are classified by :ref:`segment types <syntax-seg
 * The expression :math:`\expr` must be :ref:`constant <valid-constant>`.
 
 * For each :math:`y_i` in :math:`y^\ast`,
-  the function :math:`C.\CFUNCS[y]` must be defined in the context.
+
+  * :math:`y_i` must be :math:`\EREFFUNC~z`.
+
+  * The function :math:`C.\CFUNCS[z]` must be defined in the context.
 
 * Then the element segment is valid with type |SACTIVE|.
 
@@ -174,7 +177,7 @@ Element segments :math:`\elem` are classified by :ref:`segment types <syntax-seg
      \qquad
      C \vdashexprconst \expr \const
      \qquad
-     (C.\CFUNCS[y] = \functype)^\ast
+     (y = \EREFFUNC~z \wedge C.\CFUNCS[z] = \functype)^\ast
    }{
      C \vdashelem \{ \ETABLE~x, \EOFFSET~\expr, \EINIT~y^\ast \} : \SACTIVE
    }
@@ -184,14 +187,17 @@ Element segments :math:`\elem` are classified by :ref:`segment types <syntax-seg
 ......................................................
 
 * For each :math:`y_i` in :math:`y^\ast`,
-  the function :math:`C.\CFUNCS[y]` must be defined in the context.
+
+  * Either :math:`y_i` must be :math:`\EREFNULL`.
+
+  * Or :math:`y_i` is :math:`\EREFFUNC~z` and the function :math:`C.\CFUNCS[z]` must be defined in the context.
 
 * Then the element segment is valid with type |SPASSIVE|.
 
 
 .. math::
    \frac{
-     (C.\CFUNCS[y] = \functype)^\ast
+     (y = \EREFNULL \vee (y = \EREFFUNC~z \wedge C.\CFUNCS[z] = \functype))^\ast
    }{
      C \vdashelem \{ \EINIT~y^\ast \} : \SPASSIVE
    }
