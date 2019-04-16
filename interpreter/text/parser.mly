@@ -573,7 +573,6 @@ offset :
 elemref :
   | LPAR REF_NULL RPAR { let at = at () in fun c -> ref_null @@ at }
   | LPAR REF_FUNC var RPAR { let at = at () in fun c -> ref_func ($3 c func) @@ at }
-  | var { let at = at () in fun c -> ref_func ($1 c func) @@ at }
 
 passive_elemref_list :
   | /* empty */ { fun c -> [] }
