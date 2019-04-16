@@ -529,7 +529,7 @@ Furthermore, it must be present if any :math:`data index <syntax-dataidx>` occur
        \MIMPORTS~\import^\ast, \\
        \MEXPORTS~\export^\ast ~\} \\
        \end{array} \\ &&&
-     (\iff m^? \neq \epsilon \vee \F{dataidx}(\X{code}^n) = \emptyset) \\
+     (\iff m^? \neq \epsilon \vee \freedataidx(\X{code}^n) = \emptyset) \\
    \end{array}
 
 where for each :math:`t_i^\ast, e_i` in :math:`\X{code}^n`,
