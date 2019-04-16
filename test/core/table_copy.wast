@@ -16,10 +16,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -73,10 +73,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -130,10 +130,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -187,10 +187,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -244,10 +244,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -301,10 +301,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -358,10 +358,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -415,10 +415,10 @@
   (import "a" "ef4" (func (result i32)))    ;; index 4
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 5))  ;; index 5
   (func (result i32) (i32.const 6))
@@ -466,10 +466,10 @@
 (module
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 0))
   (func (result i32) (i32.const 1))
@@ -490,10 +490,10 @@
 (module
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 0))
   (func (result i32) (i32.const 1))
@@ -514,10 +514,10 @@
 (module
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 0))
   (func (result i32) (i32.const 1))
@@ -538,10 +538,10 @@
 (module
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 0))
   (func (result i32) (i32.const 1))
@@ -562,10 +562,10 @@
 (module
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 0))
   (func (result i32) (i32.const 1))
@@ -586,10 +586,10 @@
 (module
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 0))
   (func (result i32) (i32.const 1))
@@ -610,10 +610,10 @@
 (module
   (table 30 30 funcref)
   (elem (i32.const 2) 3 1 4 1)
-  (elem passive funcref
+  (elem funcref
     (ref.func 2) (ref.func 7) (ref.func 1) (ref.func 8))
   (elem (i32.const 12) 7 5 2 3 6)
-  (elem passive funcref
+  (elem funcref
     (ref.func 5) (ref.func 9) (ref.func 2) (ref.func 7) (ref.func 6))
   (func (result i32) (i32.const 0))
   (func (result i32) (i32.const 1))
