@@ -328,11 +328,9 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
      \X{seg}^\ast{:}\Bsection_9(\Bvec(\Belem)) &\Rightarrow& \X{seg} \\
    \production{element segment} & \Belem &::=&
      \hex{00}~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
-       &\Rightarrow& \{ \ETABLE~0, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\
-   \production{element segment} & \Belem &::=&
+       &\Rightarrow& \{ \ETABLE~0, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\ &&|&
      \hex{01}~~e^\ast{:}\Bvec(\Belemexpr)
-       &\Rightarrow& \{ \EINIT~e^\ast \} \\
-   \production{element segment} & \Belem &::=&
+       &\Rightarrow& \{ \EINIT~e^\ast \} \\ &&|&
      \hex{02}~~x{:}\Btableidx~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
        &\Rightarrow& \{ \ETABLE~x, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\
    \production{elemexpr} & \Belemexpr &::=&
@@ -423,11 +421,9 @@ It decodes into a vector of :ref:`data segments <syntax-data>` that represent th
      \X{seg}^\ast{:}\Bsection_{11}(\Bvec(\Bdata)) &\Rightarrow& \X{seg} \\
    \production{data segment} & \Bdata &::=&
      \hex{00}~~e{:}\Bexpr~~b^\ast{:}\Bvec(\Bbyte)
-       &\Rightarrow& \{ \DMEM~0, \DOFFSET~e, \DINIT~b^\ast \} \\
-   \production{data segment} & \Bdata &::=&
+       &\Rightarrow& \{ \DMEM~0, \DOFFSET~e, \DINIT~b^\ast \} \\ &&|&
      \hex{01}~~b^\ast{:}\Bvec(\Bbyte)
-       &\Rightarrow& \{ \DINIT~b^\ast \} \\
-   \production{data segment} & \Bdata &::=&
+       &\Rightarrow& \{ \DINIT~b^\ast \} \\ &&|&
      \hex{02}~~x{:}\Bmemidx~~e{:}\Bexpr~~b^\ast{:}\Bvec(\Bbyte)
        &\Rightarrow& \{ \DMEM~x, \DOFFSET~e, \DINIT~b^\ast \} \\
    \end{array}
