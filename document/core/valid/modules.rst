@@ -147,7 +147,7 @@ Element Segments
 
 Element segments :math:`\elem` are classified by :ref:`segment types <syntax-segtype>`.
 
-:math:`\{ \ETABLE~x, \EOFFSET~\expr, \EINIT~y^\ast \}`
+:math:`\{ \ETABLE~x, \EOFFSET~\expr, \EINIT~e^\ast \}`
 ......................................................
 
 * The table :math:`C.\CTABLES[x]` must be defined in the context.
@@ -160,11 +160,9 @@ Element segments :math:`\elem` are classified by :ref:`segment types <syntax-seg
 
 * The expression :math:`\expr` must be :ref:`constant <valid-constant>`.
 
-* For each :math:`y_i` in :math:`y^\ast`,
+* For each :math:`e_i` in :math:`e^\ast`,
 
-  * :math:`y_i` must be :math:`\EREFFUNC~z`.
-
-  * The function :math:`C.\CFUNCS[z]` must be defined in the context.
+  * The element expression :math:`e_i` must be :ref:`valid <valid-elemexpr>`.
 
 * Then the element segment is valid with type |SACTIVE|.
 
@@ -177,29 +175,51 @@ Element segments :math:`\elem` are classified by :ref:`segment types <syntax-seg
      \qquad
      C \vdashexprconst \expr \const
      \qquad
-     (y = \EREFFUNC~z \wedge C.\CFUNCS[z] = \functype)^\ast
+     (C \vdashelemexpr e \ok)^\ast
    }{
-     C \vdashelem \{ \ETABLE~x, \EOFFSET~\expr, \EINIT~y^\ast \} : \SACTIVE
+     C \vdashelem \{ \ETABLE~x, \EOFFSET~\expr, \EINIT~e^\ast \} : \SACTIVE
    }
 
 
-:math:`\{ \EINIT~y^\ast \}`
-......................................................
+:math:`\{ \EINIT~e^\ast \}`
+...........................
 
-* For each :math:`y_i` in :math:`y^\ast`,
+* For each :math:`e_i` in :math:`e^\ast`,
 
-  * Either :math:`y_i` must be :math:`\EREFNULL`.
-
-  * Or :math:`y_i` is :math:`\EREFFUNC~z` and the function :math:`C.\CFUNCS[z]` must be defined in the context.
+  * The element expression :math:`e_i` must be :ref:`valid <valid-elemexpr>`.
 
 * Then the element segment is valid with type |SPASSIVE|.
 
 
 .. math::
    \frac{
-     (y = \EREFNULL \vee (y = \EREFFUNC~z \wedge C.\CFUNCS[z] = \functype))^\ast
+     (C \vdashelemexpr e \ok)^\ast
    }{
-     C \vdashelem \{ \EINIT~y^\ast \} : \SPASSIVE
+     C \vdashelem \{ \EINIT~e^\ast \} : \SPASSIVE
+   }
+
+
+.. _valid-elemexpr:
+
+:math:`\elemexpr`
+.................
+
+* An element expression must be:
+
+  * either of the form :math:`\REFNULL~\END`,
+
+  * or of the form :math:`(\REFFUNC~x)~\END`, in which case :math:`C.\CFUNCS[x]` must be defined in the context.
+
+.. math::
+   \frac{
+   }{
+     C \vdashelemexpr \REFNULL~\END \ok
+   }
+   \qquad
+   \frac{
+     C.\CFUNCS[x] = \functype
+   }{
+     C \vdashelemexpr (\REFFUNC~x)~\END \ok
    }
 
 

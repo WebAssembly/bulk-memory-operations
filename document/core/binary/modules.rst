@@ -314,7 +314,7 @@ It decodes into an optional :ref:`start function <syntax-start>` that represents
    single: element; segment
 .. _binary-elem:
 .. _binary-elemsec:
-.. _binary-element:
+.. _binary-elemexpr:
 
 Element Section
 ~~~~~~~~~~~~~~~
@@ -328,16 +328,16 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
      \X{seg}^\ast{:}\Bsection_9(\Bvec(\Belem)) &\Rightarrow& \X{seg} \\
    \production{element segment} & \Belem &::=&
      \hex{00}~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
-       &\Rightarrow& \{ \ETABLE~0, \EOFFSET~e, \EINIT~(\EREFFUNC~y)^\ast \} \\
+       &\Rightarrow& \{ \ETABLE~0, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\
    \production{element segment} & \Belem &::=&
-     \hex{01}~~y^\ast{:}\Bvec(\Belement)
-       &\Rightarrow& \{ \EINIT~y^\ast \} \\
+     \hex{01}~~e^\ast{:}\Bvec(\Belemexpr)
+       &\Rightarrow& \{ \EINIT~e^\ast \} \\
    \production{element segment} & \Belem &::=&
      \hex{02}~~x{:}\Btableidx~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
-       &\Rightarrow& \{ \ETABLE~x, \EOFFSET~e, \EINIT~(\EREFFUNC~y)^\ast \} \\
-   \production{element} & \Belement &::=&
-     \hex{D0} &\Rightarrow& \EREFNULL \\ &&|&
-     \hex{D2}~x{:}\Bfuncidx &\Rightarrow& \EREFFUNC~x \\
+       &\Rightarrow& \{ \ETABLE~x, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\
+   \production{elemexpr} & \Belemexpr &::=&
+     \hex{D0} &\Rightarrow& \REFNULL~\END \\ &&|&
+     \hex{D2}~x{:}\Bfuncidx &\Rightarrow& (\REFFUNC~x)~\END \\
    \end{array}
 
 .. note::
