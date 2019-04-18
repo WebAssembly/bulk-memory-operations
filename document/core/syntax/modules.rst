@@ -261,11 +261,11 @@ The |MELEM| component of a module defines a vector of element segments. Each act
 .. math::
    \begin{array}{llll}
    \production{element segment} & \elem &::=&
-     \{ \ETABLE~\tableidx, \EOFFSET~\expr, \EINIT~\vec(\element) \} \\&&|&
-     \{ \EINIT~\vec(\element) \} \\
+     \{ \ETABLE~\tableidx, \EOFFSET~\expr, \EINIT~\vec(\elemexpr) \} \\&&|&
+     \{ \EINIT~\vec(\elemexpr) \} \\
    \production{elemexpr} & \elemexpr &::=&
-     \REFNULL \\&&|&
-     \REFFUNC~\funcidx \\
+     \REFNULL~\END \\&&|&
+     (\REFFUNC~\funcidx)~\END \\
    \end{array}
 
 The |EOFFSET| is given by a :ref:`constant <valid-constant>` :ref:`expression <syntax-expr>`.

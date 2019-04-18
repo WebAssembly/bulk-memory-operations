@@ -334,8 +334,8 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
      \hex{02}~~x{:}\Btableidx~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
        &\Rightarrow& \{ \ETABLE~x, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\
    \production{elemexpr} & \Belemexpr &::=&
-     \hex{D0} &\Rightarrow& \REFNULL~\END \\ &&|&
-     \hex{D2}~x{:}\Bfuncidx &\Rightarrow& (\REFFUNC~x)~\END \\
+     \hex{D0}~\hex{0B} &\Rightarrow& \REFNULL~\END \\ &&|&
+     \hex{D2}~x{:}\Bfuncidx~\hex{0B} &\Rightarrow& (\REFFUNC~x)~\END \\
    \end{array}
 
 .. note::
