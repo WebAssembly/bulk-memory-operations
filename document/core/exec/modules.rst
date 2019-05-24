@@ -371,6 +371,64 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
    \end{array}
 
 
+.. index:: element, element instance, element address
+.. _alloc-elem:
+
+:ref:`Element segments <syntax-eleminst>`
+.........................................
+
+1. Let :math:`\elem` be the :ref:`element segment <syntax-elem>` to allocate.
+
+2. Let :math:`\{ \EINIT~\elemexpr^\ast, \dots \}` be the structure of :ref:`element segment <syntax-elem>` :math:`\elem`.
+
+3. Let :math:`a` be the first free :ref:`element address <syntax-elemaddr>` in :math:`S`.
+
+5. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\elemexpr^\ast \}`.
+
+6. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
+
+7. Return :math:`a`.
+
+.. math::
+  \begin{array}{rlll}
+  \allocelem(S, \elem) &=& S', \elemaddr \\[1ex]
+  \mbox{where:} \hfill \\
+  \elem &=& \{ \EINIT~\elemexpr^\ast, \dots \} \\
+  \elemaddr &=& |S.\SELEM| \\
+  \eleminst &=& \{ \EIINIT~\elemexpr^\ast \} \\
+  S' &=& S \compose \{\SELEM~\eleminst\} \\
+  \end{array}
+
+
+.. index:: data, data instance, data address
+.. _alloc-data:
+
+:ref:`Data segments <syntax-datainst>`
+......................................
+
+1. Let :math:`\data` be the :ref:`data segment <syntax-data>` to allocate.
+
+2. Let :math:`\{ \DINIT~\bytes, \dots \}` be the structure of :ref:`data segment <syntax-data>` :math:`\data`.
+
+2. Let :math:`a` be the first free :ref:`data address <syntax-dataaddr>` in :math:`S`.
+
+3. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIINIT~\bytes \}`.
+
+4. Append :math:`\datainst` to the |SDATA| of :math:`S`.
+
+5. Return :math:`a`.
+
+.. math::
+  \begin{array}{rlll}
+  \allocdata(S, \data) &=& S', \dataaddr \\[1ex]
+  \mbox{where:} \hfill \\
+  \data &=& \{ \DINIT~\bytes, \dots \} \\
+  \dataaddr &=& |S.\SDATA| \\
+  \datainst &=& \{ \DIINIT~d.\DINIT \} \\
+  S' &=& S \compose \{\SDATA~\datainst\} \\
+  \end{array}
+
+
 .. index:: table, table instance, table address, grow, limits
 .. _grow-table:
 
