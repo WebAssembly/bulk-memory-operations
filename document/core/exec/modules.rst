@@ -377,25 +377,22 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 :ref:`Element segments <syntax-eleminst>`
 .........................................
 
-1. Let :math:`\elem` be the :ref:`element segment <syntax-elem>` to allocate.
+1. Let :math:`\funcelem^\ast` be the vector of :ref:`function elements <syntax-funcelem>` to allocate.
 
-2. Let :math:`\{ \EINIT~\elemexpr^\ast, \dots \}` be the structure of :ref:`element segment <syntax-elem>` :math:`\elem`.
+2. Let :math:`a` be the first free :ref:`element address <syntax-elemaddr>` in :math:`S`.
 
-3. Let :math:`a` be the first free :ref:`element address <syntax-elemaddr>` in :math:`S`.
+3. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\funcelem^\ast \}`.
 
-5. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\elemexpr^\ast \}`.
+4. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
 
-6. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
-
-7. Return :math:`a`.
+5. Return :math:`a`.
 
 .. math::
   \begin{array}{rlll}
-  \allocelem(S, \elem) &=& S', \elemaddr \\[1ex]
+  \allocelem(S, \funcelem^\ast) &=& S', \elemaddr \\[1ex]
   \mbox{where:} \hfill \\
-  \elem &=& \{ \EINIT~\elemexpr^\ast, \dots \} \\
   \elemaddr &=& |S.\SELEM| \\
-  \eleminst &=& \{ \EIINIT~\elemexpr^\ast \} \\
+  \eleminst &=& \{ \EIINIT~\funcelem^\ast \} \\
   S' &=& S \compose \{\SELEM~\eleminst\} \\
   \end{array}
 
@@ -406,9 +403,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 :ref:`Data segments <syntax-datainst>`
 ......................................
 
-1. Let :math:`\data` be the :ref:`data segment <syntax-data>` to allocate.
-
-2. Let :math:`\{ \DINIT~\bytes, \dots \}` be the structure of :ref:`data segment <syntax-data>` :math:`\data`.
+1. Let :math:`\bytes` be the vector of :ref:`bytes <syntax-byte>` to allocate.
 
 2. Let :math:`a` be the first free :ref:`data address <syntax-dataaddr>` in :math:`S`.
 
@@ -420,11 +415,10 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 .. math::
   \begin{array}{rlll}
-  \allocdata(S, \data) &=& S', \dataaddr \\[1ex]
+  \allocdata(S, \bytes) &=& S', \dataaddr \\[1ex]
   \mbox{where:} \hfill \\
-  \data &=& \{ \DINIT~\bytes, \dots \} \\
   \dataaddr &=& |S.\SDATA| \\
-  \datainst &=& \{ \DIINIT~d.\DINIT \} \\
+  \datainst &=& \{ \DIINIT~\bytes \} \\
   S' &=& S \compose \{\SDATA~\datainst\} \\
   \end{array}
 

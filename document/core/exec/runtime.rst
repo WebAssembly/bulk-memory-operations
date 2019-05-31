@@ -298,12 +298,12 @@ Element Instances
 ~~~~~~~~~~~~~~~~~
 
 An *element instance* is the runtime representation of an :ref:`element segment <syntax-elem>`.
-It holds a vector of :ref:`element expressions <syntax-elemexpr>`.
+Like table instances, an element instance holds a vector of function elements.
 
 .. math::
   \begin{array}{llll}
   \production{(element instance)} & \eleminst &::=&
-    \{ \EIINIT~\vec(\elemexpr) \} \\
+    \{ \EIINIT~\vec(\funcelem) \} \\
   \end{array}
 
 
