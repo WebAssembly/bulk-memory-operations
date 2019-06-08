@@ -72,8 +72,8 @@ Syntactically, the store is defined as a :ref:`record <notation-record>` listing
      \STABLES & \tableinst^\ast, \\
      \SMEMS & \meminst^\ast, \\
      \SGLOBALS & \globalinst^\ast, \\
-     \SELEM & \eleminst^\ast, \\
-     \SDATA & \datainst^\ast ~\} \\
+     \SELEM & (\eleminst^?)^\ast, \\
+     \SDATA & (\datainst^?)^\ast ~\} \\
      \end{array}
    \end{array}
 
@@ -170,8 +170,8 @@ and collects runtime representations of all entities that are imported, defined,
      \MITABLES & \tableaddr^\ast, \\
      \MIMEMS & \memaddr^\ast, \\
      \MIGLOBALS & \globaladdr^\ast, \\
-     \MIELEMS & (\elemaddr^?)^\ast, \\
-     \MIDATAS & (\dataaddr^?)^\ast, \\
+     \MIELEMS & \elemaddr^\ast, \\
+     \MIDATAS & \dataaddr^\ast, \\
      \MIEXPORTS & \exportinst^\ast ~\} \\
      \end{array}
    \end{array}
