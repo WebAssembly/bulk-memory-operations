@@ -768,8 +768,7 @@ Memory Instructions
    \end{array} \\
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & S.\SDATA[F.\AMODULE.\MIDATAS[x]] \ne \epsilon \\
-     \wedge & s < |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT| \\
+     (\iff & s < |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT| \\
      \wedge & b = S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT[s]) \\
      \end{array}
    \\[1ex]
@@ -779,7 +778,6 @@ Memory Instructions
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
      (\iff & d \leq |S.\SMEMS[F.\AMODULE.\MIMEMS[0]].\MIDATA| \\
-     \wedge & S.\SDATA[F.\AMODULE.\MIDATAS[x]] \ne \epsilon \\
      \wedge & s \leq |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT|) \\
      \end{array}
    \\[1ex]
