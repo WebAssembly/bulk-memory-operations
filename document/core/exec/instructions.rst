@@ -645,13 +645,7 @@ Memory Instructions
 
 11. Pop the value :math:`\I32.\CONST~i` from the stack.
 
-12. If :math:`n` is :math:`0`, then:
-
-    a. If :math:`i` is larger than the length of :math:`\X{mem}.\MIDATA`, then:
-
-       i. Trap.
-
-13. Else:
+12. Else:
 
     a. Push the value :math:`\I32.\CONST~i` to the stack.
 
@@ -678,14 +672,7 @@ Memory Instructions
    \end{array} \\
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~i)~\val~(\I32.\CONST~0)~(\MEMORYFILL) &\stepto& S; F; \epsilon
-   \end{array}
-   \\ \qquad
-     (\iff i \leq |\SMEMS[F.\AMODULE.\MIMEMS[0]]|) \\
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~\val~(\I32.\CONST~0)~(\MEMORYFILL) &\stepto& S; F; \TRAP
-   \end{array}
-   \\ \qquad
-     (\otherwise) \\
+   \end{array} \\
    \end{array}
 
 
@@ -728,17 +715,7 @@ Memory Instructions
 
 16. Pop the value :math:`\I32.\CONST~d` from the stack.
 
-17. If :math:`n` is :math:`0`, then:
-
-    a. If :math:`d` is larger than the length of :math:`\X{mem}.\MIDATA`, then:
-
-       i. Trap.
-
-    b. If :math:`s` is larger than the length of :math:`\X{data}.\DIINIT`, then:
-
-       i. Trap.
-
-18. Else:
+17. Else:
 
     a. Push the value :math:`\I32.\CONST~d` to the stack.
 
@@ -773,13 +750,8 @@ Memory Instructions
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~d)~(\I32.\CONST~(s)~(\I32.\CONST~0)~(\MEMORYINIT~x) &\stepto& S; F; \epsilon
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~0)~(\MEMORYINIT~x) &\stepto& S; F; \epsilon
    \end{array}
-   \\ \qquad
-     \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & d \leq |S.\SMEMS[F.\AMODULE.\MIMEMS[0]].\MIDATA| \\
-     \wedge & s \leq |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT|) \\
-     \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~(\MEMORYINIT~x) &\stepto& S; F; \TRAP
@@ -877,17 +849,7 @@ Table Instructions
 
 16. Pop the value :math:`\I32.\CONST~d` from the stack.
 
-17. If :math:`n` is :math:`0`, then:
-
-    a. If :math:`d` is larger than the length of :math:`\X{table}.\TIELEM`, then:
-
-       i. Trap.
-
-    b. If :math:`s` is larger than the length of :math:`\X{elem}.\EIINIT`, then:
-
-       i. Trap.
-
-18. Else:
+17. Else:
 
     a. Push the value :math:`\I32.\CONST~d` to the stack.
 
@@ -922,11 +884,6 @@ Table Instructions
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~d)~(\I32.\CONST~(s)~(\I32.\CONST~0)~(\TABLEINIT~x) &\stepto& S; F; \epsilon
    \end{array}
-   \\ \qquad
-     \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & d \leq |S.\STABLES[F.\AMODULE.\MITABLES[0]].\TIELEM| \\
-     \wedge & s \leq |S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIINIT|) \\
-     \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~(\TABLEINIT~x) &\stepto& S; F; \TRAP
