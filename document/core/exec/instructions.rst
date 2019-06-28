@@ -737,6 +737,10 @@ Memory Instructions
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~0)~(\MEMORYINIT~x) &\stepto& S; F; \epsilon
+   \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~(n+1))~(\MEMORYINIT~x) &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
      (\I32.\CONST~d)~(\I32.\CONST~b)~(\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
@@ -748,10 +752,6 @@ Memory Instructions
      (\iff & s < |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT| \\
      \wedge & b = S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT[s]) \\
      \end{array}
-   \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~0)~(\MEMORYINIT~x) &\stepto& S; F; \epsilon
-   \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~(\MEMORYINIT~x) &\stepto& S; F; \TRAP
@@ -869,6 +869,10 @@ Table Instructions
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~(s)~(\I32.\CONST~0)~(\TABLEINIT~x) &\stepto& S; F; \epsilon
+   \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~(n+1))~(\TABLEINIT~x) &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
      (\I32.\CONST~d)~\funcelem~\TABLESET \\
@@ -880,10 +884,6 @@ Table Instructions
      (\iff & s < |S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIINIT| \\
      \wedge & \funcelem = S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIINIT[s]) \\
      \end{array}
-   \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~d)~(\I32.\CONST~(s)~(\I32.\CONST~0)~(\TABLEINIT~x) &\stepto& S; F; \epsilon
-   \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~(\TABLEINIT~x) &\stepto& S; F; \TRAP
