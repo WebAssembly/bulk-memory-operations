@@ -863,7 +863,7 @@ Table Instructions
 
 21. Push the value :math:`\funcelem` to the stack.
 
-22. Execute the instruction :math:`\TABLESET~x`.
+22. Execute the instruction :math:`\TABLESET`.
 
 23. Push the value :math:`\I32.\CONST~(dst+1)` to the stack.
 
