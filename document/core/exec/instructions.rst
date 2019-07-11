@@ -877,10 +877,10 @@ Table Instructions
    \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~(\TABLECOPY) &\stepto& S; F;
+   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~\TABLECOPY &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
      (\I32.\CONST~dst)~((\I32.\CONST~src)~\TABLEGET)~\TABLESET \\
-     (\I32.\CONST~(dst+1))~(\I32.\CONST~(src+1))~(\I32.\CONST~cnt)~(\TABLECOPY~x) \\
+     (\I32.\CONST~(dst+1))~(\I32.\CONST~(src+1))~(\I32.\CONST~cnt)~\TABLECOPY \\
      \end{array} \\
    \end{array} \\
    \\ \qquad
