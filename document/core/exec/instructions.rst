@@ -889,7 +889,7 @@ Table Instructions
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~(\TABLECOPY) &\stepto& S; F;
+   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~\TABLECOPY &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
      (\I32.\CONST~(dst+cnt-1))~((\I32.\CONST~(src+cnt-1))~\TABLEGET)~\TABLESET \\
      (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~(\TABLECOPY) \\
