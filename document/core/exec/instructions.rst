@@ -801,6 +801,93 @@ Memory Instructions
      (\otherwise)
    \end{array}
 
+.. _exec-memory.copy:
+
+:math:`\MEMORYCOPY`
+...................
+
+1. Assert: due to :ref:`validation <valid-memory.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+
+2. Pop the value :math:`\I32.\CONST~cnt` from the stack.
+
+3. Assert: due to :ref:`validation <valid-memory.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+
+4. Pop the value :math:`\I32.\CONST~src` from the stack.
+
+5. Assert: due to :ref:`validation <valid-memory.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+
+6. Pop the value :math:`\I32.\CONST~dst` from the stack.
+
+7. If :math:`cnt = 0`, then:
+
+    a. Return.
+
+8. If :math:`dst < src`, then:
+
+    a. Push the value :math:`\I32.\CONST~dst` to the stack.
+
+    b. Push the value :math:`\I32.\CONST~src` to the stack.
+
+    c. Execute the instruction :math:`\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}`.
+
+    d. Execute the instruction :math:`\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}`.
+
+    e. Push the value :math:`\I32.\CONST~(dst+1)` to the stack.
+
+    f. Push the value :math:`\I32.\CONST~(src+1)` to the stack.
+
+9. Else:
+
+    a. Push the value :math:`\I32.\CONST~(dst+cnt-1)` to the stack.
+
+    b. Push the value :math:`\I32.\CONST~(src+cnt-1)` to the stack.
+
+    c. Execute the instruction :math:`\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}`.
+
+    d. Execute the instruction :math:`\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}`.
+
+    e. Push the value :math:`\I32.\CONST~dst` to the stack.
+
+    f. Push the value :math:`\I32.\CONST~src` to the stack.
+
+10. Push the value :math:`\I32.\CONST~(cnt-1)` to the stack.
+
+11. Execute the instruction :math:`\MEMORYCOPY`.
+
+.. math::
+   ~\\[-1ex]
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~0)~\MEMORYCOPY &\stepto& S; F; \epsilon
+   \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~\MEMORYCOPY &\stepto& S; F;
+     \begin{array}[t]{@{}l@{}}
+     (\I32.\CONST~dst) \\
+     (\I32.\CONST~src)~(\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}) \\
+     (\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
+     (\I32.\CONST~(dst+1))~(\I32.\CONST~(src+1))~(\I32.\CONST~cnt)~\MEMORYCOPY \\
+     \end{array} \\
+   \end{array} \\
+   \\ \qquad
+     \begin{array}[t]{@{}r@{~}l@{}}
+     (\iff & dst < src)
+     \end{array}
+   \\[1ex]
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~\MEMORYCOPY &\stepto& S; F;
+     \begin{array}[t]{@{}l@{}}
+     (\I32.\CONST~(dst+cnt-1)) \\
+     (\I32.\CONST~(src+cnt-1))~(\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}) \\
+     (\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
+     (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~\MEMORYCOPY \\
+     \end{array} \\
+   \end{array} \\
+   \\ \qquad
+     (\otherwise) \\
+   \end{array}
+
 
 .. index:: table instruction, table index, store, frame, address, table address, table instance, function element, element address, element instance, value type
    pair: execution; instruction
@@ -813,31 +900,25 @@ Table Instructions
 .. _exec-table.copy:
 
 :math:`\TABLECOPY`
-...................
+..................
 
-1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+1. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-2. Assert: due to :ref:`validation <valid-table.copy>`, :math:`F.\AMODULE.\MITABLES[0]` exists.
+2. Pop the value :math:`\I32.\CONST~cnt` from the stack.
 
-3. Let :math:`\X{ta}` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[0]`.
+3. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-4. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+4. Pop the value :math:`\I32.\CONST~src` from the stack.
 
-5. Pop the value :math:`\I32.\CONST~cnt` from the stack.
+5. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-6. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+6. Pop the value :math:`\I32.\CONST~dst` from the stack.
 
-7. Pop the value :math:`\I32.\CONST~src` from the stack.
-
-8. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
-
-9. Pop the value :math:`\I32.\CONST~dst` from the stack.
-
-10. If :math:`cnt = 0`, then:
+7. If :math:`cnt = 0`, then:
 
     a. Return.
 
-11. If :math:`dst < src`, then:
+8. If :math:`dst < src`, then:
 
     a. Push the value :math:`\I32.\CONST~dst` to the stack.
 
@@ -851,7 +932,7 @@ Table Instructions
 
     f. Push the value :math:`\I32.\CONST~(src+1)` to the stack.
 
-12. Else:
+9. Else:
 
     a. Push the value :math:`\I32.\CONST~(dst+cnt-1)` to the stack.
 
@@ -865,21 +946,21 @@ Table Instructions
 
     f. Push the value :math:`\I32.\CONST~src` to the stack.
 
-13. Push the value :math:`\I32.\CONST~(cnt-1)` to the stack.
+10. Push the value :math:`\I32.\CONST~(cnt-1)` to the stack.
 
-14. Execute the instruction :math:`\TABLECOPY`.
+11. Execute the instruction :math:`\TABLECOPY`.
 
 .. math::
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~0)~\TABLECOPY &\stepto& S'; F; \epsilon
+   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~0)~\TABLECOPY &\stepto& S; F; \epsilon
    \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~\TABLECOPY &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~dst)~((\I32.\CONST~src)~\TABLEGET)~\TABLESET \\
+     (\I32.\CONST~dst)~(\I32.\CONST~src)~\TABLEGET~\TABLESET \\
      (\I32.\CONST~(dst+1))~(\I32.\CONST~(src+1))~(\I32.\CONST~cnt)~\TABLECOPY \\
      \end{array} \\
    \end{array} \\
@@ -891,7 +972,7 @@ Table Instructions
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt+1))~\TABLECOPY &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~(dst+cnt-1))~((\I32.\CONST~(src+cnt-1))~\TABLEGET)~\TABLESET \\
+     (\I32.\CONST~(dst+cnt-1))~(\I32.\CONST~(src+cnt-1))~\TABLEGET~\TABLESET \\
      (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~\TABLECOPY \\
      \end{array} \\
    \end{array} \\
