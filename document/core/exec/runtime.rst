@@ -36,9 +36,9 @@ The following auxiliary notation is defined for constant values, to ensure they 
 
 .. math::
    \begin{array}{lcl@{\qquad}l}
-   \vconst(x) &=& (t\K{.}\CONST~x)
+   \vconst_t(x) &=& (t\K{.}\CONST~x)
      & (\iff x~\mbox{is well-formed for}~t) \\
-   \vconst(x) &=& \TRAP
+   \vconst_t(x) &=& \TRAP
      & (\otherwise) \\
    \end{array}
 
