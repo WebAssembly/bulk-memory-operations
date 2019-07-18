@@ -317,7 +317,7 @@ It decodes into an optional <a class="reference internal" href="../syntax/module
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="element-section">
-<span id="binary-elemsec"></span><span id="binary-elem"></span><span id="index-11"></span><h2>Element Section<a class="headerlink" href="#element-section" title="Permalink to this headline">¶</a></h2>
+<span id="binary-elemexpr"></span><span id="binary-elemsec"></span><span id="binary-elem"></span><span id="index-11"></span><h2>Element Section<a class="headerlink" href="#element-section" title="Permalink to this headline">¶</a></h2>
 <p>The <em>element section</em> has the id 9.
 It decodes into a vector of <a class="reference internal" href="../syntax/modules.html#syntax-elem"><span class="std std-ref">element segments</span></a> that represent the <span class="math">\(\href{../syntax/modules.html#syntax-module}{\mathsf{elem}}\)</span> component of a <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a>.</p>
 <div class="math">
@@ -326,13 +326,14 @@ It decodes into a vector of <a class="reference internal" href="../syntax/module
   \mathit{seg}^\ast{:}\href{../binary/modules.html#binary-section}{\mathtt{section}}_9(\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-elem}{\mathtt{elem}})) &amp;\Rightarrow&amp; \mathit{seg} \\
 \def\mathdef1113#1{{}}\mathdef1113{element segment} &amp; \href{../binary/modules.html#binary-elem}{\mathtt{elem}} &amp;::=&amp;
   \def\mathdef1178#1{\mathtt{0x#1}}\mathdef1178{00}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~y^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}})
-    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~0, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} \\
-\def\mathdef1113#1{{}}\mathdef1113{element segment} &amp; \href{../binary/modules.html#binary-elem}{\mathtt{elem}} &amp;::=&amp;
-  \def\mathdef1179#1{\mathtt{0x#1}}\mathdef1179{01}~~y^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}})
-    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} \\
-\def\mathdef1113#1{{}}\mathdef1113{element segment} &amp; \href{../binary/modules.html#binary-elem}{\mathtt{elem}} &amp;::=&amp;
+    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~0, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~((\href{../syntax/modules.html#syntax-elemexpr}{\mathsf{ref.func}}~y)~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}})^\ast \} \\ &amp;&amp;|&amp;
+  \def\mathdef1179#1{\mathtt{0x#1}}\mathdef1179{01}~~\mathit{et}:\href{../binary/types.html#binary-elemtype}{\mathtt{elemtype}}~e^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-elemexpr}{\mathtt{elemexpr}})
+    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{type}}~et, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~e^\ast \} \\ &amp;&amp;|&amp;
   \def\mathdef1180#1{\mathtt{0x#1}}\mathdef1180{02}~~x{:}\href{../binary/modules.html#binary-tableidx}{\mathtt{tableidx}}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~y^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}})
-    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~x, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} \\
+    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~x, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~((\href{../syntax/modules.html#syntax-elemexpr}{\mathsf{ref.func}}~y)~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}})^\ast \} \\
+\def\mathdef1113#1{{}}\mathdef1113{elemexpr} &amp; \href{../binary/modules.html#binary-elemexpr}{\mathtt{elemexpr}} &amp;::=&amp;
+  \def\mathdef1181#1{\mathtt{0x#1}}\mathdef1181{D0}~\def\mathdef1182#1{\mathtt{0x#1}}\mathdef1182{0B} &amp;\Rightarrow&amp; \href{../syntax/modules.html#syntax-elemexpr}{\mathsf{ref.null}}~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}} \\ &amp;&amp;|&amp;
+  \def\mathdef1183#1{\mathtt{0x#1}}\mathdef1183{D2}~x{:}\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}}~\def\mathdef1184#1{\mathtt{0x#1}}\mathdef1184{0B} &amp;\Rightarrow&amp; (\href{../syntax/modules.html#syntax-elemexpr}{\mathsf{ref.func}}~x)~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}} \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -395,13 +396,11 @@ It decodes into a vector of <a class="reference internal" href="../syntax/module
 \def\mathdef1113#1{{}}\mathdef1113{data section} &amp; \href{../binary/modules.html#binary-datasec}{\mathtt{datasec}} &amp;::=&amp;
   \mathit{seg}^\ast{:}\href{../binary/modules.html#binary-section}{\mathtt{section}}_{11}(\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-data}{\mathtt{data}})) &amp;\Rightarrow&amp; \mathit{seg} \\
 \def\mathdef1113#1{{}}\mathdef1113{data segment} &amp; \href{../binary/modules.html#binary-data}{\mathtt{data}} &amp;::=&amp;
-  \def\mathdef1181#1{\mathtt{0x#1}}\mathdef1181{00}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~b^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/values.html#binary-byte}{\mathtt{byte}})
-    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-data}{\mathsf{data}}~0, \href{../syntax/modules.html#syntax-data}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} \\
-\def\mathdef1113#1{{}}\mathdef1113{data segment} &amp; \href{../binary/modules.html#binary-data}{\mathtt{data}} &amp;::=&amp;
-  \def\mathdef1182#1{\mathtt{0x#1}}\mathdef1182{01}~~b^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/values.html#binary-byte}{\mathtt{byte}})
-    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} \\
-\def\mathdef1113#1{{}}\mathdef1113{data segment} &amp; \href{../binary/modules.html#binary-data}{\mathtt{data}} &amp;::=&amp;
-  \def\mathdef1183#1{\mathtt{0x#1}}\mathdef1183{02}~~x{:}\href{../binary/modules.html#binary-memidx}{\mathtt{memidx}}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~b^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/values.html#binary-byte}{\mathtt{byte}})
+  \def\mathdef1185#1{\mathtt{0x#1}}\mathdef1185{00}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~b^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/values.html#binary-byte}{\mathtt{byte}})
+    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-data}{\mathsf{data}}~0, \href{../syntax/modules.html#syntax-data}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} \\ &amp;&amp;|&amp;
+  \def\mathdef1186#1{\mathtt{0x#1}}\mathdef1186{01}~~b^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/values.html#binary-byte}{\mathtt{byte}})
+    &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} \\ &amp;&amp;|&amp;
+  \def\mathdef1187#1{\mathtt{0x#1}}\mathdef1187{02}~~x{:}\href{../binary/modules.html#binary-memidx}{\mathtt{memidx}}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~b^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/values.html#binary-byte}{\mathtt{byte}})
     &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-data}{\mathsf{data}}~x, \href{../syntax/modules.html#syntax-data}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-data}{\mathsf{init}}~b^\ast \} \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
@@ -432,21 +431,21 @@ instead of deferring validation.</p>
 </div>
 <div class="section" id="binary-module">
 <span id="binary-version"></span><span id="binary-magic"></span><span id="index-15"></span><span id="id1"></span><h2>Modules<a class="headerlink" href="#binary-module" title="Permalink to this headline">¶</a></h2>
-<p>The encoding of a <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a> starts with a preamble containing a 4-byte magic number (the string <span class="math">\(\def\mathdef1184#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1184{\backslash0asm}\)</span>) and a version field.
+<p>The encoding of a <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a> starts with a preamble containing a 4-byte magic number (the string <span class="math">\(\def\mathdef1188#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1188{\backslash0asm}\)</span>) and a version field.
 The current version of the WebAssembly binary format is 1.</p>
 <p>The preamble is followed by a sequence of <a class="reference internal" href="#binary-section"><span class="std std-ref">sections</span></a>.
 <a class="reference internal" href="#binary-customsec"><span class="std std-ref">Custom sections</span></a> may be inserted at any place in this sequence,
 while other sections must occur at most once and in the prescribed order.
-All sections can be empty.
-The lengths of vectors produced by the (possibly empty) <a class="reference internal" href="#binary-funcsec"><span class="std std-ref">function</span></a> and <a class="reference internal" href="#binary-codesec"><span class="std std-ref">code</span></a> section must match up.
-Similarly, the data count must match the length of the <a class="reference internal" href="#binary-datasec"><span class="std std-ref">data segment</span></a> vector.
-The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}\)</span> and <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}}\)</span> instructions can only be used if the data count section is present.</p>
+All sections can be empty.</p>
+<p>The lengths of vectors produced by the (possibly empty) <a class="reference internal" href="#binary-funcsec"><span class="std std-ref">function</span></a> and <a class="reference internal" href="#binary-codesec"><span class="std std-ref">code</span></a> section must match up.</p>
+<p>Similarly, the optional data count must match the length of the <a class="reference internal" href="#binary-datasec"><span class="std std-ref">data segment</span></a> vector.
+Furthermore, it must be present if any <span class="math">\(data index &lt;syntax-dataidx&gt;\)</span> occurs in the code section.</p>
 <div class="math">
 \[\begin{split}\begin{array}{llcllll}
 \def\mathdef1113#1{{}}\mathdef1113{magic} &amp; \href{../binary/modules.html#binary-magic}{\mathtt{magic}} &amp;::=&amp;
-  \def\mathdef1185#1{\mathtt{0x#1}}\mathdef1185{00}~\def\mathdef1186#1{\mathtt{0x#1}}\mathdef1186{61}~\def\mathdef1187#1{\mathtt{0x#1}}\mathdef1187{73}~\def\mathdef1188#1{\mathtt{0x#1}}\mathdef1188{6D} \\
+  \def\mathdef1189#1{\mathtt{0x#1}}\mathdef1189{00}~\def\mathdef1190#1{\mathtt{0x#1}}\mathdef1190{61}~\def\mathdef1191#1{\mathtt{0x#1}}\mathdef1191{73}~\def\mathdef1192#1{\mathtt{0x#1}}\mathdef1192{6D} \\
 \def\mathdef1113#1{{}}\mathdef1113{version} &amp; \href{../binary/modules.html#binary-version}{\mathtt{version}} &amp;::=&amp;
-  \def\mathdef1189#1{\mathtt{0x#1}}\mathdef1189{01}~\def\mathdef1190#1{\mathtt{0x#1}}\mathdef1190{00}~\def\mathdef1191#1{\mathtt{0x#1}}\mathdef1191{00}~\def\mathdef1192#1{\mathtt{0x#1}}\mathdef1192{00} \\
+  \def\mathdef1193#1{\mathtt{0x#1}}\mathdef1193{01}~\def\mathdef1194#1{\mathtt{0x#1}}\mathdef1194{00}~\def\mathdef1195#1{\mathtt{0x#1}}\mathdef1195{00}~\def\mathdef1196#1{\mathtt{0x#1}}\mathdef1196{00} \\
 \def\mathdef1113#1{{}}\mathdef1113{module} &amp; \href{../binary/modules.html#binary-module}{\mathtt{module}} &amp;::=&amp;
   \href{../binary/modules.html#binary-magic}{\mathtt{magic}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-version}{\mathtt{version}} \\ &amp;&amp;&amp;
@@ -473,7 +472,7 @@ The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast \\ &amp;&amp;&amp;
   \mathit{code}^n{:\,}\href{../binary/modules.html#binary-codesec}{\mathtt{codesec}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast \\ &amp;&amp;&amp;
-  \href{../syntax/modules.html#syntax-data}{\mathit{data}}^{\mathit{m'}}{:\,}\href{../binary/modules.html#binary-datasec}{\mathtt{datasec}} \\ &amp;&amp;&amp;
+  \href{../syntax/modules.html#syntax-data}{\mathit{data}}^m{:\,}\href{../binary/modules.html#binary-datasec}{\mathtt{datasec}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-customsec}{\mathtt{customsec}}^\ast
   \quad\Rightarrow\quad \{~
     \begin{array}[t]{&#64;{}l&#64;{}}
@@ -483,25 +482,16 @@ The <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{
     \href{../syntax/modules.html#syntax-module}{\mathsf{mems}}~\href{../syntax/modules.html#syntax-mem}{\mathit{mem}}^\ast, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{globals}}~\href{../syntax/modules.html#syntax-global}{\mathit{global}}^\ast, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{elem}}~\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}^\ast, \\
-    \href{../syntax/modules.html#syntax-module}{\mathsf{data}}~\href{../syntax/modules.html#syntax-data}{\mathit{data}}^{\mathit{m'}}, \\
+    \href{../syntax/modules.html#syntax-module}{\mathsf{data}}~\href{../syntax/modules.html#syntax-data}{\mathit{data}}^m, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{start}}~\href{../syntax/modules.html#syntax-start}{\mathit{start}}^?, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{imports}}~\href{../syntax/modules.html#syntax-import}{\mathit{import}}^\ast, \\
     \href{../syntax/modules.html#syntax-module}{\mathsf{exports}}~\href{../syntax/modules.html#syntax-export}{\mathit{export}}^\ast ~\} \\
-   \end{array} \\ &amp;&amp;&amp;
-  (\begin{array}[t]{&#64;{}c&#64;{~}l&#64;{}}
-   \mathrel{\mbox{if}} &amp; m^? \neq \epsilon \\
-   \vee &amp; \forall (t^\ast, e) \in \mathit{code}^n, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}} \notin e \wedge \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}} \notin e) \\
-   \end{array} \\
+    \end{array} \\ &amp;&amp;&amp;
+  (\mathrel{\mbox{if}} m^? \neq \epsilon \vee \href{../syntax/modules.html#syntax-dataidx}{\mathrm{dataidx}}(\mathit{code}^n) = \emptyset) \\
 \end{array}\end{split}\]</div>
 <p>where for each <span class="math">\(t_i^\ast, e_i\)</span> in <span class="math">\(\mathit{code}^n\)</span>,</p>
 <div class="math">
 \[\begin{split}\href{../syntax/modules.html#syntax-func}{\mathit{func}}^n[i] = \{ \href{../syntax/modules.html#syntax-func}{\mathsf{type}}~\href{../syntax/modules.html#syntax-typeidx}{\mathit{typeidx}}^n[i], \href{../syntax/modules.html#syntax-func}{\mathsf{locals}}~t_i^\ast, \href{../syntax/modules.html#syntax-func}{\mathsf{body}}~e_i \} ) \\\end{split}\]</div>
-<p>and where,</p>
-<div class="math">
-\[\begin{split}\begin{array}{lcl&#64;{\qquad}l}
-\mathit{m'} &amp;=&amp; m &amp; (\mathrel{\mbox{if}} m^? \neq \epsilon) \\
-\mathit{m'} &amp;=&amp; 0 &amp; (\mathrel{\mbox{otherwise}})
-\end{array}\end{split}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The version of the WebAssembly binary format may increase in the future
