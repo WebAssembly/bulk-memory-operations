@@ -561,11 +561,15 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 <li>Pop the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}\)</span> from the stack.</li>
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-fill"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
 <li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~i\)</span> from the stack.</li>
+<li>If <span class="math">\(n = 0\)</span>, then:<ol class="loweralpha">
+<li>Return.</li>
+</ol>
+</li>
 <li>Else:<ol class="loweralpha">
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~i\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}\)</span>.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(i+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(i+1)\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(n-1)\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}\)</span>.</li>
@@ -575,14 +579,14 @@ In practice, the choice depends on the <a class="reference internal" href="../ap
 <div class="math">
 \[\begin{split}\begin{array}{l}
 \begin{array}{lcl&#64;{\qquad}l}
+S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~i)~\href{../exec/runtime.html#syntax-val}{\mathit{val}}~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~0)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}) &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F; \epsilon
+\end{array} \\
+\begin{array}{lcl&#64;{\qquad}l}
 S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~i)~\href{../exec/runtime.html#syntax-val}{\mathit{val}}~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(n+1))~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}) &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F;
   \begin{array}[t]{&#64;{}l&#64;{}}
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~i)~\href{../exec/runtime.html#syntax-val}{\mathit{val}}~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}) \\
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(i+1))~\href{../exec/runtime.html#syntax-val}{\mathit{val}}~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~n)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}) \\
+  (\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(i+1))~\href{../exec/runtime.html#syntax-val}{\mathit{val}}~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~n)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}) \\
   \end{array} \\
-\end{array} \\
-\begin{array}{lcl&#64;{\qquad}l}
-S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~i)~\href{../exec/runtime.html#syntax-val}{\mathit{val}}~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~0)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.fill}}) &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F; \epsilon
 \end{array} \\
 \end{array}\end{split}\]</div>
 </div>
@@ -612,13 +616,17 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
 <li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~s\)</span> from the stack.</li>
 <li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-init"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
 <li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~d\)</span> from the stack.</li>
+<li>If <span class="math">\(n = 0\)</span>, then:<ol class="loweralpha">
+<li>Return.</li>
+</ol>
+</li>
 <li>Else:<ol class="loweralpha">
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~d\)</span> to the stack.</li>
 <li>Let <span class="math">\(b\)</span> be the byte <span class="math">\(\mathit{data}.\href{../exec/runtime.html#syntax-datainst}{\mathsf{init}}[s]\)</span>.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~b\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}\)</span>.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(d+1)\)</span> to the stack.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(s+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(d+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(s+1)\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(n-1)\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x\)</span>.</li>
 </ol>
@@ -635,7 +643,7 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
 S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~d)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~s)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(n+1))~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x) &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F;
   \begin{array}[t]{&#64;{}l&#64;{}}
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~d)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~b)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}) \\
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(d+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(s+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~n)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x) \\
+  (\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(d+1))~(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(s+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~n)~(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.init}}~x) \\
   \end{array} \\
 \end{array} \\
 \\ \qquad
@@ -686,54 +694,37 @@ S; F; (\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{data.drop}
 </div>
 <div class="section" id="exec-memory-copy">
 <span id="id20"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}}\)</span><a class="headerlink" href="#exec-memory-copy" title="Permalink to this headline">¶</a></h3>
-<ol class="arabic">
-<li><p class="first">Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</p>
-</li>
-<li><p class="first">Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt\)</span> from the stack.</p>
-</li>
-<li><p class="first">Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</p>
-</li>
-<li><p class="first">Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> from the stack.</p>
-</li>
-<li><p class="first">Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</p>
-</li>
-<li><p class="first">Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> from the stack.</p>
-</li>
-<li><p class="first">If <span class="math">\(cnt = 0\)</span>, then:</p>
-<blockquote>
-<div><ol class="loweralpha simple">
+<ol class="arabic simple">
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt\)</span> from the stack.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> from the stack.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-memory-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> from the stack.</li>
+<li>If <span class="math">\(cnt = 0\)</span>, then:<ol class="loweralpha">
 <li>Return.</li>
 </ol>
-</div></blockquote>
 </li>
-<li><p class="first">If <span class="math">\(dst &lt; src\)</span>, then:</p>
-<blockquote>
-<div><ol class="loweralpha simple">
+<li>If <span class="math">\(dst &lt;= src\)</span>, then:<ol class="loweralpha">
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}\mathsf{8\_u}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}\)</span>.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}\)</span>.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+1)\)</span> to the stack.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+1)\)</span> to the stack.</li>
 </ol>
-</div></blockquote>
 </li>
-<li><p class="first">Else:</p>
-<blockquote>
-<div><ol class="loweralpha simple">
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+cnt-1)\)</span> to the stack.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+cnt-1)\)</span> to the stack.</li>
+<li>Else:<ol class="loweralpha">
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+cnt-1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+cnt-1)\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}\mathsf{8\_u}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}\)</span>.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}\)</span>.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> to the stack.</li>
 </ol>
-</div></blockquote>
 </li>
-<li><p class="first">Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt-1)\)</span> to the stack.</p>
-</li>
-<li><p class="first">Execute the instruction <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}}\)</span>.</p>
-</li>
+<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt-1)\)</span> to the stack.</li>
+<li>Execute the instruction <span class="math">\(\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}}\)</span>.</li>
 </ol>
 <div class="math">
 \[\begin{split}~\\[-1ex]
@@ -748,19 +739,19 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst) \\
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}\mathsf{8\_u}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}) \\
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}) \\
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}} \\
+  (\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+1))~(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}} \\
   \end{array} \\
 \end{array} \\
 \\ \qquad
   \begin{array}[t]{&#64;{}r&#64;{~}l&#64;{}}
-  (\mathrel{\mbox{if}} &amp; dst &lt; src)
+  (\mathrel{\mbox{if}} &amp; dst &lt;= src)
   \end{array}
 \\[1ex]
 \begin{array}{lcl&#64;{\qquad}l}
 S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt+1))~\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}} &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F;
   \begin{array}[t]{&#64;{}l&#64;{}}
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+cnt-1)) \\
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+cnt-1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}\mathsf{8\_u}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}) \\
+  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+cnt)) \\
+  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+cnt))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{load}}\mathsf{8\_u}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}) \\
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\mathsf{.}\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{store}}\mathsf{8}~\{ \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{offset}}~0, \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{align}}~0 \}) \\
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~\href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.copy}} \\
   \end{array} \\
@@ -774,54 +765,37 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
 <span id="exec-instr-table"></span><span id="index-5"></span><h2>Table Instructions<a class="headerlink" href="#table-instructions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="exec-table-copy">
 <span id="id21"></span><h3><span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}}\)</span><a class="headerlink" href="#exec-table-copy" title="Permalink to this headline">¶</a></h3>
-<ol class="arabic">
-<li><p class="first">Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-table-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</p>
-</li>
-<li><p class="first">Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt\)</span> from the stack.</p>
-</li>
-<li><p class="first">Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-table-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</p>
-</li>
-<li><p class="first">Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> from the stack.</p>
-</li>
-<li><p class="first">Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-table-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</p>
-</li>
-<li><p class="first">Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> from the stack.</p>
-</li>
-<li><p class="first">If <span class="math">\(cnt = 0\)</span>, then:</p>
-<blockquote>
-<div><ol class="loweralpha simple">
+<ol class="arabic simple">
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-table-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt\)</span> from the stack.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-table-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> from the stack.</li>
+<li>Assert: due to <a class="reference internal" href="../valid/instructions.html#valid-table-copy"><span class="std std-ref">validation</span></a>, a value of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span> is on the top of the stack.</li>
+<li>Pop the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> from the stack.</li>
+<li>If <span class="math">\(cnt = 0\)</span>, then:<ol class="loweralpha">
 <li>Return.</li>
 </ol>
-</div></blockquote>
 </li>
-<li><p class="first">If <span class="math">\(dst &lt; src\)</span>, then:</p>
-<blockquote>
-<div><ol class="loweralpha simple">
+<li>If <span class="math">\(dst &lt;= src\)</span>, then:<ol class="loweralpha">
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../exec/runtime.html#syntax-table-get}{\mathsf{table.get}}\)</span>.</li>
 <li>Execute the instruction <span class="math">\(\href{../exec/runtime.html#syntax-table-set}{\mathsf{table.set}}\)</span>.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+1)\)</span> to the stack.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+1)\)</span> to the stack.</li>
 </ol>
-</div></blockquote>
 </li>
-<li><p class="first">Else:</p>
-<blockquote>
-<div><ol class="loweralpha simple">
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+cnt-1)\)</span> to the stack.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+cnt-1)\)</span> to the stack.</li>
+<li>Else:<ol class="loweralpha">
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+cnt-1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+cnt-1)\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../exec/runtime.html#syntax-table-get}{\mathsf{table.get}}\)</span>.</li>
 <li>Execute the instruction <span class="math">\(\href{../exec/runtime.html#syntax-table-set}{\mathsf{table.set}}\)</span>.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src\)</span> to the stack.</li>
 </ol>
-</div></blockquote>
 </li>
-<li><p class="first">Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt-1)\)</span> to the stack.</p>
-</li>
-<li><p class="first">Execute the instruction <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}}\)</span>.</p>
-</li>
+<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt-1)\)</span> to the stack.</li>
+<li>Execute the instruction <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}}\)</span>.</li>
 </ol>
 <div class="math">
 \[\begin{split}~\\[-1ex]
@@ -834,18 +808,18 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
 S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt+1))~\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}} &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F;
   \begin{array}[t]{&#64;{}l&#64;{}}
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~\href{../exec/runtime.html#syntax-table-get}{\mathsf{table.get}}~\href{../exec/runtime.html#syntax-table-set}{\mathsf{table.set}} \\
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}} \\
+  (\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+1))~(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}} \\
   \end{array} \\
 \end{array} \\
 \\ \qquad
   \begin{array}[t]{&#64;{}r&#64;{~}l&#64;{}}
-  (\mathrel{\mbox{if}} &amp; dst &lt; src)
+  (\mathrel{\mbox{if}} &amp; dst &lt;= src)
   \end{array}
 \\[1ex]
 \begin{array}{lcl&#64;{\qquad}l}
 S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt+1))~\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}} &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S; F;
   \begin{array}[t]{&#64;{}l&#64;{}}
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+cnt-1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+cnt-1))~\href{../exec/runtime.html#syntax-table-get}{\mathsf{table.get}}~\href{../exec/runtime.html#syntax-table-set}{\mathsf{table.set}} \\
+  (\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+cnt))~(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+cnt))~\href{../exec/runtime.html#syntax-table-get}{\mathsf{table.get}}~\href{../exec/runtime.html#syntax-table-set}{\mathsf{table.set}} \\
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.copy}} \\
   \end{array} \\
 \end{array} \\
@@ -887,8 +861,8 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-funcelem}{\mathit{funcelem}}\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../exec/runtime.html#syntax-table-set}{\mathsf{table.set}}\)</span>.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+1)\)</span> to the stack.</li>
-<li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+1)\)</span> to the stack.</li>
+<li>Push the value <span class="math">\(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+1)\)</span> to the stack.</li>
 <li>Push the value <span class="math">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt-1)\)</span> to the stack.</li>
 <li>Execute the instruction <span class="math">\(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}~x\)</span>.</li>
 </ol>
@@ -903,7 +877,7 @@ S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/
 S; F; (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~src)~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(cnt+1))~(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}~x) &amp;\href{../exec/conventions.html#formal-notation}{\hookrightarrow}&amp; S'; F;
   \begin{array}[t]{&#64;{}l&#64;{}}
   (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~dst)~\href{../exec/runtime.html#syntax-funcelem}{\mathit{funcelem}}~(\href{../exec/runtime.html#syntax-table-set}{\mathsf{table.set}}~x) \\
-  (\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(dst+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~(src+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}~x) \\
+  (\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(dst+1))~(\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}(src+1))~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~cnt)~(\href{../syntax/instructions.html#syntax-instr-table}{\mathsf{table.init}}~x) \\
   \end{array} \\
 \end{array} \\
 \\ \qquad

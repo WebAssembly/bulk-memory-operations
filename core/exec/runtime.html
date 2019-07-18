@@ -106,6 +106,17 @@ It is convenient to reuse the same notation as for the <span class="math">\(\hre
   \href{../syntax/types.html#syntax-valtype}{\mathsf{f32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~\href{../syntax/values.html#syntax-float}{\def\mathdef1675#1{{\mathit{f}#1}}\mathdef1675{\mathit{32}}} \\&amp;&amp;|&amp;
   \href{../syntax/types.html#syntax-valtype}{\mathsf{f64}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~\href{../syntax/values.html#syntax-float}{\def\mathdef1676#1{{\mathit{f}#1}}\mathdef1676{\mathit{64}}}
 \end{array}\end{split}\]</div>
+<div class="section" id="conventions">
+<h3>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h3>
+<p>The following auxiliary notation is defined for constant values, to ensure they are well-formed for the given <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a>.</p>
+<div class="math">
+\[\begin{split}\begin{array}{lcl&#64;{\qquad}l}
+\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_t(x) &amp;=&amp; (t\mathsf{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~x)
+  &amp; (\mathrel{\mbox{if}} x~\mbox{is well-formed for}~t) \\
+\href{../exec/runtime.html#syntax-val}{\mathrm{const}}_t(x) &amp;=&amp; \href{../exec/runtime.html#syntax-trap}{\mathsf{trap}}
+  &amp; (\mathrel{\mbox{otherwise}}) \\
+\end{array}\end{split}\]</div>
+</div>
 </div>
 <div class="section" id="results">
 <span id="syntax-result"></span><span id="index-2"></span><h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
@@ -323,8 +334,8 @@ It is an <a class="reference internal" href="#syntax-addr"><span class="std std-
   \href{../exec/runtime.html#syntax-externval}{\mathsf{mem}}~\href{../exec/runtime.html#syntax-memaddr}{\mathit{memaddr}} \\&amp;&amp;|&amp;
   \href{../exec/runtime.html#syntax-externval}{\mathsf{global}}~\href{../exec/runtime.html#syntax-globaladdr}{\mathit{globaladdr}} \\
 \end{array}\end{split}\]</div>
-<div class="section" id="conventions">
-<h3>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Conventions<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>The following auxiliary notation is defined for sequences of external values.
 It filters out entries of a specific kind in an order-preserving fashion:</p>
 <ul class="simple">
@@ -336,7 +347,7 @@ It filters out entries of a specific kind in an order-preserving fashion:</p>
 </div>
 </div>
 <div class="section" id="stack">
-<span id="label"></span><span id="frame"></span><span id="syntax-label"></span><span id="syntax-frame"></span><span id="index-14"></span><span id="id3"></span><h2>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h2>
+<span id="label"></span><span id="frame"></span><span id="syntax-label"></span><span id="syntax-frame"></span><span id="index-14"></span><span id="id4"></span><h2>Stack<a class="headerlink" href="#stack" title="Permalink to this headline">¶</a></h2>
 <p>Besides the <a class="reference internal" href="#store"><span class="std std-ref">store</span></a>, most <a class="reference internal" href="../syntax/instructions.html#syntax-instr"><span class="std std-ref">instructions</span></a> interact with an implicit <em>stack</em>.
 The stack contains three kinds of entries:</p>
 <ul class="simple">
@@ -352,8 +363,8 @@ Stack entries are described by abstract syntax as follows.</p>
 However, because the stacks are interdependent, additional book keeping about associated stack heights would be required.
 For the purpose of this specification, an interleaved representation is simpler.</p>
 </div>
-<div class="section" id="id4">
-<h3>Values<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>Values<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>Values are represented by <a class="reference internal" href="#syntax-val"><span class="std std-ref">themselves</span></a>.</p>
 </div>
 <div class="section" id="labels">
@@ -391,8 +402,8 @@ and a reference to the function’s own <a class="reference internal" href="#syn
 \end{array}\end{split}\]</div>
 <p>The values of the locals are mutated by respective <a class="reference internal" href="../syntax/instructions.html#syntax-instr-variable"><span class="std std-ref">variable instructions</span></a>.</p>
 </div>
-<div class="section" id="id5">
-<h3>Conventions<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>Conventions<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The meta variable <span class="math">\(L\)</span> ranges over labels where clear from context.</li>
 <li>The meta variable <span class="math">\(F\)</span> ranges over frames where clear from context.</li>
