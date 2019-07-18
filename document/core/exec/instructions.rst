@@ -653,7 +653,7 @@ Memory Instructions
 
     c. Execute the instruction :math:`\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}`.
 
-    d. Push the value :math:`\I32.\CONST~(i+1)` to the stack.
+    d. Push the value :math:`\I32.\CONST~\vconst(i+1)` to the stack.
 
     e. Push the value :math:`\val` to the stack.
 
@@ -822,7 +822,7 @@ Memory Instructions
 
     a. Return.
 
-8. If :math:`dst < src`, then:
+8. If :math:`dst <= src`, then:
 
     a. Push the value :math:`\I32.\CONST~dst` to the stack.
 
@@ -872,7 +872,7 @@ Memory Instructions
    \end{array} \\
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & dst < src)
+     (\iff & dst <= src)
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
@@ -918,7 +918,7 @@ Table Instructions
 
     a. Return.
 
-8. If :math:`dst < src`, then:
+8. If :math:`dst <= src`, then:
 
     a. Push the value :math:`\I32.\CONST~dst` to the stack.
 
@@ -966,7 +966,7 @@ Table Instructions
    \end{array} \\
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & dst < src)
+     (\iff & dst <= src)
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
