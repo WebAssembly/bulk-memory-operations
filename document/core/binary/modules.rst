@@ -331,14 +331,14 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
        &\Rightarrow& \{ \ETABLE~0, \EOFFSET~o, \ETYPE~\FUNCREF, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\ &&|&
      \hex{01}~~\hex{00}~~y^\ast{:}\Bvec(\Bfuncidx)
        &\Rightarrow& \{ \ETYPE~\FUNCREF, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\ &&|&
-     \hex{02}~~t{:}\Btableidx~~o{:}\Bexpr~~\hex{00}~~y^\ast{:}\Bvec(\Bfuncidx)
-       &\Rightarrow& \{ \ETABLE~t, \EOFFSET~o, \ETYPE~\FUNCREF, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\ &&|&
+     \hex{02}~~x{:}\Btableidx~~o{:}\Bexpr~~\hex{00}~~y^\ast{:}\Bvec(\Bfuncidx)
+       &\Rightarrow& \{ \ETABLE~x, \EOFFSET~o, \ETYPE~\FUNCREF, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\ &&|&
      \hex{04}~~o{:}\Bexpr~e^\ast{:}\Bvec(\Belemexpr)
        &\Rightarrow& \{ \ETABLE~0, \EOFFSET~o, \ETYPE~\FUNCREF, \EINIT~e^\ast \} \\ &&|&
      \hex{05}~~\X{et}:\Belemtype~~e^\ast{:}\Bvec(\Belemexpr)
        &\Rightarrow& \{ \ETYPE~et, \EINIT~e^\ast \} \\ &&|&
-     \hex{06}~~t{:}\Btableidx~~o{:}\Bexpr~~\X{et}:\Belemtype~~e^\ast{:}\Bvec(\Belemexpr)
-       &\Rightarrow& \{ \ETABLE~t, \EOFFSET~o, \ETYPE~et, \EINIT~e^\ast \} \\
+     \hex{06}~~x{:}\Btableidx~~o{:}\Bexpr~~\X{et}:\Belemtype~~e^\ast{:}\Bvec(\Belemexpr)
+       &\Rightarrow& \{ \ETABLE~x, \EOFFSET~o, \ETYPE~et, \EINIT~e^\ast \} \\
    \production{elemexpr} & \Belemexpr &::=&
      \hex{D0}~\hex{0B} &\Rightarrow& \REFNULL~\END \\ &&|&
      \hex{D2}~x{:}\Bfuncidx~\hex{0B} &\Rightarrow& (\REFFUNC~x)~\END \\
