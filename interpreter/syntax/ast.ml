@@ -140,20 +140,23 @@ and memory' =
   mtype : memory_type;
 }
 
-type ('data, 'ty) segment = ('data, 'ty) segment' Source.phrase
-and ('data, 'ty) segment' =
-  | ActiveRefs of {index : var; offset : const; etype : 'ty; init : 'data}
-  | ActiveIndices of {index : var; offset : const; init : 'data}
-  | PassiveRefs of {etype : 'ty; data : 'data}
-  | PassiveIndices of {data : 'data}
-
 type elem = elem' Source.phrase
 and elem' =
   | RefNull
   | RefFunc of var
 
-type table_segment = (elem list, elem_type) segment
-type memory_segment = (string, unit) segment
+
+type table_segment = table_segment' Source.phrase
+and table_segment' =
+  | ActiveRefs of {index : var; offset : const; etype : elem_type; init : elem list}
+  | ActiveIndices of {index : var; offset : const; init : elem list}
+  | PassiveRefs of {etype : elem_type; data : elem list}
+  | PassiveIndices of {data : elem list}
+
+type memory_segment = memory_segment' Source.phrase
+and memory_segment' =
+  | Active of {index : var; offset : const; init : string}
+  | Passive of {data : string}
 
 
 (* Modules *)

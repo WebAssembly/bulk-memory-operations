@@ -146,6 +146,11 @@ let elem_type s =
   | -0x10 -> FuncRefType
   | _ -> error s (pos s - 1) "invalid element type"
 
+let extern_kind s =
+  match vs7 s with
+  | 0x00 -> FuncKind
+  | _ -> error s (pos s - 1) "invalid extern kind"
+
 let stack_type s =
   match peek s with
   | Some 0x40 -> skip 1 s; []
@@ -613,27 +618,10 @@ let code_section s =
 
 (* Element section *)
 
-let segment active passive s =
-  match vu32 s with
-  | 0l ->
-    let index = Source.(0l @@ Source.no_region) in
-    let offset = const s in
-    let init = active s in
-    Active {index; offset; init}
-  | 1l ->
-    let etype, data = passive s in
-    Passive {etype; data}
-  | 2l ->
-    let index = at var s in
-    let offset = const s in
-    let init = active s in
-    Active {index; offset; init}
-  | _ -> error s (pos s - 1) "invalid segment kind"
-
-let active_elem s =
+let func_index s =
   ref_func (at var s)
 
-let passive_elem s =
+let elem_expr s =
   match u8 s with
   | 0xd0 -> end_ s; ref_null
   | 0xd2 ->
@@ -642,16 +630,46 @@ let passive_elem s =
     ref_func x
   | _ -> error s (pos s - 1) "invalid elem"
 
-let active_elem_segment s =
-  vec (at active_elem) s
+let elem_indices s =
+  vec (at func_index) s
 
-let passive_elem_segment s =
-  let etype = elem_type s in
-  let init = vec (at passive_elem) s in
-  etype, init
+let elem_refs s =
+  vec (at elem_expr) s
 
 let table_segment s =
-  segment active_elem_segment passive_elem_segment s
+  match vu32 s with
+  | 0l ->
+    let index = Source.(0l @@ Source.no_region) in
+    let offset = const s in
+    let init = elem_indices s in
+    ActiveIndices {index; offset; init}
+  | 1l ->
+    let _ = extern_kind s in
+    let data = elem_indices s in
+    PassiveIndices {data}
+  | 2l ->
+    let index = at var s in
+    let offset = const s in
+    let _ = extern_kind s in
+    let init = elem_indices s in
+    ActiveIndices {index; offset; init}
+  | 4l ->
+    let index = Source.(0l @@ Source.no_region) in
+    let offset = const s in
+    let etype = elem_type s in
+    let init = elem_refs s in
+    ActiveRefs {index; offset; etype; init}
+  | 5l ->
+    let etype = elem_type s in
+    let data = elem_refs s in
+    PassiveRefs {etype; data}
+  | 6l ->
+    let index = at var s in
+    let offset = const s in
+    let etype = elem_type s in
+    let init = elem_refs s in
+    ActiveRefs {index; offset; etype; init}
+  | _ -> error s (pos s - 1) "invalid table segment kind"
 
 let elem_section s =
   section `ElemSection (vec (at table_segment)) [] s
@@ -660,7 +678,21 @@ let elem_section s =
 (* Data section *)
 
 let memory_segment s =
-  segment string (fun s -> (), string s) s
+  match vu32 s with
+  | 0l ->
+    let index = Source.(0l @@ Source.no_region) in
+    let offset = const s in
+    let init = string s in
+    Active {index; offset; init}
+  | 1l ->
+    let data = string s in
+    Passive {data}
+  | 2l ->
+    let index = at var s in
+    let offset = const s in
+    let init = string s in
+    Active {index; offset; init}
+  | _ -> error s (pos s - 1) "invalid memory segment kind"
 
 let data_section s =
   section `DataSection (vec (at memory_segment)) [] s

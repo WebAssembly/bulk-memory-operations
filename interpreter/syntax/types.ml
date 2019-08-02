@@ -2,6 +2,7 @@
 
 type value_type = I32Type | I64Type | F32Type | F64Type
 type elem_type = FuncRefType
+type extern_kind = FuncKind
 type stack_type = value_type list
 type func_type = FuncType of stack_type * stack_type
 
