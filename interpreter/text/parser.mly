@@ -574,34 +574,43 @@ elemref :
   | LPAR REF_NULL RPAR { let at = at () in fun c -> ref_null @@ at }
   | LPAR REF_FUNC var RPAR { let at = at () in fun c -> ref_func ($3 c func) @@ at }
 
-passive_elemref_list :
+elemref_list :
   | /* empty */ { fun c -> [] }
-  | elemref passive_elemref_list { fun c -> $1 c :: $2 c }
+  | elemref elemref_list { fun c -> $1 c :: $2 c }
 
-active_elemref_list :
+elemindex_list :
   | var_list
     { let f = function {at; _} as x -> ref_func x @@ at in
       fun c lookup -> List.map f ($1 c lookup) }
 
 elem :
-  | LPAR ELEM bind_var_opt elem_type passive_elemref_list RPAR
+  | LPAR ELEM offset elemindex_list RPAR  /* Sugar */
+    { let at = at () in
+      fun c -> ignore (anon_elem c);
+      fun () -> ActiveIndices {index = 0l @@ at; offset = $3 c; init = $4 c func} @@ at }
+  | LPAR ELEM bind_var_opt elemindex_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> Passive {etype = $4; data = $5 c} @@ at }
-  | LPAR ELEM bind_var var offset active_elemref_list RPAR
-    { let at = at () in
-      fun c -> ignore (bind_elem c $3);
-      fun () ->
-      Active {index = $4 c table; offset = $5 c; init = $6 c func} @@ at }
-  | LPAR ELEM var offset active_elemref_list RPAR
+      fun () -> PassiveIndices {data = $4 c} @@ at }
+  | LPAR ELEM var offset elemindex_list RPAR
     { let at = at () in
       fun c -> ignore (anon_elem c);
       fun () ->
-      Active {index = $3 c table; offset = $4 c; init = $5 c func} @@ at }
-  | LPAR ELEM offset active_elemref_list RPAR  /* Sugar */
+      ActiveIndices {index = $3 c table; offset = $4 c; init = $5 c func} @@ at }
+  | LPAR ELEM offset elemref_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore (anon_elem c);
-      fun () -> Active {index = 0l @@ at; offset = $3 c; init = $4 c func} @@ at }
+      fun () -> ActiveRefs {index = 0l @@ at; offset = $3 c;
+                            etype = FuncRefType c; init = $4 c func} @@ at }
+  | LPAR ELEM bind_var_opt elem_type elemref_list RPAR
+    { let at = at () in
+      fun c -> ignore ($3 c anon_elem bind_elem);
+      fun () -> PassiveRefs {etype = $4; data = $5 c} @@ at }
+  | LPAR ELEM var offset elem_type elemref_list RPAR
+    { let at = at () in
+      fun c -> ignore (anon_elem c);
+      fun () ->
+      ActiveRefs {index = $3 c table; offset = $4 c; etype = $5 c; init = $6 c func} @@ at }
 
 table :
   | LPAR TABLE bind_var_opt table_fields RPAR

@@ -142,8 +142,10 @@ and memory' =
 
 type ('data, 'ty) segment = ('data, 'ty) segment' Source.phrase
 and ('data, 'ty) segment' =
-  | Active of {index : var; offset : const; init : 'data}
-  | Passive of {etype : 'ty; data : 'data}
+  | ActiveRefs of {index : var; offset : const; etype : 'ty; init : 'data}
+  | ActiveIndices of {index : var; offset : const; init : 'data}
+  | PassiveRefs of {etype : 'ty; data : 'data}
+  | PassiveIndices of {data : 'data}
 
 type elem = elem' Source.phrase
 and elem' =
