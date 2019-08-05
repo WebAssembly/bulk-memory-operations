@@ -97,11 +97,11 @@ let elem (e : elem) =
 
 let table_segment (s : table_segment) =
   match s.it with
-  | ActiveIndices {index; offset; init}
-  | ActiveRefs {index; offset; init; _} ->
+  | ActiveWithIndices {index; offset; init}
+  | ActiveWithRefs {index; offset; init; _} ->
     tables (var index) ++ const offset ++ list elem init
-  | PassiveIndices {data}
-  | PassiveRefs {data; _} -> list elem data
+  | PassiveWithIndices {data}
+  | PassiveWithRefs {data; _} -> list elem data
 
 let memory_segment (s : memory_segment) =
   match s.it with

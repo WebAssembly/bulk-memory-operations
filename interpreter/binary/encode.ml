@@ -491,17 +491,17 @@ let encode m =
 
     let table_segment seg =
       match seg.it with
-      | ActiveIndices {index = {it = 0l;_}; offset; init} ->
+      | ActiveWithIndices {index = {it = 0l;_}; offset; init} ->
         u8 0x00; const offset; elem_indices init
-      | PassiveIndices {data} ->
+      | PassiveWithIndices {data} ->
         u8 0x01; u8 0x00; elem_indices data
-      | ActiveIndices {index; offset; init} ->
+      | ActiveWithIndices {index; offset; init} ->
         u8 0x02; var index; const offset; u8 0x00; elem_indices init
-      | ActiveRefs {index = {it = 0l;_}; offset; etype; init} ->
+      | ActiveWithRefs {index = {it = 0l;_}; offset; etype; init} ->
         u8 0x04; const offset; elem_type etype; vec elem_expr init
-      | PassiveRefs {etype; data} ->
+      | PassiveWithRefs {etype; data} ->
         u8 0x05; elem_type etype; vec elem_expr data
-      | ActiveRefs {index; offset; etype; init} ->
+      | ActiveWithRefs {index; offset; etype; init} ->
         u8 0x06; var index; const offset; elem_type etype; vec elem_expr init
 
     let elem_section elems =

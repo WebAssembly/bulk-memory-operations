@@ -148,10 +148,10 @@ and elem' =
 
 type table_segment = table_segment' Source.phrase
 and table_segment' =
-  | ActiveRefs of {index : var; offset : const; etype : elem_type; init : elem list}
-  | ActiveIndices of {index : var; offset : const; init : elem list}
-  | PassiveRefs of {etype : elem_type; data : elem list}
-  | PassiveIndices of {data : elem list}
+  | ActiveWithRefs of {index : var; offset : const; etype : elem_type; init : elem list}
+  | ActiveWithIndices of {index : var; offset : const; init : elem list}
+  | PassiveWithRefs of {etype : elem_type; data : elem list}
+  | PassiveWithIndices of {data : elem list}
 
 type memory_segment = memory_segment' Source.phrase
 and memory_segment' =

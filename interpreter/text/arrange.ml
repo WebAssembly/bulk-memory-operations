@@ -308,15 +308,16 @@ let elem_expr el =
 
 let elems seg =
   match seg.it with
-  | ActiveIndices {index; offset; init} ->
-    Node ("elem", Node ("table", [atom var index]) :: Node ("offset", const offset) :: Atom "func"
-    :: list elem_index init)
-  | PassiveIndices {data} ->
+  | ActiveWithIndices {index; offset; init} ->
+    Node ("elem", Node ("table", [atom var index])
+    :: Node ("offset", const offset) :: Atom "func" :: list elem_index init)
+  | PassiveWithIndices {data} ->
     Node ("elem func", list elem_index data)
-  | ActiveRefs {index; offset; etype; init} ->
-    Node ("elem", Node ("table", [atom var index]) :: Node ("offset", const offset)
+  | ActiveWithRefs {index; offset; etype; init} ->
+    Node ("elem", Node ("table", [atom var index])
+    :: Node ("offset", const offset)
     :: atom elem_type etype :: list elem_expr init)
-  | PassiveRefs {etype; data} -> Node ("elem", atom elem_type etype
+  | PassiveWithRefs {etype; data} -> Node ("elem", atom elem_type etype
     :: list elem_expr data)
 
 let data seg =

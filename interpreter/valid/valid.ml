@@ -429,13 +429,13 @@ let check_elemref (c : context) (el : elem) =
 
 let check_elem (c : context) (seg : table_segment) =
   match seg.it with
-  | ActiveIndices {index; offset; init}
-  | ActiveRefs {index; offset; init; _} ->
+  | ActiveWithIndices {index; offset; init}
+  | ActiveWithRefs {index; offset; init; _} ->
     ignore (table c index);
     check_const c offset I32Type;
     List.iter (check_elemref c) init
-  | PassiveIndices {data}
-  | PassiveRefs {data; _} ->
+  | PassiveWithIndices {data}
+  | PassiveWithRefs {data; _} ->
     List.iter (check_elemref c) data
 
 let check_data (c : context) (seg : memory_segment) =

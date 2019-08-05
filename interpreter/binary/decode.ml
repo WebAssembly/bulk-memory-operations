@@ -642,33 +642,33 @@ let table_segment s =
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = elem_indices s in
-    ActiveIndices {index; offset; init}
+    ActiveWithIndices {index; offset; init}
   | 1l ->
     let _ = extern_kind s in
     let data = elem_indices s in
-    PassiveIndices {data}
+    PassiveWithIndices {data}
   | 2l ->
     let index = at var s in
     let offset = const s in
     let _ = extern_kind s in
     let init = elem_indices s in
-    ActiveIndices {index; offset; init}
+    ActiveWithIndices {index; offset; init}
   | 4l ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let etype = elem_type s in
     let init = elem_refs s in
-    ActiveRefs {index; offset; etype; init}
+    ActiveWithRefs {index; offset; etype; init}
   | 5l ->
     let etype = elem_type s in
     let data = elem_refs s in
-    PassiveRefs {etype; data}
+    PassiveWithRefs {etype; data}
   | 6l ->
     let index = at var s in
     let offset = const s in
     let etype = elem_type s in
     let init = elem_refs s in
-    ActiveRefs {index; offset; etype; init}
+    ActiveWithRefs {index; offset; etype; init}
   | _ -> error s (pos s - 1) "invalid table segment kind"
 
 let elem_section s =

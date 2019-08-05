@@ -593,30 +593,31 @@ elem :
   | LPAR ELEM bind_var_opt offset elemindex_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> ActiveIndices {index = 0l @@ at; offset = $4 c; init = $5 c func} @@ at }
+      fun () ->
+        ActiveWithIndices {index = 0l @@ at; offset = $4 c; init = $5 c func} @@ at }
   | LPAR ELEM bind_var_opt extern_kind elemindex_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> PassiveIndices {data = $5 c func} @@ at }
+      fun () -> PassiveWithIndices {data = $5 c func} @@ at }
   | LPAR ELEM bind_var_opt table_ref offset extern_kind elemindex_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-      ActiveIndices {index = $4 c table; offset = $5 c; init = $7 c func} @@ at }
+      ActiveWithIndices {index = $4 c table; offset = $5 c; init = $7 c func} @@ at }
   | LPAR ELEM bind_var_opt offset elem_type elemref_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> ActiveRefs {index = 0l @@ at; offset = $4 c;
+      fun () -> ActiveWithRefs {index = 0l @@ at; offset = $4 c;
                             etype = $5; init = $6 c} @@ at }
   | LPAR ELEM bind_var_opt elem_type elemref_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> PassiveRefs {etype = $4; data = $5 c} @@ at }
+      fun () -> PassiveWithRefs {etype = $4; data = $5 c} @@ at }
   | LPAR ELEM bind_var_opt table_ref offset elem_type elemref_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-        ActiveRefs {index = $4 c table; offset = $5 c; etype = $6; init = $7 c} @@ at }
+        ActiveWithRefs {index = $4 c table; offset = $5 c; etype = $6; init = $7 c} @@ at }
 
 table :
   | LPAR TABLE bind_var_opt table_fields RPAR
@@ -641,7 +642,7 @@ table_fields :
       let init = $4 c func in
       let size = Lib.List32.length init in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
-      [ActiveIndices {index = x; offset; init} @@ at],
+      [ActiveWithIndices {index = x; offset; init} @@ at],
       [], [] }
 
 data :
