@@ -485,11 +485,11 @@ Element segments allow for an optional :ref:`table index <text-tableidx>` to ide
    \production{element segment} & \Telem_I &::=&
      \text{(}~\text{elem}~~\Tid^?~~e{:}\Toffset_I~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETABLE~0, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~x{:}\Ttableidx_I~~e{:}\Toffset_I~~\text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
+     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~x{:}\Ttableidx_I ~\text{)}~~e{:}\Toffset_I~~\text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
      \text{(}~\text{elem}~~\Tid^?~~e{:}\Toffset_I~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETABLE~0, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~x{:}\Ttableidx_I~~e{:}\Toffset_I~~et{:}\Telemtype~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
+     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~x{:}\Ttableidx_I ~\text{)}~~e{:}\Toffset_I~~et{:}\Telemtype~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \ETYPE~et, \EINIT~y^\ast \} \\ &&|&
      \text{(}~\text{elem}~~\Tid^?~~\text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{\EINIT~y^\ast \} \\ &&|&
