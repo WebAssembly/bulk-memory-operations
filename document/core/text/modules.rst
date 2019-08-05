@@ -483,10 +483,21 @@ Element segments allow for an optional :ref:`table index <text-tableidx>` to ide
 .. math::
    \begin{array}{llclll}
    \production{element segment} & \Telem_I &::=&
-     \text{(}~\text{elem}~~\Tid^?~~x{:}\Ttableidx_I~~\text{(}~\text{offset}~~e{:}\Texpr_I~\text{)}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
+     \text{(}~\text{elem}~~\Tid^?~~e{:}\Toffset_I~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{ \ETABLE~0, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
+     \text{(}~\text{elem}~~\Tid^?~~x{:}\Ttableidx_I~~e{:}\Toffset_I~~\text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~et{:}\Telemtype~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
-       \Rightarrow\quad \{ \ETYPE~et, \EINIT~y^\ast \} \\
+     \text{(}~\text{elem}~~\Tid^?~~e{:}\Toffset_I~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{ \ETABLE~0, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
+     \text{(}~\text{elem}~~\Tid^?~~x{:}\Ttableidx_I~~e{:}\Toffset_I~~et{:}\Telemtype~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \ETYPE~et, \EINIT~y^\ast \} \\ &&|&
+     \text{(}~\text{elem}~~\Tid^?~~\text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{\EINIT~y^\ast \} \\ &&|&
+     \text{(}~\text{elem}~~\Tid^?~~et{:}\Telemtype~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{\ETYPE~et,\EINIT~y^\ast \} \\
+   \production{offset}  & \Toffset_I &::=&
+     \text{(}~\text{offset}~~e{:}\Texpr_I~\text{)} \qquad\Rightarrow\quad \EOFFSET~e \\ &&|&
+     e{:}\Texpr_I \qquad\Rightarrow\quad \EOFFSET~e \\
    \end{array}
 
 .. note::
