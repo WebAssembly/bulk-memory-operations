@@ -429,12 +429,10 @@ let check_elemref (c : context) (el : elem) =
 
 let check_elem (c : context) (seg : table_segment) =
   match seg.it with
-  | ActiveWithIndices {index; offset; init}
-  | ActiveWithRefs {index; offset; init; _} ->
+  | EActive {index; offset; init; _} ->
     ignore (table c index);
     check_const c offset I32Type;
     List.iter (check_elemref c) init
-  | PassiveWithIndices {data}
   | PassiveWithRefs {data; _} ->
     List.iter (check_elemref c) data
 

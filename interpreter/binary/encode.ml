@@ -487,21 +487,24 @@ let encode m =
       | RefNull -> assert false
       | RefFunc x -> var x
 
-    let elem_indices init = vec elem_index init
+    let elem_indices data = vec elem_index data
 
     let table_segment seg =
       match seg.it with
-      | ActiveWithIndices {index = {it = 0l;_}; offset; init} ->
+      | EActive {index = {it = 0l;_}; offset; init; _}
+        when not (contains_null_ref init) ->
         u8 0x00; const offset; elem_indices init
-      | PassiveWithIndices {data} ->
+      | PassiveWithRefs {data; _}
+        when not (contains_null_ref data) ->
         u8 0x01; u8 0x00; elem_indices data
-      | ActiveWithIndices {index; offset; init} ->
+      | EActive {index; offset; init; _}
+        when not (contains_null_ref init) ->
         u8 0x02; var index; const offset; u8 0x00; elem_indices init
-      | ActiveWithRefs {index = {it = 0l;_}; offset; etype; init} ->
+      | EActive {index = {it = 0l;_}; offset; etype; init} ->
         u8 0x04; const offset; elem_type etype; vec elem_expr init
       | PassiveWithRefs {etype; data} ->
         u8 0x05; elem_type etype; vec elem_expr data
-      | ActiveWithRefs {index; offset; etype; init} ->
+      | EActive {index; offset; etype; init} ->
         u8 0x06; var index; const offset; elem_type etype; vec elem_expr init
 
     let elem_section elems =

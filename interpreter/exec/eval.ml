@@ -448,9 +448,7 @@ let elem_list inst init =
 
 let create_elem (inst : module_inst) (seg : table_segment) : elem_inst =
   match seg.it with
-  | ActiveWithIndices _ -> ref None
-  | ActiveWithRefs _ -> ref None
-  | PassiveWithIndices {data} -> ref (Some (elem_list inst data))
+  | EActive _ -> ref None
   | PassiveWithRefs {data; _} -> ref (Some (elem_list inst data))
 
 let create_data (inst : module_inst) (seg : memory_segment) : data_inst =
@@ -466,15 +464,13 @@ let init_func (inst : module_inst) (func : func_inst) =
 
 let init_table (inst : module_inst) (seg : table_segment) =
   match seg.it with
-  | ActiveWithIndices {index; offset = const; init}
-  | ActiveWithRefs {index; offset = const; init; _} ->
+  | EActive {index; offset = const; init; _} ->
     let tab = table inst index in
     let offset = i32 (eval_const inst const) const.at in
     let elems = elem_list inst init in
     let len = Int32.of_int (List.length elems) in
     (try Table.init tab elems offset 0l len
     with Table.Bounds -> Link.error seg.at "elements segment does not fit table")
-  | PassiveWithIndices _
   | PassiveWithRefs _ -> ()
 
 let init_memory (inst : module_inst) (seg : memory_segment) =

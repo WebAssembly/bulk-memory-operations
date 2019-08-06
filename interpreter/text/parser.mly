@@ -594,20 +594,21 @@ elem :
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-        ActiveWithIndices {index = 0l @@ at; offset = $4 c; init = $5 c func} @@ at }
+        EActive {index = 0l @@ at; offset = $4 c; etype = FuncRefType;
+                           init = $5 c func} @@ at }
   | LPAR ELEM bind_var_opt extern_kind elemindex_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> PassiveWithIndices {data = $5 c func} @@ at }
+      fun () -> PassiveWithRefs {etype = FuncRefType; data = $5 c func} @@ at }
   | LPAR ELEM bind_var_opt table_ref offset extern_kind elemindex_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-      ActiveWithIndices {index = $4 c table; offset = $5 c; init = $7 c func} @@ at }
+        EActive {index = $4 c table; offset = $5 c; etype = FuncRefType; init = $7 c func} @@ at }
   | LPAR ELEM bind_var_opt offset elem_type elemref_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> ActiveWithRefs {index = 0l @@ at; offset = $4 c;
+      fun () -> EActive {index = 0l @@ at; offset = $4 c;
                             etype = $5; init = $6 c} @@ at }
   | LPAR ELEM bind_var_opt elem_type elemref_list RPAR
     { let at = at () in
@@ -617,7 +618,7 @@ elem :
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-        ActiveWithRefs {index = $4 c table; offset = $5 c; etype = $6; init = $7 c} @@ at }
+        EActive {index = $4 c table; offset = $5 c; etype = $6; init = $7 c} @@ at }
 
 table :
   | LPAR TABLE bind_var_opt table_fields RPAR
@@ -642,7 +643,7 @@ table_fields :
       let init = $4 c func in
       let size = Lib.List32.length init in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
-      [ActiveWithIndices {index = x; offset; init} @@ at],
+      [EActive {index = x; offset; etype = FuncRefType; init} @@ at],
       [], [] }
 
 data :
