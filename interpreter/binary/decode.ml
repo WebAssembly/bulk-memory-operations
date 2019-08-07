@@ -148,7 +148,7 @@ let elem_type s =
 
 let extern_kind s =
   match vs7 s with
-  | 0x00 -> FuncKind
+  | 0x00 -> FuncRefType
   | _ -> error s (pos s - 1) "invalid extern kind"
 
 let stack_type s =
@@ -644,21 +644,20 @@ let table_segment s =
     let init = elem_indices s in
     EActive {index; offset; etype = FuncRefType; init}
   | 1l ->
-    let _ = extern_kind s in
+    let etype = extern_kind s in
     let data = elem_indices s in
-    PassiveWithRefs {etype = FuncRefType; data}
+    PassiveWithRefs {etype; data}
   | 2l ->
     let index = at var s in
     let offset = const s in
-    let _ = extern_kind s in
+    let etype = extern_kind s in
     let init = elem_indices s in
-    EActive {index; offset; etype = FuncRefType; init}
+    EActive {index; offset; etype; init}
   | 4l ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
-    let etype = elem_type s in
     let init = elem_refs s in
-    EActive {index; offset; etype; init}
+    EActive {index; offset; etype = FuncRefType; init}
   | 5l ->
     let etype = elem_type s in
     let data = elem_refs s in

@@ -501,7 +501,7 @@ let encode m =
         when not (contains_null_ref init) ->
         u8 0x02; var index; const offset; u8 0x00; elem_indices init
       | EActive {index = {it = 0l;_}; offset; etype; init} ->
-        u8 0x04; const offset; elem_type etype; vec elem_expr init
+        u8 0x04; const offset; vec elem_expr init
       | PassiveWithRefs {etype; data} ->
         u8 0x05; elem_type etype; vec elem_expr data
       | EActive {index; offset; etype; init} ->

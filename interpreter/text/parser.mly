@@ -221,9 +221,6 @@ value_type_list :
 elem_type :
   | FUNCREF { FuncRefType }
 
-extern_kind :
-  | FUNC { FuncKind }
-
 global_type :
   | VALUE_TYPE { GlobalType ($1, Immutable) }
   | LPAR MUT VALUE_TYPE RPAR { GlobalType ($3, Mutable) }
@@ -576,6 +573,9 @@ offset :
   | LPAR OFFSET const_expr RPAR { $3 }
   | expr { let at = at () in fun c -> $1 c @@ at }  /* Sugar */
 
+elem_kind :
+  | FUNC { FuncRefType }
+
 elemref :
   | LPAR REF_NULL RPAR { let at = at () in fun c -> ref_null @@ at }
   | LPAR REF_FUNC var RPAR { let at = at () in fun c -> ref_func ($3 c func) @@ at }
@@ -596,20 +596,20 @@ elem :
       fun () ->
         EActive {index = 0l @@ at; offset = $4 c; etype = FuncRefType;
                            init = $5 c func} @@ at }
-  | LPAR ELEM bind_var_opt extern_kind elemindex_list RPAR
+  | LPAR ELEM bind_var_opt elem_kind elemindex_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> PassiveWithRefs {etype = FuncRefType; data = $5 c func} @@ at }
-  | LPAR ELEM bind_var_opt table_ref offset extern_kind elemindex_list RPAR
+      fun () -> PassiveWithRefs {etype = $4; data = $5 c func} @@ at }
+  | LPAR ELEM bind_var_opt table_ref offset elem_kind elemindex_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-        EActive {index = $4 c table; offset = $5 c; etype = FuncRefType; init = $7 c func} @@ at }
-  | LPAR ELEM bind_var_opt offset elem_type elemref_list RPAR  /* Sugar */
+        EActive {index = $4 c table; offset = $5 c; etype = $6; init = $7 c func} @@ at }
+  | LPAR ELEM bind_var_opt offset elemref elemref_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () -> EActive {index = 0l @@ at; offset = $4 c;
-                            etype = $5; init = $6 c} @@ at }
+                         etype = FuncRefType; init = (fun c -> $5 c :: $6 c) c} @@ at }
   | LPAR ELEM bind_var_opt elem_type elemref_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
@@ -641,6 +641,14 @@ table_fields :
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
       let init = $4 c func in
+      let size = Lib.List32.length init in
+      [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
+      [EActive {index = x; offset; etype = FuncRefType; init} @@ at],
+      [], [] }
+  | elem_type LPAR ELEM elemref elemref_list RPAR  /* Sugar */
+    { fun c x at ->
+      let offset = [i32_const (0l @@ at) @@ at] @@ at in
+      let init = (fun c -> $4 c :: $5 c) c in
       let size = Lib.List32.length init in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
       [EActive {index = x; offset; etype = FuncRefType; init} @@ at],
