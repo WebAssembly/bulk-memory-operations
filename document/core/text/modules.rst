@@ -293,6 +293,16 @@ An :ref:`element segment <text-elem>` can be given inline with a table definitio
        (\iff \Tid' = \Tid^? \neq \epsilon \vee \Tid' \idfresh) \\
    \end{array}
 
+.. math::
+   \begin{array}{llclll}
+   \production{module field} &
+     \text{(}~\text{table}~~\Tid^?~~\Telemtype~~\text{(}~\text{elem}~~x^n{:}\Tvec(\Texpr)~\text{)}~~\text{)} \quad\equiv \\ & \qquad
+       \text{(}~\text{table}~~\Tid'~~n~~n~~\Telemtype~\text{)}~~
+       \text{(}~\text{elem}~~\Tid'~~\text{(}~\text{i32.const}~~\text{0}~\text{)}~~\Tvec(\Texpr)~\text{)}
+       \\ & \qquad\qquad
+       (\iff \Tid' = \Tid^? \neq \epsilon \vee \Tid' \idfresh) \\
+   \end{array}
+
 Tables can be defined as :ref:`imports <text-import>` or :ref:`exports <text-export>` inline:
 
 .. math::
@@ -485,19 +495,18 @@ Element segments allow for an optional :ref:`table index <text-tableidx>` to ide
    \production{element segment} & \Telem_I &::=&
      \text{(}~\text{elem}~~\Tid^?~~e{:}\Toffset_I~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETABLE~0, \EOFFSET~e, \ETYPE~\FUNCREF, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~x{:}\Ttableidx_I ~\text{)}~~e{:}\Toffset_I~~\text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
-       \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \ETYPE~\FUNCREF, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~e{:}\Toffset_I~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
-       \Rightarrow\quad \{ \ETABLE~0, \EOFFSET~e, \ETYPE~\FUNCREF, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~x{:}\Ttableidx_I ~\text{)}~~e{:}\Toffset_I~~et{:}\Telemtype~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
-       \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \ETYPE~et, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~\text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I)~\text{)} \\ &&& \qquad
-       \Rightarrow\quad \{\ETYPE~\FUNCREF, \EINIT~y^\ast \} \\ &&|&
-     \text{(}~\text{elem}~~\Tid^?~~et{:}\Telemtype~~y^\ast{:}\Tvec(\Texpr_I)~\text{)} \\ &&& \qquad
-       \Rightarrow\quad \{\ETYPE~et,\EINIT~y^\ast \} \\
+     \text{(}~\text{elem}~~\Tid^?~~e{:}\Toffset_I~~\{et, init\}{:}\Tfunclist_I~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{ \ETABLE~0, \EOFFSET~e, \ETYPE~et, \EINIT~init \} \\ &&|&
+     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~x{:}\Ttableidx_I ~\text{)}~~e{:}\Toffset_I~~\{et, init\}{:}\Tfunclist_I~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{ \ETABLE~x, \EOFFSET~e, \ETYPE~et, \EINIT~init \} \\ &&|&
+     \text{(}~\text{elem}~~\Tid^?~~\{et, init\}{:}\Tfunclist_I~\text{)} \\ &&& \qquad
+       \Rightarrow\quad \{\ETYPE~et,\EINIT~init \} \\
    \production{offset}  & \Toffset_I &::=&
      \text{(}~\text{offset}~~e{:}\Texpr_I~\text{)} \qquad\Rightarrow\quad \EOFFSET~e \\ &&|&
      e{:}\Texpr_I \qquad\Rightarrow\quad \EOFFSET~e \\
+   \production{funclist}  & \Tfunclist_I &::=&
+     \text{func}~~y^\ast{:}\Tvec(\Tfuncidx_I) \qquad\Rightarrow\quad \{ \ETYPE~\FUNCREF, \EINIT~y^\ast \} \\ &&|&
+     et{:}\Telemtype~~y^\ast{:}\Tvec(\Texpr_I) \qquad\Rightarrow\quad \{ \ETYPE~et, \EINIT~y^\ast \} \\
    \end{array}
 
 .. note::

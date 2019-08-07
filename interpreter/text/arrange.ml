@@ -308,32 +308,32 @@ let elem_expr el =
 
 let elems seg =
   match seg.it with
-  | EActive {index = {it = 0l;_}; offset; init; _}
+  | ElemActive {index = {it = 0l;_}; offset; init; _}
     when not (contains_null_ref init) ->
     Node ("elem", Node ("offset", const offset) :: list elem_index init)
-  | EActive {index; offset; init; _}
+  | ElemActive {index; offset; init; _}
     when not (contains_null_ref init) ->
     Node ("elem", Node ("table", [atom var index])
     :: Node ("offset", const offset) :: Atom "func" :: list elem_index init)
-  | EActive {index = {it = 0l;_}; offset; etype; init} ->
-    Node ("elem", Node ("offset", const offset)
-    :: atom elem_type etype :: list elem_expr init)
-  | EActive {index; offset; etype; init} ->
+  | ElemActive {index = {it = 0l;_}; offset; etype; init} ->
+    Node ("elem", Node ("offset", const offset) :: atom elem_type etype
+    :: list elem_expr init)
+  | ElemActive {index; offset; etype; init} ->
     Node ("elem", Node ("table", [atom var index])
     :: Node ("offset", const offset)
     :: atom elem_type etype :: list elem_expr init)
-  | PassiveWithRefs {data; _}
+  | ElemPassive {data; _}
     when not (contains_null_ref data) ->
     Node ("elem func", list elem_index data)
-  | PassiveWithRefs {etype; data} -> Node ("elem", atom elem_type etype
+  | ElemPassive {etype; data} -> Node ("elem", atom elem_type etype
     :: list elem_expr data)
 
 let data seg =
   match seg.it with
-  | Active {index; offset; init} ->
+  | DataActive {index; offset; init} ->
     Node ("data", atom var index :: Node ("offset", const offset)
     :: break_bytes init)
-  | Passive {data} -> Node ("data", break_bytes data)
+  | DataPassive {data} -> Node ("data", break_bytes data)
 
 
 (* Modules *)

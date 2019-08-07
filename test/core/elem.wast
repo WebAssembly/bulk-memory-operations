@@ -25,8 +25,8 @@
   (elem (table $t) (offset (i32.const 0)) func)
   (elem (table $t) (offset (i32.const 0)) func $f $f)
 
-  (elem (i32.const 3) (ref.func $f) (ref.func $g) (ref.func $f))
-  (elem (i32.const 3) (ref.func $f) (ref.null) (ref.func $f))
+  (elem (i32.const 3) funcref (ref.func $f) (ref.func $g) (ref.func $f))
+  (elem (i32.const 3) funcref (ref.func $f) (ref.null) (ref.func $f))
 
   (elem funcref (ref.func $f) (ref.func $g) (ref.func $f))
   (elem funcref (ref.func $f) (ref.func $g) (ref.null))

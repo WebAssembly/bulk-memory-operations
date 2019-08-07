@@ -148,13 +148,13 @@ and elem' =
 
 type table_segment = table_segment' Source.phrase
 and table_segment' =
-  | EActive of {index : var; offset : const; etype : elem_type; init : elem list}
-  | PassiveWithRefs of {etype : elem_type; data : elem list}
+  | ElemActive of {index : var; offset : const; etype : elem_type; init : elem list}
+  | ElemPassive of {etype : elem_type; data : elem list}
 
 type memory_segment = memory_segment' Source.phrase
 and memory_segment' =
-  | Active of {index : var; offset : const; init : string}
-  | Passive of {data : string}
+  | DataActive of {index : var; offset : const; init : string}
+  | DataPassive of {data : string}
 
 
 (* Modules *)

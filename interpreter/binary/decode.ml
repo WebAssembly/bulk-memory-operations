@@ -642,32 +642,32 @@ let table_segment s =
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = elem_indices s in
-    EActive {index; offset; etype = FuncRefType; init}
+    ElemActive {index; offset; etype = FuncRefType; init}
   | 1l ->
     let etype = extern_kind s in
     let data = elem_indices s in
-    PassiveWithRefs {etype; data}
+    ElemPassive {etype; data}
   | 2l ->
     let index = at var s in
     let offset = const s in
     let etype = extern_kind s in
     let init = elem_indices s in
-    EActive {index; offset; etype; init}
+    ElemActive {index; offset; etype; init}
   | 4l ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = elem_refs s in
-    EActive {index; offset; etype = FuncRefType; init}
+    ElemActive {index; offset; etype = FuncRefType; init}
   | 5l ->
     let etype = elem_type s in
     let data = elem_refs s in
-    PassiveWithRefs {etype; data}
+    ElemPassive {etype; data}
   | 6l ->
     let index = at var s in
     let offset = const s in
     let etype = elem_type s in
     let init = elem_refs s in
-    EActive {index; offset; etype; init}
+    ElemActive {index; offset; etype; init}
   | _ -> error s (pos s - 1) "invalid table segment kind"
 
 let elem_section s =
@@ -682,15 +682,15 @@ let memory_segment s =
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = string s in
-    Active {index; offset; init}
+    DataActive {index; offset; init}
   | 1l ->
     let data = string s in
-    Passive {data}
+    DataPassive {data}
   | 2l ->
     let index = at var s in
     let offset = const s in
     let init = string s in
-    Active {index; offset; init}
+    DataActive {index; offset; init}
   | _ -> error s (pos s - 1) "invalid memory segment kind"
 
 let data_section s =

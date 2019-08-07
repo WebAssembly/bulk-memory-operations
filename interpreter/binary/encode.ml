@@ -491,20 +491,20 @@ let encode m =
 
     let table_segment seg =
       match seg.it with
-      | EActive {index = {it = 0l;_}; offset; init; _}
+      | ElemActive {index = {it = 0l;_}; offset; init; _}
         when not (contains_null_ref init) ->
         u8 0x00; const offset; elem_indices init
-      | PassiveWithRefs {data; _}
+      | ElemPassive {data; _}
         when not (contains_null_ref data) ->
         u8 0x01; u8 0x00; elem_indices data
-      | EActive {index; offset; init; _}
+      | ElemActive {index; offset; init; _}
         when not (contains_null_ref init) ->
         u8 0x02; var index; const offset; u8 0x00; elem_indices init
-      | EActive {index = {it = 0l;_}; offset; etype; init} ->
+      | ElemActive {index = {it = 0l;_}; offset; etype; init} ->
         u8 0x04; const offset; vec elem_expr init
-      | PassiveWithRefs {etype; data} ->
+      | ElemPassive {etype; data} ->
         u8 0x05; elem_type etype; vec elem_expr data
-      | EActive {index; offset; etype; init} ->
+      | ElemActive {index; offset; etype; init} ->
         u8 0x06; var index; const offset; elem_type etype; vec elem_expr init
 
     let elem_section elems =
@@ -513,11 +513,11 @@ let encode m =
     (* Data section *)
     let memory_segment seg =
       match seg.it with
-      | Active {index = {it = 0l;_}; offset; init} ->
+      | DataActive {index = {it = 0l;_}; offset; init} ->
           u8 0x00; const offset; string init
-      | Passive {data} ->
+      | DataPassive {data} ->
           u8 0x01; string data
-      | Active {index; offset; init} ->
+      | DataActive {index; offset; init} ->
           u8 0x02; var index; const offset; string init
 
     let data_section datas =
