@@ -566,7 +566,7 @@ func_body :
 
 /* Tables, Memories & Globals */
 
-table_ref :
+table_use :
   | LPAR TABLE var RPAR { fun c -> $3 c }
 
 offset :
@@ -576,47 +576,47 @@ offset :
 elem_kind :
   | FUNC { FuncRefType }
 
-elemref :
+elem_expr :
   | LPAR REF_NULL RPAR { let at = at () in fun c -> ref_null @@ at }
   | LPAR REF_FUNC var RPAR { let at = at () in fun c -> ref_func ($3 c func) @@ at }
 
-elemref_list :
+elem_expr_list :
   | /* empty */ { fun c -> [] }
-  | elemref elemref_list { fun c -> $1 c :: $2 c }
+  | elem_expr elem_expr_list { fun c -> $1 c :: $2 c }
 
-elemindex_list :
+elem_var_list :
   | var_list
     { let f = function {at; _} as x -> ref_func x @@ at in
       fun c lookup -> List.map f ($1 c lookup) }
 
 elem_list :
-  | elem_kind elemindex_list
+  | elem_kind elem_var_list
     { ($1, fun c -> $2 c func) }
-  | elem_type elemref_list
+  | elem_type elem_expr_list
     { ($1, fun c -> $2 c) }
 
 
 elem :
-  | LPAR ELEM bind_var_opt offset elemindex_list RPAR  /* Sugar */
+  | LPAR ELEM bind_var_opt offset elem_var_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-        ElemActive {index = 0l @@ at; offset = $4 c; etype = FuncRefType;
+        ActiveElem {index = 0l @@ at; offset = $4 c; etype = FuncRefType;
                            init = $5 c func} @@ at }
   | LPAR ELEM bind_var_opt elem_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> ElemPassive {etype = (fst $4); data = (snd $4) c} @@ at }
-  | LPAR ELEM bind_var_opt table_ref offset elem_list RPAR
+      fun () -> PassiveElem {etype = (fst $4); data = (snd $4) c} @@ at }
+  | LPAR ELEM bind_var_opt table_use offset elem_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-        ElemActive {index = $4 c table; offset = $5 c;
+        ActiveElem {index = $4 c table; offset = $5 c;
                     etype = (fst $6); init = (snd $6) c} @@ at }
   | LPAR ELEM bind_var_opt offset elem_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
-      fun () -> ElemActive {index = 0l @@ at; offset = $4 c;
+      fun () -> ActiveElem {index = 0l @@ at; offset = $4 c;
                          etype = (fst $5); init = (snd $5) c} @@ at }
 
 table :
@@ -636,40 +636,40 @@ table_fields :
   | inline_export table_fields  /* Sugar */
     { fun c x at -> let tabs, elems, ims, exs = $2 c x at in
       tabs, elems, ims, $1 (TableExport x) c :: exs }
-  | elem_type LPAR ELEM elemindex_list RPAR  /* Sugar */
+  | elem_type LPAR ELEM elem_var_list RPAR  /* Sugar */
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
       let init = $4 c func in
       let size = Lib.List32.length init in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
-      [ElemActive {index = x; offset; etype = FuncRefType; init} @@ at],
+      [ActiveElem {index = x; offset; etype = FuncRefType; init} @@ at],
       [], [] }
-  | elem_type LPAR ELEM elemref elemref_list RPAR  /* Sugar */
+  | elem_type LPAR ELEM elem_expr elem_expr_list RPAR  /* Sugar */
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
       let init = (fun c -> $4 c :: $5 c) c in
       let size = Lib.List32.length init in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
-      [ElemActive {index = x; offset; etype = FuncRefType; init} @@ at],
+      [ActiveElem {index = x; offset; etype = FuncRefType; init} @@ at],
       [], [] }
 
 data :
   | LPAR DATA bind_var_opt string_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_data bind_data);
-      fun () -> DataPassive {data = $4} @@ at }
+      fun () -> PassiveData {data = $4} @@ at }
  | LPAR DATA bind_var var offset string_list RPAR
    { let at = at () in
      fun c -> ignore (bind_data c $3);
-     fun () -> DataActive {index = $4 c memory; offset = $5 c; init = $6} @@ at }
+     fun () -> ActiveData {index = $4 c memory; offset = $5 c; init = $6} @@ at }
  | LPAR DATA var offset string_list RPAR
    { let at = at () in
      fun c -> ignore (anon_data c);
-     fun () -> DataActive {index = $3 c memory; offset = $4 c; init = $5} @@ at }
+     fun () -> ActiveData {index = $3 c memory; offset = $4 c; init = $5} @@ at }
  | LPAR DATA offset string_list RPAR  /* Sugar */
    { let at = at () in
      fun c -> ignore (anon_data c);
-     fun () -> DataActive {index = 0l @@ at; offset = $3 c; init = $4} @@ at }
+     fun () -> ActiveData {index = 0l @@ at; offset = $3 c; init = $4} @@ at }
 
 memory :
   | LPAR MEMORY bind_var_opt memory_fields RPAR
@@ -693,7 +693,7 @@ memory_fields :
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
       let size = Int32.(div (add (of_int (String.length $3)) 65535l) 65536l) in
       [{mtype = MemoryType {min = size; max = Some size}} @@ at],
-      [DataActive {index = x; offset; init = $3} @@ at],
+      [ActiveData {index = x; offset; init = $3} @@ at],
       [], [] }
 
 global :

@@ -146,11 +146,6 @@ let elem_type s =
   | -0x10 -> FuncRefType
   | _ -> error s (pos s - 1) "invalid element type"
 
-let extern_kind s =
-  match vs7 s with
-  | 0x00 -> FuncRefType
-  | _ -> error s (pos s - 1) "invalid extern kind"
-
 let stack_type s =
   match peek s with
   | Some 0x40 -> skip 1 s; []
@@ -540,6 +535,11 @@ let func_section s =
 
 (* Table section *)
 
+let elem_kind s =
+  match vs7 s with
+  | 0x00 -> FuncRefType
+  | _ -> error s (pos s - 1) "invalid elem kind"
+
 let table s =
   let ttype = table_type s in
   {ttype}
@@ -618,7 +618,7 @@ let code_section s =
 
 (* Element section *)
 
-let func_index s =
+let elem_index s =
   ref_func (at var s)
 
 let elem_expr s =
@@ -631,7 +631,7 @@ let elem_expr s =
   | _ -> error s (pos s - 1) "invalid elem"
 
 let elem_indices s =
-  vec (at func_index) s
+  vec (at elem_index) s
 
 let elem_refs s =
   vec (at elem_expr) s
@@ -642,32 +642,32 @@ let table_segment s =
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = elem_indices s in
-    ElemActive {index; offset; etype = FuncRefType; init}
+    ActiveElem {index; offset; etype = FuncRefType; init}
   | 1l ->
-    let etype = extern_kind s in
+    let etype = elem_kind s in
     let data = elem_indices s in
-    ElemPassive {etype; data}
+    PassiveElem {etype; data}
   | 2l ->
     let index = at var s in
     let offset = const s in
-    let etype = extern_kind s in
+    let etype = elem_kind s in
     let init = elem_indices s in
-    ElemActive {index; offset; etype; init}
+    ActiveElem {index; offset; etype; init}
   | 4l ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = elem_refs s in
-    ElemActive {index; offset; etype = FuncRefType; init}
+    ActiveElem {index; offset; etype = FuncRefType; init}
   | 5l ->
     let etype = elem_type s in
     let data = elem_refs s in
-    ElemPassive {etype; data}
+    PassiveElem {etype; data}
   | 6l ->
     let index = at var s in
     let offset = const s in
     let etype = elem_type s in
     let init = elem_refs s in
-    ElemActive {index; offset; etype; init}
+    ActiveElem {index; offset; etype; init}
   | _ -> error s (pos s - 1) "invalid table segment kind"
 
 let elem_section s =
@@ -682,15 +682,15 @@ let memory_segment s =
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = string s in
-    DataActive {index; offset; init}
+    ActiveData {index; offset; init}
   | 1l ->
     let data = string s in
-    DataPassive {data}
+    PassiveData {data}
   | 2l ->
     let index = at var s in
     let offset = const s in
     let init = string s in
-    DataActive {index; offset; init}
+    ActiveData {index; offset; init}
   | _ -> error s (pos s - 1) "invalid memory segment kind"
 
 let data_section s =

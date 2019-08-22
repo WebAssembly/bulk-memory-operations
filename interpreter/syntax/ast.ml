@@ -148,13 +148,13 @@ and elem' =
 
 type table_segment = table_segment' Source.phrase
 and table_segment' =
-  | ElemActive of {index : var; offset : const; etype : elem_type; init : elem list}
-  | ElemPassive of {etype : elem_type; data : elem list}
+  | ActiveElem of {index : var; offset : const; etype : elem_type; init : elem list}
+  | PassiveElem of {etype : elem_type; data : elem list}
 
 type memory_segment = memory_segment' Source.phrase
 and memory_segment' =
-  | DataActive of {index : var; offset : const; init : string}
-  | DataPassive of {data : string}
+  | ActiveData of {index : var; offset : const; init : string}
+  | PassiveData of {data : string}
 
 
 (* Modules *)
@@ -267,6 +267,4 @@ let string_of_name n =
   in
   List.iter escape n;
   Buffer.contents b
-
-let contains_null_ref l = List.exists (fun elem -> elem.it = RefNull) l
 

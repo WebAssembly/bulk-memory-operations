@@ -148,7 +148,7 @@ Element Segments
 Element segments :math:`\elem` are classified by :ref:`segment types <syntax-segtype>`.
 
 :math:`\{ \ETABLE~x, \EOFFSET~\expr, \ETYPE~et, \EINIT~e^\ast \}`
-......................................................
+.................................................................
 
 * The table :math:`C.\CTABLES[x]` must be defined in the context.
 
@@ -177,7 +177,7 @@ Element segments :math:`\elem` are classified by :ref:`segment types <syntax-seg
      \qquad
      C \vdashexprconst \expr \const
      \qquad
-     C \vdashexprconst et = \FUNCREF
+     et = \FUNCREF
      \qquad
      (C \vdashelemexpr e \ok)^\ast
    }{
@@ -199,7 +199,7 @@ Element segments :math:`\elem` are classified by :ref:`segment types <syntax-seg
 
 .. math::
    \frac{
-     C \vdashexprconst et = \FUNCREF
+     et = \FUNCREF
      \qquad
      (C \vdashelemexpr e \ok)^\ast
    }{
