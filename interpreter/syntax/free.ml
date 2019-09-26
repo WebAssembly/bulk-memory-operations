@@ -97,14 +97,14 @@ let elem (e : elem) =
 
 let table_segment (s : table_segment) =
   match s.it with
-  | ActiveElem {index; offset; init; _} ->
-    tables (var index) ++ const offset ++ list elem init
   | PassiveElem {data; _} -> list elem data
+  | ActiveElem {data; index; offset; _} ->
+    list elem data ++ tables (var index) ++ const offset
 
 let memory_segment (s : memory_segment) =
   match s.it with
-  | ActiveData {index; offset; init} -> memories (var index) ++ const offset
-  | PassiveData {data} -> empty
+  | PassiveData _ -> empty
+  | ActiveData {index; offset; _} -> memories (var index) ++ const offset
 
 let type_ (t : type_) = empty
 

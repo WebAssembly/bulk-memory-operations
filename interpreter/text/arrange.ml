@@ -57,7 +57,7 @@ let break_string s =
 
 let value_type t = string_of_value_type t
 
-let elem_type t = string_of_elem_type t
+let ref_type t = string_of_ref_type t
 
 let decls kind ts = tab kind (atom value_type) ts
 
@@ -289,7 +289,7 @@ let start x = Node ("start " ^ var x, [])
 let table off i tab =
   let {ttype = TableType (lim, t)} = tab.it in
   Node ("table $" ^ nat (off + i) ^ " " ^ limits nat32 lim,
-    [atom elem_type t]
+    [atom ref_type t]
   )
 
 let memory off i mem =
@@ -306,37 +306,40 @@ let elem_expr el =
   | RefNull -> Node ("ref.null", [])
   | RefFunc x -> Node ("ref.func", [atom var x])
 
-let all_func_ref l = not (List.exists (fun elem -> elem.it = RefNull) l)
+let is_func_ref elem = match elem.it with RefFunc _ -> true | _ -> false
 
 let elems seg =
   match seg.it with
-  | ActiveElem {index = {it = 0l;_}; offset; init; _}
-    when all_func_ref init ->
-    Node ("elem", Node ("offset", const offset) :: list elem_index init)
-  | ActiveElem {index; offset; init; _}
-    when all_func_ref init ->
-    Node ("elem", Node ("table", [atom var index])
-    :: Node ("offset", const offset) :: Atom "func" :: list elem_index init)
-  | ActiveElem {index = {it = 0l;_}; offset; etype; init} ->
-    Node ("elem", Node ("offset", const offset) :: atom elem_type etype
-    :: list elem_expr init)
-  | ActiveElem {index; offset; etype; init} ->
-    Node ("elem", Node ("table", [atom var index])
-    :: Node ("offset", const offset)
-    :: atom elem_type etype :: list elem_expr init)
-  | PassiveElem {data; _}
-    when all_func_ref data ->
-    Node ("elem func", list elem_index data)
+  | PassiveElem {etype; data} when List.for_all is_func_ref data ->
+    Node ("elem", Atom "func" :: list elem_index data)
   | PassiveElem {etype; data} ->
-    Node ("elem", atom elem_type etype
-    :: list elem_expr data)
+    Node ("elem", atom ref_type etype :: list elem_expr data)
+  | ActiveElem {etype; data; index; offset}
+    when index.it = 0l && List.for_all is_func_ref data ->
+    Node ("elem", Node ("offset", const offset) :: list elem_index data)
+  | ActiveElem {etype; data; index; offset}
+    when List.for_all is_func_ref data ->
+    Node ("elem",
+      Node ("table", [atom var index]) :: Node ("offset", const offset) ::
+      Atom "func" :: list elem_index data
+    )
+  | ActiveElem {etype; data; index; offset} when index.it = 0l ->
+    Node ("elem",
+      Node ("offset", const offset) ::
+      atom ref_type etype :: list elem_expr data
+    )
+  | ActiveElem {etype; data; index; offset} ->
+    Node ("elem",
+      Node ("table", [atom var index]) :: Node ("offset", const offset) ::
+      atom ref_type etype :: list elem_expr data
+    )
 
 let data seg =
   match seg.it with
-  | ActiveData {index; offset; init} ->
-    Node ("data", atom var index :: Node ("offset", const offset)
-    :: break_bytes init)
   | PassiveData {data} -> Node ("data", break_bytes data)
+  | ActiveData {data; index; offset} ->
+    Node ("data",
+      atom var index :: Node ("offset", const offset) :: break_bytes data)
 
 
 (* Modules *)

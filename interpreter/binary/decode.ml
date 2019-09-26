@@ -535,11 +535,6 @@ let func_section s =
 
 (* Table section *)
 
-let elem_kind s =
-  match vs7 s with
-  | 0x00 -> FuncRefType
-  | _ -> error s (pos s - 1) "invalid elem kind"
-
 let table s =
   let ttype = table_type s in
   {ttype}
@@ -621,6 +616,11 @@ let code_section s =
 let elem_index s =
   ref_func (at var s)
 
+let elem_kind s =
+  match vs7 s with
+  | 0x00 -> FuncRefType
+  | _ -> error s (pos s - 1) "invalid element kind"
+
 let elem_expr s =
   match u8 s with
   | 0xd0 -> end_ s; ref_null
@@ -628,7 +628,7 @@ let elem_expr s =
     let x = at var s in
     end_ s;
     ref_func x
-  | _ -> error s (pos s - 1) "invalid elem"
+  | _ -> error s (pos s - 1) "invalid element expression"
 
 let elem_indices s =
   vec (at elem_index) s
@@ -641,8 +641,8 @@ let table_segment s =
   | 0x00 ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
-    let init = elem_indices s in
-    ActiveElem {index; offset; etype = FuncRefType; init}
+    let data = elem_indices s in
+    ActiveElem {etype = FuncRefType; data; index; offset}
   | 0x01 ->
     let etype = elem_kind s in
     let data = elem_indices s in
@@ -651,13 +651,13 @@ let table_segment s =
     let index = at var s in
     let offset = const s in
     let etype = elem_kind s in
-    let init = elem_indices s in
-    ActiveElem {index; offset; etype; init}
+    let data = elem_indices s in
+    ActiveElem {etype; data; index; offset}
   | 0x04 ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
-    let init = elem_refs s in
-    ActiveElem {index; offset; etype = FuncRefType; init}
+    let data = elem_refs s in
+    ActiveElem {etype = FuncRefType; data; index; offset}
   | 0x05 ->
     let etype = elem_type s in
     let data = elem_refs s in
@@ -666,8 +666,8 @@ let table_segment s =
     let index = at var s in
     let offset = const s in
     let etype = elem_type s in
-    let init = elem_refs s in
-    ActiveElem {index; offset; etype; init}
+    let data = elem_refs s in
+    ActiveElem {etype; data; index; offset}
   | _ -> error s (pos s - 1) "invalid table segment kind"
 
 let elem_section s =
@@ -681,16 +681,16 @@ let memory_segment s =
   | 0l ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
-    let init = string s in
-    ActiveData {index; offset; init}
+    let data = string s in
+    ActiveData {data; index; offset}
   | 1l ->
     let data = string s in
     PassiveData {data}
   | 2l ->
     let index = at var s in
     let offset = const s in
-    let init = string s in
-    ActiveData {index; offset; init}
+    let data = string s in
+    ActiveData {data; index; offset}
   | _ -> error s (pos s - 1) "invalid memory segment kind"
 
 let data_section s =

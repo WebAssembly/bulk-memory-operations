@@ -422,26 +422,26 @@ let check_memory (c : context) (mem : memory) =
   let {mtype} = mem.it in
   check_memory_type mtype mem.at
 
-let check_elemref (c : context) (el : elem) =
+let check_elem_expr (c : context) (t : ref_type) (el : elem) =
   match el.it with
   | RefNull -> ()
   | RefFunc x -> ignore (func c x)
 
 let check_elem (c : context) (seg : table_segment) =
   match seg.it with
-  | ActiveElem {index; offset; init; _} ->
+  | PassiveElem {etype; data} ->
+    List.iter (check_elem_expr c etype) data
+  | ActiveElem {etype; data; index; offset} ->
     ignore (table c index);
     check_const c offset I32Type;
-    List.iter (check_elemref c) init
-  | PassiveElem {data; _} ->
-    List.iter (check_elemref c) data
+    List.iter (check_elem_expr c etype) data
 
 let check_data (c : context) (seg : memory_segment) =
   match seg.it with
-  | ActiveData {index; offset; init} ->
+  | PassiveData {data} -> ()
+  | ActiveData {data; index; offset} ->
     ignore (memory c index);
     check_const c offset I32Type
-  | PassiveData init -> ()
 
 let check_global (c : context) (glob : global) =
   let {gtype; value} = glob.it in

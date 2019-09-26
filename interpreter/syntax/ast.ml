@@ -140,21 +140,21 @@ and memory' =
   mtype : memory_type;
 }
 
+
 type elem = elem' Source.phrase
 and elem' =
   | RefNull
   | RefFunc of var
 
-
 type table_segment = table_segment' Source.phrase
 and table_segment' =
-  | ActiveElem of {index : var; offset : const; etype : elem_type; init : elem list}
-  | PassiveElem of {etype : elem_type; data : elem list}
+  | PassiveElem of {etype : ref_type; data : elem list}
+  | ActiveElem of {etype : ref_type; data : elem list; index : var; offset : const}
 
 type memory_segment = memory_segment' Source.phrase
 and memory_segment' =
-  | ActiveData of {index : var; offset : const; init : string}
   | PassiveData of {data : string}
+  | ActiveData of {data : string; index : var; offset : const}
 
 
 (* Modules *)

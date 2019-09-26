@@ -489,25 +489,24 @@ let encode m =
 
     let elem_indices data = vec elem_index data
 
-    let all_func_ref l = not (List.exists (fun elem -> elem.it = RefNull) l)
+    let is_func_ref elem = match elem.it with RefFunc _ -> true | _ -> false
 
     let table_segment seg =
       match seg.it with
-      | ActiveElem {index = {it = 0l;_}; offset; init; _}
-        when all_func_ref init ->
-        u8 0x00; const offset; elem_indices init
-      | PassiveElem {data; _}
-        when all_func_ref data ->
+      | PassiveElem {etype; data} when List.for_all is_func_ref data ->
         u8 0x01; u8 0x00; elem_indices data
-      | ActiveElem {index; offset; init; _}
-        when all_func_ref init ->
-        u8 0x02; var index; const offset; u8 0x00; elem_indices init
-      | ActiveElem {index = {it = 0l;_}; offset; etype; init} ->
-        u8 0x04; const offset; vec elem_expr init
       | PassiveElem {etype; data} ->
         u8 0x05; elem_type etype; vec elem_expr data
-      | ActiveElem {index; offset; etype; init} ->
-        u8 0x06; var index; const offset; elem_type etype; vec elem_expr init
+      | ActiveElem {data; index; offset; _}
+        when index.it = 0l && List.for_all is_func_ref data ->
+        u8 0x00; const offset; elem_indices data
+      | ActiveElem {data; index; offset; _}
+        when List.for_all is_func_ref data ->
+        u8 0x02; var index; const offset; u8 0x00; elem_indices data
+      | ActiveElem {etype; data; index; offset} when index.it = 0l ->
+        u8 0x04; const offset; vec elem_expr data
+      | ActiveElem {etype; data; index; offset} ->
+        u8 0x06; var index; const offset; elem_type etype; vec elem_expr data
 
     let elem_section elems =
       section 9 (vec table_segment) elems (elems <> [])
@@ -515,12 +514,12 @@ let encode m =
     (* Data section *)
     let memory_segment seg =
       match seg.it with
-      | ActiveData {index = {it = 0l;_}; offset; init} ->
-        u8 0x00; const offset; string init
       | PassiveData {data} ->
         u8 0x01; string data
-      | ActiveData {index; offset; init} ->
-        u8 0x02; var index; const offset; string init
+      | ActiveData {data; index; offset} when index.it = 0l->
+        u8 0x00; const offset; string data
+      | ActiveData {data; index; offset} ->
+        u8 0x02; var index; const offset; string data
 
     let data_section datas =
       section 11 (vec memory_segment) datas (datas <> [])
