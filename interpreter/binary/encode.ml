@@ -477,52 +477,56 @@ let encode m =
       section 10 (vec code) fs (fs <> [])
 
     (* Element section *)
-    let elem_expr el =
-      match el.it with
+    let elem_kind = function
+      | FuncRefType -> u8 0x00
+
+    let elem_expr e =
+      match e.it with
       | RefNull -> u8 0xd0; end_ ()
       | RefFunc x -> u8 0xd2; var x; end_ ()
 
-    let elem_index el =
-      match el.it with
+    let elem_index e =
+      match e.it with
       | RefNull -> assert false
       | RefFunc x -> var x
 
-    let elem_indices data = vec elem_index data
+    let elem_indices es = vec elem_index es
 
-    let is_func_ref elem = match elem.it with RefFunc _ -> true | _ -> false
+    let is_func_ref e = match e.it with RefFunc _ -> true | _ -> false
 
-    let table_segment seg =
-      match seg.it with
-      | PassiveElem {etype; data} when List.for_all is_func_ref data ->
-        u8 0x01; u8 0x00; elem_indices data
-      | PassiveElem {etype; data} ->
-        u8 0x05; elem_type etype; vec elem_expr data
-      | ActiveElem {data; index; offset; _}
-        when index.it = 0l && List.for_all is_func_ref data ->
-        u8 0x00; const offset; elem_indices data
-      | ActiveElem {data; index; offset; _}
-        when List.for_all is_func_ref data ->
-        u8 0x02; var index; const offset; u8 0x00; elem_indices data
-      | ActiveElem {etype; data; index; offset} when index.it = 0l ->
-        u8 0x04; const offset; vec elem_expr data
-      | ActiveElem {etype; data; index; offset} ->
-        u8 0x06; var index; const offset; elem_type etype; vec elem_expr data
+    let elem seg =
+      let {etype; elems; emode} = seg.it in
+      match emode.it with
+      | Passive when List.for_all is_func_ref elems ->
+        u8 0x01; elem_kind etype; elem_indices elems
+      | Passive ->
+        u8 0x05; elem_type etype; vec elem_expr elems
+      | Active {index; offset}
+        when index.it = 0l && List.for_all is_func_ref elems ->
+        u8 0x00; const offset; elem_indices elems
+      | Active {index; offset} when List.for_all is_func_ref elems ->
+        u8 0x02; var index; const offset; elem_kind etype; elem_indices elems
+      | Active {index; offset} when index.it = 0l ->
+        u8 0x04; const offset; vec elem_expr elems
+      | Active {index; offset} ->
+        u8 0x06; var index; const offset; elem_type etype; vec elem_expr elems
 
     let elem_section elems =
-      section 9 (vec table_segment) elems (elems <> [])
+      section 9 (vec elem) elems (elems <> [])
 
     (* Data section *)
-    let memory_segment seg =
-      match seg.it with
-      | PassiveData {data} ->
+    let data seg =
+      let {data; dmode} = seg.it in
+      match dmode.it with
+      | Passive ->
         u8 0x01; string data
-      | ActiveData {data; index; offset} when index.it = 0l->
+      | Active {index; offset} when index.it = 0l ->
         u8 0x00; const offset; string data
-      | ActiveData {data; index; offset} ->
+      | Active {index; offset} ->
         u8 0x02; var index; const offset; string data
 
     let data_section datas =
-      section 11 (vec memory_segment) datas (datas <> [])
+      section 11 (vec data) datas (datas <> [])
 
     (* Data count section *)
     let data_count_section datas m =

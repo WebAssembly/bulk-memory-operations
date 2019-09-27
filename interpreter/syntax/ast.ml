@@ -140,21 +140,30 @@ and memory' =
   mtype : memory_type;
 }
 
+type segment_mode = segment_mode' Source.phrase
+and segment_mode' =
+  | Passive
+  | Active of {index : var; offset : const}
 
-type elem = elem' Source.phrase
-and elem' =
+type elem_expr = elem_expr' Source.phrase
+and elem_expr' =
   | RefNull
   | RefFunc of var
 
-type table_segment = table_segment' Source.phrase
-and table_segment' =
-  | PassiveElem of {etype : ref_type; data : elem list}
-  | ActiveElem of {etype : ref_type; data : elem list; index : var; offset : const}
+type elem_segment = elem_segment' Source.phrase
+and elem_segment' =
+{
+  etype : elem_type;
+  elems : elem_expr list;
+  emode : segment_mode;
+}
 
-type memory_segment = memory_segment' Source.phrase
-and memory_segment' =
-  | PassiveData of {data : string}
-  | ActiveData of {data : string; index : var; offset : const}
+type data_segment = data_segment' Source.phrase
+and data_segment' =
+{
+  data : string;
+  dmode : segment_mode;
+}
 
 
 (* Modules *)
@@ -199,8 +208,8 @@ and module_' =
   memories : memory list;
   funcs : func list;
   start : var option;
-  elems : table_segment list;
-  datas : memory_segment list;
+  elems : elem_segment list;
+  datas : data_segment list;
   imports : import list;
   exports : export list;
 }

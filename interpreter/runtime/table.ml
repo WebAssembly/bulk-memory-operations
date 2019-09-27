@@ -9,7 +9,7 @@ type elem += Uninitialized
 
 type table' = elem array
 type table =
-  {mutable content : table'; max : size option; elem_type : ref_type}
+  {mutable content : table'; max : size option; elem_type : elem_type}
 type t = table
 
 exception Bounds

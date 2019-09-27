@@ -422,24 +422,26 @@ let check_memory (c : context) (mem : memory) =
   let {mtype} = mem.it in
   check_memory_type mtype mem.at
 
-let check_elem_expr (c : context) (t : ref_type) (el : elem) =
-  match el.it with
+let check_elem_expr (c : context) (t : elem_type) (e : elem_expr) =
+  match e.it with
   | RefNull -> ()
   | RefFunc x -> ignore (func c x)
 
-let check_elem (c : context) (seg : table_segment) =
-  match seg.it with
-  | PassiveElem {etype; data} ->
-    List.iter (check_elem_expr c etype) data
-  | ActiveElem {etype; data; index; offset} ->
+let check_elem (c : context) (seg : elem_segment) =
+  let {etype; elems; emode} = seg.it in
+  match emode.it with
+  | Passive ->
+    List.iter (check_elem_expr c etype) elems
+  | Active {index; offset} ->
     ignore (table c index);
     check_const c offset I32Type;
-    List.iter (check_elem_expr c etype) data
+    List.iter (check_elem_expr c etype) elems
 
-let check_data (c : context) (seg : memory_segment) =
-  match seg.it with
-  | PassiveData {data} -> ()
-  | ActiveData {data; index; offset} ->
+let check_data (c : context) (seg : data_segment) =
+  let {data; dmode} = seg.it in
+  match dmode.it with
+  | Passive -> ()
+  | Active {index; offset} ->
     ignore (memory c index);
     check_const c offset I32Type
 

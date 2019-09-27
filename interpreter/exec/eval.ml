@@ -446,15 +446,17 @@ let elem_list inst init =
     | RefFunc x -> FuncElem (func inst x)
   in List.map to_elem init
 
-let create_elem (inst : module_inst) (seg : table_segment) : elem_inst =
-  match seg.it with
-  | PassiveElem {data; _} -> ref (Some (elem_list inst data))
-  | ActiveElem _ -> ref None
+let create_elem (inst : module_inst) (seg : elem_segment) : elem_inst =
+  let {etype; elems; emode} = seg.it in
+  match emode.it with
+  | Passive -> ref (Some (elem_list inst elems))
+  | Active _ -> ref None
 
-let create_data (inst : module_inst) (seg : memory_segment) : data_inst =
-  match seg.it with
-  | PassiveData {data; _} -> ref (Some data)
-  | ActiveData _ -> ref None
+let create_data (inst : module_inst) (seg : data_segment) : data_inst =
+  let {data; dmode} = seg.it in
+  match dmode.it with
+  | Passive -> ref (Some data)
+  | Active _ -> ref None
 
 
 let init_func (inst : module_inst) (func : func_inst) =
@@ -462,26 +464,27 @@ let init_func (inst : module_inst) (func : func_inst) =
   | Func.AstFunc (_, inst_ref, _) -> inst_ref := inst
   | _ -> assert false
 
-let init_table (inst : module_inst) (seg : table_segment) =
-  match seg.it with
-  | PassiveElem _ -> ()
-  | ActiveElem {etype; data; index; offset = const} ->
+let init_table (inst : module_inst) (seg : elem_segment) =
+  let {etype; elems; emode} = seg.it in
+  match emode.it with
+  | Passive -> ()
+  | Active {index; offset} ->
+    let refs = elem_list inst elems in
     let tab = table inst index in
-    let offset = i32 (eval_const inst const) const.at in
-    let elems = elem_list inst data in
-    let len = Int32.of_int (List.length elems) in
-    (try Table.init tab elems offset 0l len
+    let i = i32 (eval_const inst offset) offset.at in
+    let n = Int32.of_int (List.length elems) in
+    (try Table.init tab refs i 0l n
     with Table.Bounds -> Link.error seg.at "elements segment does not fit table")
 
-let init_memory (inst : module_inst) (seg : memory_segment) =
-  match seg.it with
-  | PassiveData _ -> ()
-  | ActiveData {data; index; offset = const} ->
+let init_memory (inst : module_inst) (seg : data_segment) =
+  let {data; dmode} = seg.it in
+  match dmode.it with
+  | Passive -> ()
+  | Active {index; offset} ->
     let mem = memory inst index in
-    let offset' = i32 (eval_const inst const) const.at in
-    let offset = I64_convert.extend_i32_u offset' in
-    let len = Int32.of_int (String.length data) in
-    (try Memory.init mem data offset 0L len
+    let i = i32 (eval_const inst offset) offset.at in
+    let n = Int32.of_int (String.length data) in
+    (try Memory.init mem data (I64_convert.extend_i32_u i) 0L n
     with Memory.Bounds -> Link.error seg.at "data segment does not fit memory")
 
 
