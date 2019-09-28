@@ -534,6 +534,7 @@
 .. |Bimportdesc| mathdef:: \xref{binary/modules}{binary-importdesc}{\B{importdesc}}
 .. |Bexportdesc| mathdef:: \xref{binary/modules}{binary-exportdesc}{\B{exportdesc}}
 .. |Belem| mathdef:: \xref{binary/modules}{binary-elem}{\B{elem}}
+.. |Belemkind| mathdef:: \xref{binary/modules}{binary-elemexpr}{\B{elemkind}}
 .. |Belemexpr| mathdef:: \xref{binary/modules}{binary-elemexpr}{\B{elemexpr}}
 .. |Bcode| mathdef:: \xref{binary/modules}{binary-code}{\B{code}}
 .. |Blocal| mathdef:: \xref{binary/modules}{binary-local}{\B{local}}
