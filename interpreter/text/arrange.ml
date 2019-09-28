@@ -309,38 +309,28 @@ let elem_expr el =
   | RefNull -> Node ("ref.null", [])
   | RefFunc x -> Node ("ref.func", [atom var x])
 
+let segment_mode category mode =
+  match mode.it with
+  | Passive -> []
+  | Active {index; offset} ->
+    (if index.it = 0l then [] else [Node (category, [atom var index])]) @
+    [Node ("offset", const offset)]
+
 let is_func_ref e = match e.it with RefFunc _ -> true | _ -> false
 
 let elem seg =
   let {etype; elems; emode} = seg.it in
   Node ("elem",
-    match emode.it with
-    | Passive when List.for_all is_func_ref elems ->
+    segment_mode "table" emode @
+    if List.for_all is_func_ref elems then
       atom elem_kind etype :: list elem_index elems
-    | Passive ->
-      atom elem_type etype :: list elem_expr elems
-    | Active {index; offset}
-      when index.it = 0l && List.for_all is_func_ref elems ->
-      Node ("offset", const offset) :: list elem_index elems
-    | Active {index; offset} when List.for_all is_func_ref elems ->
-      Node ("table", [atom var index]) :: Node ("offset", const offset) ::
-      atom elem_kind etype :: list elem_index elems
-    | Active {index; offset} when index.it = 0l ->
-      Node ("offset", const offset) ::
-      atom elem_type etype :: list elem_expr elems
-    | Active {index; offset} ->
-      Node ("table", [atom var index]) :: Node ("offset", const offset) ::
+    else
       atom elem_type etype :: list elem_expr elems
   )
 
 let data seg =
   let {data; dmode} = seg.it in
-  Node ("data",
-    match dmode.it with
-    | Passive -> break_bytes data
-    | Active {index; offset} ->
-      atom var index :: Node ("offset", const offset) :: break_bytes data
-  )
+  Node ("data", segment_mode "memory" dmode @ break_bytes data)
 
 
 (* Modules *)

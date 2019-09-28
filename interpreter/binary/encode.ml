@@ -490,26 +490,29 @@ let encode m =
       | RefNull -> assert false
       | RefFunc x -> var x
 
-    let elem_indices es = vec elem_index es
-
     let is_func_ref e = match e.it with RefFunc _ -> true | _ -> false
 
     let elem seg =
       let {etype; elems; emode} = seg.it in
+      let has_indices = List.for_all is_func_ref elems in
       match emode.it with
-      | Passive when List.for_all is_func_ref elems ->
-        u8 0x01; elem_kind etype; elem_indices elems
       | Passive ->
-        u8 0x05; elem_type etype; vec elem_expr elems
-      | Active {index; offset}
-        when index.it = 0l && List.for_all is_func_ref elems ->
-        u8 0x00; const offset; elem_indices elems
-      | Active {index; offset} when List.for_all is_func_ref elems ->
-        u8 0x02; var index; const offset; elem_kind etype; elem_indices elems
-      | Active {index; offset} when index.it = 0l ->
-        u8 0x04; const offset; vec elem_expr elems
+        if has_indices then
+          (vu32 0x01l; elem_kind etype; vec elem_index elems)
+        else
+          (vu32 0x05l; elem_type etype; vec elem_expr elems)
       | Active {index; offset} ->
-        u8 0x06; var index; const offset; elem_type etype; vec elem_expr elems
+        match index.it = 0l, etype = FuncRefType, has_indices with
+        | true, true, true ->
+          vu32 0x00l; const offset; vec elem_index elems
+        | true, true, false ->
+          vu32 0x04l; const offset; vec elem_expr elems
+        | _, _, true ->
+          vu32 0x02l;
+          var index; const offset; elem_kind etype; vec elem_index elems
+        | _, _, false ->
+          vu32 0x06l;
+          var index; const offset; elem_type etype; vec elem_expr elems
 
     let elem_section elems =
       section 9 (vec elem) elems (elems <> [])
@@ -519,11 +522,12 @@ let encode m =
       let {data; dmode} = seg.it in
       match dmode.it with
       | Passive ->
-        u8 0x01; string data
-      | Active {index; offset} when index.it = 0l ->
-        u8 0x00; const offset; string data
+        vu32 0x01l; string data
       | Active {index; offset} ->
-        u8 0x02; var index; const offset; string data
+        if index.it = 0l then
+          (vu32 0x00l; const offset; string data)
+        else
+          (vu32 0x02l; var index; const offset; string data)
 
     let data_section datas =
       section 11 (vec data) datas (datas <> [])

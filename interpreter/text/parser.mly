@@ -865,9 +865,9 @@ script_var_opt :
 script_module :
   | module_ { $1 }
   | LPAR MODULE module_var_opt BIN string_list RPAR
-    { $3, Encoded ("binary", $5) @@ at() }
+    { $3, Encoded ("binary:" ^ string_of_pos (at()).left, $5) @@ at() }
   | LPAR MODULE module_var_opt QUOTE string_list RPAR
-    { $3, Quoted ("quote", $5) @@ at() }
+    { $3, Quoted ("quote:" ^ string_of_pos (at()).left, $5) @@ at() }
 
 action :
   | LPAR INVOKE module_var_opt name const_list RPAR

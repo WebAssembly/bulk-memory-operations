@@ -643,41 +643,35 @@ let elem_expr s =
     ref_func x
   | _ -> error s (pos s - 1) "invalid element expression"
 
-let elem_indices s =
-  vec (at elem_index) s
-
-let elem_exprs s =
-  vec (at elem_expr) s
-
 let elem s =
-  match u8 s with
-  | 0x00 ->
+  match vu32 s with
+  | 0x00l ->
     let emode = at active_zero s in
-    let elems = elem_indices s in
+    let elems = vec (at elem_index) s in
     {etype = FuncRefType; elems; emode}
-  | 0x01 ->
+  | 0x01l ->
     let emode = at passive s in
     let etype = elem_kind s in
-    let elems = elem_indices s in
+    let elems = vec (at elem_index) s in
     {etype; elems; emode}
-  | 0x02 ->
+  | 0x02l ->
     let emode = at active s in
     let etype = elem_kind s in
-    let elems = elem_indices s in
+    let elems = vec (at elem_index) s in
     {etype; elems; emode}
-  | 0x04 ->
+  | 0x04l ->
     let emode = at active_zero s in
-    let elems = elem_exprs s in
+    let elems = vec (at elem_expr) s in
     {etype = FuncRefType; elems; emode}
-  | 0x05 ->
+  | 0x05l ->
     let emode = at passive s in
     let etype = elem_type s in
-    let elems = elem_exprs s in
+    let elems = vec (at elem_expr) s in
     {etype; elems; emode}
-  | 0x06 ->
+  | 0x06l ->
     let emode = at active s in
     let etype = elem_type s in
-    let elems = elem_exprs s in
+    let elems = vec (at elem_expr) s in
     {etype; elems; emode}
   | _ -> error s (pos s - 1) "invalid elements segment kind"
 
@@ -689,15 +683,15 @@ let elem_section s =
 
 let data s =
   match vu32 s with
-  | 0l ->
+  | 0x00l ->
     let dmode = at active_zero s in
     let data = string s in
     {data; dmode}
-  | 1l ->
+  | 0x01l ->
     let dmode = at passive s in
     let data = string s in
     {data; dmode}
-  | 2l ->
+  | 0x02l ->
     let dmode = at active s in
     let data = string s in
     {data; dmode}
