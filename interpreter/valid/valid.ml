@@ -427,23 +427,29 @@ let check_elem_expr (c : context) (t : elem_type) (e : elem_expr) =
   | RefNull -> ()
   | RefFunc x -> ignore (func c x)
 
+let check_elem_mode (c : context) (t : elem_type) (mode : segment_mode) =
+  match mode.it with
+  | Passive -> ()
+  | Active {index; offset} ->
+    let TableType (_, et) = table c index in
+    require (et = t) mode.at "type mismatch in active element segment";
+    check_const c offset I32Type
+
 let check_elem (c : context) (seg : elem_segment) =
   let {etype; elems; emode} = seg.it in
-  match emode.it with
-  | Passive ->
-    List.iter (check_elem_expr c etype) elems
-  | Active {index; offset} ->
-    ignore (table c index);
-    check_const c offset I32Type;
-    List.iter (check_elem_expr c etype) elems
+  List.iter (check_elem_expr c etype) elems;
+  check_elem_mode c etype emode
 
-let check_data (c : context) (seg : data_segment) =
-  let {data; dmode} = seg.it in
-  match dmode.it with
+let check_data_mode (c : context) (mode : segment_mode) =
+  match mode.it with
   | Passive -> ()
   | Active {index; offset} ->
     ignore (memory c index);
     check_const c offset I32Type
+
+let check_data (c : context) (seg : data_segment) =
+  let {data; dmode} = seg.it in
+  check_data_mode c dmode
 
 let check_global (c : context) (glob : global) =
   let {gtype; value} = glob.it in
@@ -487,6 +493,11 @@ let check_export (c : context) (set : NameSet.t) (ex : export) : NameSet.t =
   require (not (NameSet.mem name set)) ex.at "duplicate export name";
   NameSet.add name set
 
+let segment_type mode =
+  match mode.it with
+  | Passive -> PassiveType
+  | Active _ -> ActiveType
+
 let check_module (m : module_) =
   let
     { types; imports; tables; memories; globals; funcs; start; elems; datas;
@@ -501,8 +512,8 @@ let check_module (m : module_) =
       funcs = c0.funcs @ List.map (fun f -> type_ c0 f.it.ftype) funcs;
       tables = c0.tables @ List.map (fun tab -> tab.it.ttype) tables;
       memories = c0.memories @ List.map (fun mem -> mem.it.mtype) memories;
-      elems = List.map (fun elem -> SegmentType) elems;
-      datas = List.map (fun data -> SegmentType) datas;
+      elems = List.map (fun elem -> segment_type elem.it.emode) elems;
+      datas = List.map (fun data -> segment_type data.it.dmode) datas;
     }
   in
   let c =
