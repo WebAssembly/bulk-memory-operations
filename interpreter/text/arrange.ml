@@ -319,18 +319,18 @@ let segment_mode category mode =
 let is_func_ref e = match e.it with RefFunc _ -> true | _ -> false
 
 let elem seg =
-  let {etype; elems; emode} = seg.it in
+  let {etype; einit; emode} = seg.it in
   Node ("elem",
     segment_mode "table" emode @
-    if List.for_all is_func_ref elems then
-      atom elem_kind etype :: list elem_index elems
+    if List.for_all is_func_ref einit then
+      atom elem_kind etype :: list elem_index einit
     else
-      atom elem_type etype :: list elem_expr elems
+      atom elem_type etype :: list elem_expr einit
   )
 
 let data seg =
-  let {data; dmode} = seg.it in
-  Node ("data", segment_mode "memory" dmode @ break_bytes data)
+  let {dinit; dmode} = seg.it in
+  Node ("data", segment_mode "memory" dmode @ break_bytes dinit)
 
 
 (* Modules *)
@@ -364,8 +364,8 @@ let export ex =
   Node ("export", [atom name n; export_desc edesc])
 
 let global off i g =
-  let {gtype; value} = g.it in
-  Node ("global $" ^ nat (off + i), global_type gtype :: const value)
+  let {gtype; ginit} = g.it in
+  Node ("global $" ^ nat (off + i), global_type gtype :: const ginit)
 
 
 (* Modules *)

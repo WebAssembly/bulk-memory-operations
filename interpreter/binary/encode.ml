@@ -430,8 +430,8 @@ let encode m =
 
     (* Global section *)
     let global g =
-      let {gtype; value} = g.it in
-      global_type gtype; const value
+      let {gtype; ginit} = g.it in
+      global_type gtype; const ginit
 
     let global_section gs =
       section 6 (vec global) gs (gs <> [])
@@ -493,41 +493,41 @@ let encode m =
     let is_func_ref e = match e.it with RefFunc _ -> true | _ -> false
 
     let elem seg =
-      let {etype; elems; emode} = seg.it in
-      let has_indices = List.for_all is_func_ref elems in
+      let {etype; einit; emode} = seg.it in
+      let has_indices = List.for_all is_func_ref einit in
       match emode.it with
       | Passive ->
         if has_indices then
-          (vu32 0x01l; elem_kind etype; vec elem_index elems)
+          (vu32 0x01l; elem_kind etype; vec elem_index einit)
         else
-          (vu32 0x05l; elem_type etype; vec elem_expr elems)
+          (vu32 0x05l; elem_type etype; vec elem_expr einit)
       | Active {index; offset} ->
         match index.it = 0l, etype = FuncRefType, has_indices with
         | true, true, true ->
-          vu32 0x00l; const offset; vec elem_index elems
+          vu32 0x00l; const offset; vec elem_index einit
         | true, true, false ->
-          vu32 0x04l; const offset; vec elem_expr elems
+          vu32 0x04l; const offset; vec elem_expr einit
         | _, _, true ->
           vu32 0x02l;
-          var index; const offset; elem_kind etype; vec elem_index elems
+          var index; const offset; elem_kind etype; vec elem_index einit
         | _, _, false ->
           vu32 0x06l;
-          var index; const offset; elem_type etype; vec elem_expr elems
+          var index; const offset; elem_type etype; vec elem_expr einit
 
     let elem_section elems =
       section 9 (vec elem) elems (elems <> [])
 
     (* Data section *)
     let data seg =
-      let {data; dmode} = seg.it in
+      let {dinit; dmode} = seg.it in
       match dmode.it with
       | Passive ->
-        vu32 0x01l; string data
+        vu32 0x01l; string dinit
       | Active {index; offset} ->
         if index.it = 0l then
-          (vu32 0x00l; const offset; string data)
+          (vu32 0x00l; const offset; string dinit)
         else
-          (vu32 0x02l; var index; const offset; string data)
+          (vu32 0x02l; var index; const offset; string dinit)
 
     let data_section datas =
       section 11 (vec data) datas (datas <> [])

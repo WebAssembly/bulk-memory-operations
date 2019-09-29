@@ -85,7 +85,7 @@ and block (es : instr list) =
 
 let const (c : const) = block c.it
 
-let global (g : global) = const g.it.value
+let global (g : global) = const g.it.ginit
 let func (f : func) = {(block f.it.body) with locals = Set.empty}
 let table (t : table) = empty
 let memory (m : memory) = empty
@@ -101,7 +101,7 @@ let elem_expr (e : elem_expr) =
   | RefFunc x -> funcs (var x)
 
 let elem (s : elem_segment) =
-  list elem_expr s.it.elems ++ segment_mode tables s.it.emode
+  list elem_expr s.it.einit ++ segment_mode tables s.it.emode
 
 let data (s : data_segment) =
   segment_mode memories s.it.dmode

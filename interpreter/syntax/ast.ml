@@ -114,7 +114,7 @@ type global = global' Source.phrase
 and global' =
 {
   gtype : global_type;
-  value : const;
+  ginit : const;
 }
 
 type func = func' Source.phrase
@@ -154,14 +154,14 @@ type elem_segment = elem_segment' Source.phrase
 and elem_segment' =
 {
   etype : elem_type;
-  elems : elem_expr list;
+  einit : elem_expr list;
   emode : segment_mode;
 }
 
 type data_segment = data_segment' Source.phrase
 and data_segment' =
 {
-  data : string;
+  dinit : string;
   dmode : segment_mode;
 }
 

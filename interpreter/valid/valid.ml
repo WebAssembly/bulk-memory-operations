@@ -436,8 +436,8 @@ let check_elem_mode (c : context) (t : elem_type) (mode : segment_mode) =
     check_const c offset I32Type
 
 let check_elem (c : context) (seg : elem_segment) =
-  let {etype; elems; emode} = seg.it in
-  List.iter (check_elem_expr c etype) elems;
+  let {etype; einit; emode} = seg.it in
+  List.iter (check_elem_expr c etype) einit;
   check_elem_mode c etype emode
 
 let check_data_mode (c : context) (mode : segment_mode) =
@@ -448,13 +448,13 @@ let check_data_mode (c : context) (mode : segment_mode) =
     check_const c offset I32Type
 
 let check_data (c : context) (seg : data_segment) =
-  let {data; dmode} = seg.it in
+  let {dinit; dmode} = seg.it in
   check_data_mode c dmode
 
 let check_global (c : context) (glob : global) =
-  let {gtype; value} = glob.it in
+  let {gtype; ginit} = glob.it in
   let GlobalType (t, mut) = gtype in
-  check_const c value t
+  check_const c ginit t
 
 
 (* Modules *)

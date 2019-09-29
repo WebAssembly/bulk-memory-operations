@@ -425,8 +425,8 @@ let create_memory (inst : module_inst) (mem : memory) : memory_inst =
   Memory.alloc mtype
 
 let create_global (inst : module_inst) (glob : global) : global_inst =
-  let {gtype; value} = glob.it in
-  let v = eval_const inst value in
+  let {gtype; ginit} = glob.it in
+  let v = eval_const inst ginit in
   Global.alloc gtype v
 
 let create_export (inst : module_inst) (ex : export) : export_inst =
@@ -447,15 +447,15 @@ let elem_list inst init =
   in List.map to_elem init
 
 let create_elem (inst : module_inst) (seg : elem_segment) : elem_inst =
-  let {etype; elems; emode} = seg.it in
+  let {etype; einit; emode} = seg.it in
   match emode.it with
-  | Passive -> ref (Some (elem_list inst elems))
+  | Passive -> ref (Some (elem_list inst einit))
   | Active _ -> ref None
 
 let create_data (inst : module_inst) (seg : data_segment) : data_inst =
-  let {data; dmode} = seg.it in
+  let {dinit; dmode} = seg.it in
   match dmode.it with
-  | Passive -> ref (Some data)
+  | Passive -> ref (Some dinit)
   | Active _ -> ref None
 
 
@@ -465,26 +465,26 @@ let init_func (inst : module_inst) (func : func_inst) =
   | _ -> assert false
 
 let init_table (inst : module_inst) (seg : elem_segment) =
-  let {etype; elems; emode} = seg.it in
+  let {etype; einit; emode} = seg.it in
   match emode.it with
   | Passive -> ()
   | Active {index; offset} ->
-    let refs = elem_list inst elems in
+    let refs = elem_list inst einit in
     let tab = table inst index in
     let i = i32 (eval_const inst offset) offset.at in
-    let n = Int32.of_int (List.length elems) in
+    let n = Int32.of_int (List.length einit) in
     (try Table.init tab refs i 0l n
     with Table.Bounds -> Link.error seg.at "elements segment does not fit table")
 
 let init_memory (inst : module_inst) (seg : data_segment) =
-  let {data; dmode} = seg.it in
+  let {dinit; dmode} = seg.it in
   match dmode.it with
   | Passive -> ()
   | Active {index; offset} ->
     let mem = memory inst index in
     let i = i32 (eval_const inst offset) offset.at in
-    let n = Int32.of_int (String.length data) in
-    (try Memory.init mem data (I64_convert.extend_i32_u i) 0L n
+    let n = Int32.of_int (String.length dinit) in
+    (try Memory.init mem dinit (I64_convert.extend_i32_u i) 0L n
     with Memory.Bounds -> Link.error seg.at "data segment does not fit memory")
 
 

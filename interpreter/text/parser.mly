@@ -601,24 +601,24 @@ elem :
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-      { etype = FuncRefType; elems = $5 c func;
+      { etype = FuncRefType; einit = $5 c func;
         emode = Active {index = 0l @@ at; offset = $4 c} @@ at} @@ at }
   | LPAR ELEM bind_var_opt elem_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-      {etype = (fst $4); elems = (snd $4) c; emode = Passive @@ at} @@ at }
+      {etype = (fst $4); einit = (snd $4) c; emode = Passive @@ at} @@ at }
   | LPAR ELEM bind_var_opt table_use offset elem_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-      { etype = (fst $6); elems = (snd $6) c;
+      { etype = (fst $6); einit = (snd $6) c;
         emode = Active {index = $4 c table; offset = $5 c} @@ at} @@ at }
   | LPAR ELEM bind_var_opt offset elem_list RPAR  /* Sugar */
     { let at = at () in
       fun c -> ignore ($3 c anon_elem bind_elem);
       fun () ->
-      { etype = (fst $5); elems = (snd $5) c;
+      { etype = (fst $5); einit = (snd $5) c;
         emode = Active {index = 0l @@ at; offset = $4 c} @@ at} @@ at }
 
 table :
@@ -641,42 +641,42 @@ table_fields :
   | elem_type LPAR ELEM elem_var_list RPAR  /* Sugar */
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
-      let elems = $4 c func in
-      let size = Lib.List32.length elems in
+      let einit = $4 c func in
+      let size = Lib.List32.length einit in
       let emode = Active {index = x; offset} @@ at in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
-      [{etype = FuncRefType; elems; emode} @@ at],
+      [{etype = FuncRefType; einit; emode} @@ at],
       [], [] }
   | elem_type LPAR ELEM elem_expr elem_expr_list RPAR  /* Sugar */
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
-      let elems = (fun c -> $4 c :: $5 c) c in
-      let size = Lib.List32.length elems in
+      let einit = (fun c -> $4 c :: $5 c) c in
+      let size = Lib.List32.length einit in
       let emode = Active {index = x; offset} @@ at in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
-      [{etype = FuncRefType; elems; emode} @@ at],
+      [{etype = FuncRefType; einit; emode} @@ at],
       [], [] }
 
 data :
   | LPAR DATA bind_var_opt string_list RPAR
     { let at = at () in
       fun c -> ignore ($3 c anon_data bind_data);
-      fun () -> {data = $4; dmode = Passive @@ at} @@ at }
+      fun () -> {dinit = $4; dmode = Passive @@ at} @@ at }
  | LPAR DATA bind_var var offset string_list RPAR
    { let at = at () in
      fun c -> ignore (bind_data c $3);
      fun () ->
-     {data = $6; dmode = Active {index = $4 c memory; offset = $5 c} @@ at} @@ at }
+     {dinit = $6; dmode = Active {index = $4 c memory; offset = $5 c} @@ at} @@ at }
  | LPAR DATA var offset string_list RPAR
    { let at = at () in
      fun c -> ignore (anon_data c);
      fun () ->
-     {data = $5; dmode = Active {index = $3 c memory; offset = $4 c} @@ at} @@ at }
+     {dinit = $5; dmode = Active {index = $3 c memory; offset = $4 c} @@ at} @@ at }
  | LPAR DATA offset string_list RPAR  /* Sugar */
    { let at = at () in
      fun c -> ignore (anon_data c);
      fun () ->
-     {data = $4; dmode = Active {index = 0l @@ at; offset = $3 c} @@ at} @@ at }
+     {dinit = $4; dmode = Active {index = 0l @@ at; offset = $3 c} @@ at} @@ at }
 
 memory :
   | LPAR MEMORY bind_var_opt memory_fields RPAR
@@ -700,7 +700,7 @@ memory_fields :
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
       let size = Int32.(div (add (of_int (String.length $3)) 65535l) 65536l) in
       [{mtype = MemoryType {min = size; max = Some size}} @@ at],
-      [{data = $3; dmode = Active {index = x; offset} @@ at} @@ at],
+      [{dinit = $3; dmode = Active {index = x; offset} @@ at} @@ at],
       [], [] }
 
 global :
@@ -711,7 +711,7 @@ global :
 
 global_fields :
   | global_type const_expr
-    { fun c x at -> [{gtype = $1; value = $2 c} @@ at], [], [] }
+    { fun c x at -> [{gtype = $1; ginit = $2 c} @@ at], [], [] }
   | inline_import global_type  /* Sugar */
     { fun c x at ->
       [],
