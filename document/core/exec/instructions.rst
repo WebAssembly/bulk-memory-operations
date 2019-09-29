@@ -695,6 +695,8 @@ Memory Instructions
      (\iff n > 1) \\
    \end{array}
 
+.. note::
+   
 
 .. _exec-memory.init:
 
@@ -941,7 +943,7 @@ Memory Instructions
    \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~\MEMORYCOPY &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~(dst+cnt-1))~(\I32.\CONST~(src+cnt-1))~(\I32.\CONST~1)~\MEMORYCOPY \\
+     (\vconst_\I32(dst+cnt-1))~(\vconst_\I32(src+cnt-1))~(\I32.\CONST~1)~\MEMORYCOPY \\
      (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt-1))~\MEMORYCOPY \\
      \end{array} \\
    \end{array}
