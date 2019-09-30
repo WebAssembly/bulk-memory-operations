@@ -251,7 +251,7 @@ Data segments :math:`\data` are classified by :ref:`segment types <syntax-segtyp
 :math:`\{ \DINIT~b^\ast, \DMODE~\datamode \}`
 ....................................................
 
-* The data mode :math:`\elemmode` must valid with type :math:`\segtype`.
+* The data mode :math:`\datamode` must valid with type :math:`\segtype`.
 
 * Then the data segment is valid with type :math:`\segtype`.
 

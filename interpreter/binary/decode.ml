@@ -630,7 +630,7 @@ let elem_index s =
   ref_func (at var s)
 
 let elem_kind s =
-  match vs7 s with
+  match u8 s with
   | 0x00 -> FuncRefType
   | _ -> error s (pos s - 1) "invalid element kind"
 
