@@ -278,7 +278,7 @@
 .. |DMODE| mathdef:: \xref{syntax/modules}{syntax-data}{\K{mode}}
 .. |DPASSIVE| mathdef:: \xref{syntax/modules}{syntax-data}{\K{passive}}
 .. |DACTIVE| mathdef:: \xref{syntax/modules}{syntax-data}{\K{active}}
-.. |DMEM| mathdef:: \xref{syntax/modules}{syntax-data}{\K{data}}
+.. |DMEM| mathdef:: \xref{syntax/modules}{syntax-data}{\K{memory}}
 .. |DOFFSET| mathdef:: \xref{syntax/modules}{syntax-data}{\K{offset}}
 
 .. |SFUNC| mathdef:: \xref{syntax/modules}{syntax-start}{\K{func}}
