@@ -321,7 +321,7 @@ Element Section
 ~~~~~~~~~~~~~~~
 
 The *element section* has the id 9.
-It decodes into a vector of :ref:`element segments <syntax-elem>` that represent the |MELEM| component of a :ref:`module <syntax-module>`.
+It decodes into a vector of :ref:`element segments <syntax-elem>` that represent the |MELEMS| component of a :ref:`module <syntax-module>`.
 
 .. math::
    \begin{array}{llclll}
@@ -429,7 +429,7 @@ Data Section
 ~~~~~~~~~~~~
 
 The *data section* has the id 11.
-It decodes into a vector of :ref:`data segments <syntax-data>` that represent the |MDATA| component of a :ref:`module <syntax-module>`.
+It decodes into a vector of :ref:`data segments <syntax-data>` that represent the |MDATAS| component of a :ref:`module <syntax-module>`.
 
 .. math::
    \begin{array}{llclll}
@@ -543,8 +543,8 @@ Furthermore, it must be present if any :math:`data index <syntax-dataidx>` occur
        \MTABLES~\table^\ast, \\
        \MMEMS~\mem^\ast, \\
        \MGLOBALS~\global^\ast, \\
-       \MELEM~\elem^\ast, \\
-       \MDATA~\data^m, \\
+       \MELEMS~\elem^\ast, \\
+       \MDATAS~\data^m, \\
        \MSTART~\start^?, \\
        \MIMPORTS~\import^\ast, \\
        \MEXPORTS~\export^\ast ~\} \\

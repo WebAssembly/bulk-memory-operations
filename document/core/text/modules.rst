@@ -500,7 +500,7 @@ Element segments allow for an optional :ref:`table index <text-tableidx>` to ide
      \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~x{:}\Ttableidx_I ~\text{)}~~\text{(}~\text{offset}~~e{:}\Texpr_I~\text{)}~~(et, y^\ast){:}\Telemlist~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETYPE~et, \EINIT~y^\ast, \EMODE~\EACTIVE~\{ \ETABLE~x, \EOFFSET~e \} \} \\
    \production{element list} & \Telemlist &::=&
-     et{:}\Telemtype~~y^\ast{:}\Tvec(\Telemexpr_I) \qquad\Rightarrow\quad ( \ETYPE~et, \EINIT~y^\ast ) \\ &&|&
+     et{:}\Telemtype~~y^\ast{:}\Tvec(\Telemexpr_I) \qquad\Rightarrow\quad ( \ETYPE~et, \EINIT~y^\ast ) \\
    \production{element expression} & \Telemexpr &::=&
      \text{(}~\text{ref.null}~\text{)} \\ &&|&
      \text{(}~\text{ref.func}~~\Tfuncidx_I~\text{)} \\
@@ -641,8 +641,8 @@ The name serves a documentary role only.
      \X{gl}{:}\Tglobal_I &\Rightarrow& \{\MGLOBALS~\X{gl}\} \\ |&
      \X{ex}{:}\Texport_I &\Rightarrow& \{\MEXPORTS~\X{ex}\} \\ |&
      \X{st}{:}\Tstart_I &\Rightarrow& \{\MSTART~\X{st}\} \\ |&
-     \X{el}{:}\Telem_I &\Rightarrow& \{\MELEM~\X{el}\} \\ |&
-     \X{da}{:}\Tdata_I &\Rightarrow& \{\MDATA~\X{da}\} \\
+     \X{el}{:}\Telem_I &\Rightarrow& \{\MELEMS~\X{el}\} \\ |&
+     \X{da}{:}\Tdata_I &\Rightarrow& \{\MDATAS~\X{da}\} \\
    \end{array}
    \end{array}
 

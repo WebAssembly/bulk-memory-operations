@@ -19,8 +19,8 @@ and provide initialization in the form of :ref:`active <syntax-active>` and :ref
      \MTABLES~\vec(\table), \\&&&&
      \MMEMS~\vec(\mem), \\&&&&
      \MGLOBALS~\vec(\global), \\&&&&
-     \MELEM~\vec(\elem), \\&&&&
-     \MDATA~\vec(\data), \\&&&&
+     \MELEMS~\vec(\elem), \\&&&&
+     \MDATAS~\vec(\data), \\&&&&
      \MSTART~\start^?, \\&&&&
      \MIMPORTS~\vec(\import), \\&&&&
      \MEXPORTS~\vec(\export) \quad\} \\
@@ -255,7 +255,7 @@ Element Segments
 
 The initial contents of a table is uninitialized. *Element segments* can be used to initialize a subrange of a table from a static :ref:`vector <syntax-vec>` of elements.
 
-The |MELEM| component of a module defines a vector of element segments.
+The |MELEMS| component of a module defines a vector of element segments.
 Each element segment defines an :ref:`element type <syntax-elemtype>` and a corresponding list of :ref:`element expressions <syntax-elemexpr>`.
 
 Element segments have a mode that identifies them as either :ref:`passive <syntax-passive>` or :ref:`active <syntax-active>`.
@@ -295,7 +295,7 @@ Data Segments
 
 The initial contents of a :ref:`memory <syntax-mem>` are zero bytes. *Data segments* can be used to initialize a range of memory from a static :ref:`vector <syntax-vec>` of :ref:`bytes <syntax-byte>`.
 
-The |MDATA| component of a module defines a vector of data segments.
+The |MDATAS| component of a module defines a vector of data segments.
 
 Like element segments, data segments have a mode that identifies them as either :ref:`passive <syntax-passive>` or :ref:`active <syntax-active>`.
 A passive data segment's contents can be copied into a memory using the |MEMORYINIT| instruction.

@@ -248,8 +248,8 @@
 .. |MGLOBALS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{globals}}
 .. |MIMPORTS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{imports}}
 .. |MEXPORTS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{exports}}
-.. |MDATA| mathdef:: \xref{syntax/modules}{syntax-module}{\K{data}}
-.. |MELEM| mathdef:: \xref{syntax/modules}{syntax-module}{\K{elem}}
+.. |MDATAS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{datas}}
+.. |MELEMS| mathdef:: \xref{syntax/modules}{syntax-module}{\K{elems}}
 .. |MSTART| mathdef:: \xref{syntax/modules}{syntax-module}{\K{start}}
 
 .. |FTYPE| mathdef:: \xref{syntax/modules}{syntax-func}{\K{type}}

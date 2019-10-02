@@ -568,10 +568,10 @@ Instead, the context :math:`C` for validation of the module's content is constru
     * Under the context :math:`C'`,
       the definition :math:`\global_i` must be :ref:`valid <valid-global>` with a :ref:`global type <syntax-globaltype>` :math:`\X{gt}_i`.
 
-  * For each :math:`\elem_i` in :math:`\module.\MELEM`,
+  * For each :math:`\elem_i` in :math:`\module.\MELEMS`,
     the segment :math:`\elem_i` must be :ref:`valid <valid-elem>` with a :ref:`segment type <syntax-segtype>` :math:`\X{est}_i`.
 
-  * For each :math:`\data_i` in :math:`\module.\MDATA`,
+  * For each :math:`\data_i` in :math:`\module.\MDATAS`,
     the segment :math:`\data_i` must be :ref:`valid <valid-data>` with a :ref:`segment type <syntax-segtype>` :math:`\X{dst}_i`.
 
   * If :math:`\module.\MSTART` is non-empty,
@@ -656,8 +656,8 @@ Instead, the context :math:`C` for validation of the module's content is constru
          \MTABLES~\table^\ast,
          \MMEMS~\mem^\ast,
          \MGLOBALS~\global^\ast, \\
-         \MELEM~\elem^\ast,
-         \MDATA~\data^\ast,
+         \MELEMS~\elem^\ast,
+         \MDATAS~\data^\ast,
          \MSTART~\start^?,
          \MIMPORTS~\import^\ast,
          \MEXPORTS~\export^\ast \} : \X{it}^\ast \to \X{et}^\ast \\
