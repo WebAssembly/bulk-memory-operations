@@ -295,7 +295,7 @@ let rec step (c : config) : config =
             {ty = I32Type; align = 0; offset = 0l; sz = Some Memory.Pack8});
         ]
 
-      | MemoryCopy, I32 n :: I32 s :: I32 d :: vs' when s >= d ->
+      | MemoryCopy, I32 n :: I32 s :: I32 d :: vs' when d <= s ->
         vs', List.map (at e.at) [
           Plain (Const (I32 d @@ e.at));
           Plain (Const (I32 s @@ e.at));

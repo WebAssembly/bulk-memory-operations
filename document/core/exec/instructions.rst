@@ -696,7 +696,8 @@ Memory Instructions
    \end{array}
 
 .. note::
-   
+   The use of the :math:`\vconst_t` meta function in the rules for this and the following instructions ensures that an overflowing index turns into a :ref:`trap <syntax-trap>`.
+
 
 .. _exec-memory.init:
 
