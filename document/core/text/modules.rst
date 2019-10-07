@@ -536,13 +536,13 @@ Also, the table index can be omitted, defaulting to :math:`\T{0}`.
 Furthermore, for backwards compatibility with earlier versions of WebAssembly, if the table index is omitted, the :math:`\text{func}` keyword can be omitted as well.
 
 .. math::
-   \begin{array}{llclll}
+   \begin{array}{ll}
    \production{element segment} &
     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{offset}~~\Texpr_I~\text{)}~~\Telemlist~\text{)}
-       &\equiv&
-     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~\text{0}~\text{)}~~\text{(}~\text{offset}~~\Texpr_I~\text{)}~~\Telemlist~\text{)}
+       \quad\equiv \\&
+     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~\text{0}~\text{)}~~\text{(}~\text{offset}~~\Texpr_I~\text{)}~~\Telemlist~\text{)} \\
     \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{offset}~~\Texpr_I~\text{)}~~\Tvec(\Tfuncidx_I)~\text{)}
-       &\equiv&
+       \quad\equiv \\&
      \text{(}~\text{elem}~~\Tid^?~~\text{(}~\text{table}~~\text{0}~\text{)}~~\text{(}~\text{offset}~~\Texpr_I~\text{)}~~\text{func}~~\Tvec(\Tfuncidx_I)~\text{)}
    \end{array}
 
