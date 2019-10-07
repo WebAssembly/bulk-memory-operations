@@ -354,7 +354,7 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
    bit 2 indicates the use of element type and element expressions instead of element kind and element indices.
 
    In the current version of WebAssembly, at most one table may be defined or
-   imported in a single module, so all valid :ref:`active <syntax-active>`
+   imported in a single module, so all valid :ref:`active <syntax-elem>`
    element segments have a |ETABLE| value of :math:`0`.
 
    Additional element kinds may be added in future versions of WebAssembly.
@@ -450,7 +450,7 @@ It decodes into a vector of :ref:`data segments <syntax-data>` that represent th
    bit 1 indicates the presence of an explicit memory index for an active segment.
 
    In the current version of WebAssembly, at most one memory may be defined or
-   imported in a single module, so all valid :ref:`active <syntax-active>` data
+   imported in a single module, so all valid :ref:`active <syntax-data>` data
    segments have a |DMEM| value of :math:`0`.
 
 

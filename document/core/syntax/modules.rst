@@ -9,7 +9,7 @@ WebAssembly programs are organized into *modules*,
 which are the unit of deployment, loading, and compilation.
 A module collects definitions for :ref:`types <syntax-type>`, :ref:`functions <syntax-func>`, :ref:`tables <syntax-table>`, :ref:`memories <syntax-mem>`, and :ref:`globals <syntax-global>`.
 In addition, it can declare :ref:`imports <syntax-import>` and :ref:`exports <syntax-export>`
-and provide initialization in the form of :ref:`active <syntax-active>` and :ref:`passive <syntax-passive>` :ref:`data <syntax-data>` and :ref:`element <syntax-elem>` segments, or a :ref:`start function <syntax-start>`.
+and provide initialization in the form of :ref:`data <syntax-data>` and :ref:`element <syntax-elem>` segments, or a :ref:`start function <syntax-start>`.
 
 .. math::
    \begin{array}{lllll}
@@ -258,7 +258,7 @@ The initial contents of a table is uninitialized. *Element segments* can be used
 The |MELEMS| component of a module defines a vector of element segments.
 Each element segment defines an :ref:`element type <syntax-elemtype>` and a corresponding list of :ref:`element expressions <syntax-elemexpr>`.
 
-Element segments have a mode that identifies them as either :ref:`passive <syntax-passive>` or :ref:`active <syntax-active>`.
+Element segments have a mode that identifies them as either *passive* or *active*.
 A passive element segment's elements can be copied to a table using the |TABLEINIT| instruction.
 An active element segment copies its elements into a table during :ref:`instantiation <exec-instantiation>`, as specified by a :ref:`table index <syntax-tableidx>` and a :ref:`constant <valid-constant>` :ref:`expression <syntax-expr>` defining an offset into that table.
 
@@ -297,7 +297,7 @@ The initial contents of a :ref:`memory <syntax-mem>` are zero bytes. *Data segme
 
 The |MDATAS| component of a module defines a vector of data segments.
 
-Like element segments, data segments have a mode that identifies them as either :ref:`passive <syntax-passive>` or :ref:`active <syntax-active>`.
+Like element segments, data segments have a mode that identifies them as either *passive* or *active*.
 A passive data segment's contents can be copied into a memory using the |MEMORYINIT| instruction.
 An active data segment copies its contents into a memory during :ref:`instantiation <exec-instantiation>`, as specified by a :ref:`memory index <syntax-memidx>` and a :ref:`constant <valid-constant>` :ref:`expression <syntax-expr>` defining an offset into that memory.
 
