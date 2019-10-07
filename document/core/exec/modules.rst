@@ -489,10 +489,9 @@ Growing :ref:`memories <syntax-meminst>`
 
 The allocation function for :ref:`modules <syntax-module>` requires a suitable list of :ref:`external values <syntax-externval>` that are assumed to :ref:`match <match-externtype>` the :ref:`import <syntax-import>` vector of the module,
 a list of initialization :ref:`values <syntax-val>` for the module's :ref:`globals <syntax-global>`,
-and vector of :ref:`function element <syntax-funcelem>` vectors for the module's :ref:`element segments <syntax-elem>`.
+and list of :ref:`function element <syntax-funcelem>` vectors for the module's :ref:`element segments <syntax-elem>`.
 
-1. Let :math:`\module` be the :ref:`module <syntax-module>` to allocate and :math:`\externval_{\F{im}}^\ast` the vector of :ref:`external values <syntax-externval>` providing the module's imports,
-and :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the module's :ref:`globals <syntax-global>` and :math:`(\funcelem^\ast)^\ast` the :ref:`function element <syntax-funcelem>` vectors of the module's :ref:`element segments <syntax-elem>`.
+1. Let :math:`\module` be the :ref:`module <syntax-module>` to allocate and :math:`\externval_{\F{im}}^\ast` the vector of :ref:`external values <syntax-externval>` providing the module's imports, :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the module's :ref:`globals <syntax-global>`, and :math:`(\funcelem^\ast)^\ast` the :ref:`function element <syntax-funcelem>` vectors of the module's :ref:`element segments <syntax-elem>`.
 
 2. For each :ref:`function <syntax-func>` :math:`\func_i` in :math:`\module.\MFUNCS`, do:
 
@@ -679,9 +678,9 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
    g. Let :math:`\val^\ast` be the conatenation of :math:`\val_i` in index order.
 
-6. Let :math:`(\funcelem^\ast)^\ast` be the vector of :ref:`function element <syntax-funcelem>` vectors determined by :math:`\module` and :math:`\externval^n`. These may be calculated as follows.
+6. Let :math:`(\funcelem^\ast)^\ast` be the list of :ref:`function element <syntax-funcelem>` vectors determined by the :ref:`element segments <syntax-elem>` in :math:`\module`. These may be calculated as follows.
 
-    a. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEM`, and for each :ref:`element expression <syntax-elemexpr>` :math:`\elemexpr_{ij}` in :math:`\elem_i.\EINIT`, do:
+    a. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEMS`, and for each :ref:`element expression <syntax-elemexpr>` :math:`\elemexpr_{ij}` in :math:`\elem_i.\EINIT`, do:
 
        i. If :math:`\elemexpr_{ij}` is of the form :math:`\REFNULL`, then let the :ref:`function element <syntax-funcelem>` :math:`\funcelem_{ij}` be :math:`\epsilon`.
 
@@ -701,7 +700,7 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
 9. Push the frame :math:`F` to the stack.
 
-10. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEM` whose :ref:`mode <syntax-elemmode>` is of the form :math:`\EACTIVE~\{ \ETABLE~\tableidx_i, \EOFFSET~\X{einstr}^\ast_i~\END \}`, do:
+10. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEMS` whose :ref:`mode <syntax-elemmode>` is of the form :math:`\EACTIVE~\{ \ETABLE~\tableidx_i, \EOFFSET~\X{einstr}^\ast_i~\END \}`, do:
 
     a. Assert: :math:`\tableidx_i` is :math:`0`.
 
@@ -717,19 +716,19 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
     g. :ref:`Execute <exec-elem.drop>` the instruction :math:`\ELEMDROP~i`.
 
-11. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATA` whose :ref:`mode <syntax-datamode>` is of the form :math:`\DACTIVE~\{ \DMEM~\memidx_i, \DOFFSET~\X{dinstr}^\ast_i~\END \}`, do:
+11. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATAS` whose :ref:`mode <syntax-datamode>` is of the form :math:`\DACTIVE~\{ \DMEM~\memidx_i, \DOFFSET~\X{dinstr}^\ast_i~\END \}`, do:
 
     a. Assert: :math:`\memidx_i` is :math:`0`.
 
     b. Let :math:`n` be the length of the vector :math:`\data_i.\DINIT`.
 
-    c. :ref:`Execute <exec-instr-seq>` the instruction sequence :math:`\{dinstr}^\ast_i`.
+    c. :ref:`Execute <exec-instr-seq>` the instruction sequence :math:`\X{dinstr}^\ast_i`.
 
     d. :ref:`Execute <exec-const>` the instruction :math:`\I32.\CONST~0`.
 
     e. :ref:`Execute <exec-const>` the instruction :math:`\I32.\CONST~n`.
 
-    f. :ref:`Execute <exec-memory.init>` the instruction :math:`\MEMINIT~i`.
+    f. :ref:`Execute <exec-memory.init>` the instruction :math:`\MEMORYINIT~i`.
 
     g. :ref:`Execute <exec-data.drop>` the instruction :math:`\DATADROP~i`.
 
@@ -749,8 +748,8 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
    \begin{array}{@{}rcll}
    \instantiate(S, \module, \externval^k) &=& S'; F;
      \begin{array}[t]{@{}l@{}}
-     \f{runelem}_0(\elem^n[0])~\dots~\f{runelem}_{n-1}(\elem^n[n-1]) \\
-     \f{rundata}_0(\data^m[0])~\dots~\f{rundata}_{m-1}(\data^m[m-1]) \\
+     \F{runelem}_0(\elem^n[0])~\dots~\F{runelem}_{n-1}(\elem^n[n-1]) \\
+     \F{rundata}_0(\data^m[0])~\dots~\F{rundata}_{m-1}(\data^m[m-1]) \\
      (\CALL~\start.\SFUNC)^? \\
      \end{array} \\
    &(\iff
@@ -758,8 +757,8 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
      &\wedge& (S \vdashexternval \externval : \externtype)^k \\
      &\wedge& (\vdashexterntypematch \externtype \matches \externtype_{\F{im}})^k \\[1ex]
      &\wedge& \module.\MGLOBALS = \global^\ast \\
-     &\wedge& \module.\MELEM = \elem^n \\
-     &\wedge& \module.\MDATA = \data^m \\
+     &\wedge& \module.\MELEMS = \elem^n \\
+     &\wedge& \module.\MDATAS = \data^m \\
      &\wedge& \module.\MSTART = \start^? \\[1ex]
      &\wedge& S', \moduleinst = \allocmodule(S, \module, \externval^k, \val^\ast) \\
      &\wedge& F = \{ \AMODULE~\moduleinst, \ALOCALS~\epsilon \} \\[1ex]
@@ -775,11 +774,11 @@ where:
 
 .. math::
    \begin{array}{@{}l}
-   \f{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\funcelem^n, \EMODE~\EPASSIVE\}) \quad=\quad \epsilon \\
-   \f{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\funcelem^n, \EMODE~\EACTIVE \{\ETABLE~0, \EOFFSET~\instr^\ast~\END\}\}) \quad=\\ \qquad
+   \F{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\funcelem^n, \EMODE~\EPASSIVE\}) \quad=\quad \epsilon \\
+   \F{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\funcelem^n, \EMODE~\EACTIVE \{\ETABLE~0, \EOFFSET~\instr^\ast~\END\}\}) \quad=\\ \qquad
      \instr^\ast~(\I32.\CONST~0)~(\I32.\CONST~n)~(\TABLEINIT~i)~(\ELEMDROP~i) \\[1ex]
-   \f{rundata}_i(\{\DINIT~b^n, DMODE~\DPASSIVE\}) \quad=\quad \epsilon \\
-   \f{rundata}_i(\{\DINIT~b^n, DMODE~\DACTIVE \{\DMEM~0, \DOFFSET~\instr^\ast~\END\}\}) \quad=\\ \qquad
+   \F{rundata}_i(\{\DINIT~b^n, DMODE~\DPASSIVE\}) \quad=\quad \epsilon \\
+   \F{rundata}_i(\{\DINIT~b^n, DMODE~\DACTIVE \{\DMEM~0, \DOFFSET~\instr^\ast~\END\}\}) \quad=\\ \qquad
      \instr^\ast~(\I32.\CONST~0)~(\I32.\CONST~n)~(\MEMORYINIT~i)~(\DATADROP~i) \\
    \end{array}
 
