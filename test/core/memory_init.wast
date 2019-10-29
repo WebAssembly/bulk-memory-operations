@@ -827,7 +827,7 @@
 
 (assert_return (invoke "checkRange" (i32.const 0) (i32.const 65528) (i32.const 0))
                (i32.const -1))
-(assert_return (invoke "checkRange" (i32.const 65528) (i32.const 65536) (i32.const 66))
+(assert_return (invoke "checkRange" (i32.const 65528) (i32.const 65536) (i32.const 0))
                (i32.const -1))
 (assert_return (invoke "checkRange" (i32.const 65536) (i32.const 65536) (i32.const 0))
                (i32.const -1))
@@ -854,7 +854,7 @@
 
 (assert_return (invoke "checkRange" (i32.const 0) (i32.const 65527) (i32.const 0))
                (i32.const -1))
-(assert_return (invoke "checkRange" (i32.const 65527) (i32.const 65536) (i32.const 66))
+(assert_return (invoke "checkRange" (i32.const 65527) (i32.const 65536) (i32.const 0))
                (i32.const -1))
 (assert_return (invoke "checkRange" (i32.const 65536) (i32.const 65536) (i32.const 0))
                (i32.const -1))
@@ -935,7 +935,7 @@
 
 (assert_return (invoke "checkRange" (i32.const 0) (i32.const 65528) (i32.const 0))
                (i32.const -1))
-(assert_return (invoke "checkRange" (i32.const 65528) (i32.const 65536) (i32.const 66))
+(assert_return (invoke "checkRange" (i32.const 65528) (i32.const 65536) (i32.const 0))
                (i32.const -1))
 (assert_return (invoke "checkRange" (i32.const 65536) (i32.const 65536) (i32.const 0))
                (i32.const -1))
@@ -962,7 +962,7 @@
 
 (assert_return (invoke "checkRange" (i32.const 0) (i32.const 0) (i32.const 0))
                (i32.const -1))
-(assert_return (invoke "checkRange" (i32.const 0) (i32.const 16) (i32.const 66))
+(assert_return (invoke "checkRange" (i32.const 0) (i32.const 16) (i32.const 0))
                (i32.const -1))
 (assert_return (invoke "checkRange" (i32.const 16) (i32.const 65536) (i32.const 0))
                (i32.const -1))
