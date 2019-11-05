@@ -689,22 +689,19 @@ Memory Instructions
    S; F; (\I32.\CONST~i)~\val~(\I32.\CONST~0)~(\MEMORYFILL) &\stepto& S; F; \epsilon
    \end{array} \\
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~\val~(\I32.\CONST~1)~(\MEMORYFILL) &\stepto& S; F;
-     (\I32.\CONST~i)~\val~(\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
-   \end{array} \\
-   \begin{array}{lcl@{\qquad}l}
    S; F; (\I32.\CONST~i)~\val~(\I32.\CONST~n)~(\MEMORYFILL) &\stepto& S; F;
      \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~i)~\val~(\I32.\CONST~1)~(\MEMORYFILL) \\
-     (\vconst_{\I32}(i+1))~\val~(\I32.\CONST~(n-1))~(\MEMORYFILL) \\
+     (\I32.\CONST~i)~\val~(\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
+     (\I32.\CONST~(i+1) \mod 2^{32})~\val~(\I32.\CONST~(n-1))~(\MEMORYFILL) \\
      \end{array} \\
    \end{array}
-   \\ \qquad
-     (\iff n > 1) \\
+   \\ \qquad (\iff i + n \leq |S.\SMEMS[F.\AMODULE.\MIMEMS[0]].\MIDATA|) \\
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~i)~\val~(\I32.\CONST~n)~(\MEMORYFILL) &\stepto& S; F;
+     \TRAP \\
+   \end{array} \\
+   \\ \qquad (\otherwise)
    \end{array}
-
-.. note::
-   The use of the :math:`\vconst_t` meta function in the rules for this and the following instructions ensures that an overflowing index turns into a :ref:`trap <syntax-trap>`.
 
 
 .. _exec-memory.init:

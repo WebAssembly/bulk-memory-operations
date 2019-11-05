@@ -29,19 +29,6 @@ It is convenient to reuse the same notation as for the |CONST| :ref:`instruction
      \F64.\CONST~\f64
    \end{array}
 
-Conventions
-...........
-
-The following auxiliary notation is defined for constant values, to ensure they are well-formed for the given :ref:`value type <syntax-valtype>`.
-
-.. math::
-   \begin{array}{lcl@{\qquad}l}
-   \vconst_t(x) &=& (t\K{.}\CONST~x)
-     & (\iff x~\mbox{is well-formed for}~t) \\
-   \vconst_t(x) &=& \TRAP
-     & (\otherwise) \\
-   \end{array}
-
 
 .. index:: ! result, value, trap
    pair: abstract syntax; result
