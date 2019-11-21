@@ -228,7 +228,7 @@ The meaning of the bits of the flag field for element segments is:
 | 0   | 0=is active, 1=is passive                        |
 | 1   | if bit 0 clear: 0=table 0, 1=has table index     | 
 |     | if bit 0 set: 0=active, 1=declared               |
-| 2   | 0=carries function indicies; 1=carries elemexprs |
+| 2   | 0=carries indicies; 1=carries elemexprs          |
 
 which yields this view, with the fields carried by each flag value:
 
