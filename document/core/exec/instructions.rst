@@ -830,13 +830,7 @@ Memory Instructions
 
 4. Assert: due to :ref:`validation <valid-data.drop>`, :math:`S.\SDATA[a]` exists.
 
-5. Let :math:`\X{data}^?` be the optional :ref:`data instance <syntax-datainst>` :math:`S.\SDATA[a]`.
-
-6. If :math:`\X{data}^? = \epsilon`, then:
-
-   a. Trap.
-
-7. Replace :math:`S.\SDATA[a]` with :math:`\epsilon`.
+5. Replace :math:`S.\SDATA[a]` with the :ref:`data instance <syntax-datainst>` :math:`\{\DIINIT~\epsilon\}`.
 
 .. math::
    ~\\[-1ex]
@@ -845,16 +839,7 @@ Memory Instructions
    S; F; (\DATADROP~x) &\stepto& S'; F; \epsilon
    \end{array}
    \\ \qquad
-     \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & S.\SDATA[F.\AMODULE.\MIDATAS[x]] \ne \epsilon \\
-     \wedge & S' = S \with \SDATA[F.\AMODULE.\MIDATAS[x]] = \epsilon) \\
-     \end{array}
-   \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\DATADROP~x) &\stepto& S; F; \TRAP
-   \end{array}
-   \\ \qquad
-     (\otherwise)
+     (\iff S' = S \with \SDATA[F.\AMODULE.\MIDATAS[x]] = \{ \DIINIT~\epsilon \}) \\
    \end{array}
 
 
@@ -1191,13 +1176,7 @@ Table Instructions
 
 4. Assert: due to :ref:`validation <valid-elem.drop>`, :math:`S.\SELEM[a]` exists.
 
-5. Let :math:`\X{elem}^?` be the optional :ref:`elem instance <syntax-eleminst>` :math:`S.\SELEM[a]`.
-
-6. If :math:`\X{elem}^? = \epsilon`, then:
-
-   a. Trap.
-
-7. Replace :math:`S.\SELEM[a]` with :math:`\epsilon`.
+5. Replace :math:`S.\SELEM[a]` with the :ref:`element instance <syntax-eleminst>` :math:`\{\EIINIT~\epsilon\}`.
 
 .. math::
    ~\\[-1ex]
@@ -1206,16 +1185,7 @@ Table Instructions
    S; F; (\ELEMDROP~x) &\stepto& S'; F; \epsilon
    \end{array}
    \\ \qquad
-     \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & S.\SELEM[F.\AMODULE.\MIELEMS[x]] \ne \epsilon \\
-     \wedge & S' = S \with \SELEM[F.\AMODULE.\MIELEMS[x]] = \epsilon) \\
-     \end{array}
-   \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\ELEMDROP~x) &\stepto& S; F; \TRAP
-   \end{array}
-   \\ \qquad
-     (\otherwise)
+     (\iff S' = S \with \SELEM[F.\AMODULE.\MIELEMS[x]] = \{ \EIINIT~\epsilon \}) \\
    \end{array}
 
 
