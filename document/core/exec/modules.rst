@@ -381,7 +381,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 2. Let :math:`a` be the first free :ref:`element address <syntax-elemaddr>` in :math:`S`.
 
-3. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\funcelem^\ast \}`.
+3. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIELEM~\funcelem^\ast \}`.
 
 4. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
 
@@ -392,7 +392,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
   \allocelem(S, \funcelem^\ast) &=& S', \elemaddr \\[1ex]
   \mbox{where:} \hfill \\
   \elemaddr &=& |S.\SELEM| \\
-  \eleminst &=& \{ \EIINIT~\funcelem^\ast \} \\
+  \eleminst &=& \{ \EIELEM~\funcelem^\ast \} \\
   S' &=& S \compose \{\SELEM~\eleminst\} \\
   \end{array}
 
@@ -407,7 +407,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 2. Let :math:`a` be the first free :ref:`data address <syntax-dataaddr>` in :math:`S`.
 
-3. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIINIT~\bytes \}`.
+3. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIDATA~\bytes \}`.
 
 4. Append :math:`\datainst` to the |SDATA| of :math:`S`.
 
@@ -418,7 +418,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
   \allocdata(S, \bytes) &=& S', \dataaddr \\[1ex]
   \mbox{where:} \hfill \\
   \dataaddr &=& |S.\SDATA| \\
-  \datainst &=& \{ \DIINIT~\bytes \} \\
+  \datainst &=& \{ \DIDATA~\bytes \} \\
   S' &=& S \compose \{\SDATA~\datainst\} \\
   \end{array}
 

@@ -854,9 +854,9 @@
 .. |GIVALUE| mathdef:: \xref{exec/runtime}{syntax-globalinst}{\K{value}}
 .. |GIMUT| mathdef:: \xref{exec/runtime}{syntax-globalinst}{\K{mut}}
 
-.. |EIINIT| mathdef:: \xref{exec/runtime}{syntax-eleminst}{\K{init}}
+.. |EIELEM| mathdef:: \xref{exec/runtime}{syntax-eleminst}{\K{elem}}
 
-.. |DIINIT| mathdef:: \xref{exec/runtime}{syntax-datainst}{\K{init}}
+.. |DIDATA| mathdef:: \xref{exec/runtime}{syntax-datainst}{\K{data}}
 
 .. |EINAME| mathdef:: \xref{exec/runtime}{syntax-exportinst}{\K{name}}
 .. |EIVALUE| mathdef:: \xref{exec/runtime}{syntax-exportinst}{\K{value}}

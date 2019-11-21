@@ -750,11 +750,11 @@ Memory Instructions
 
     a. Push the value :math:`\I32.\CONST~dst` to the stack.
 
-    b. If `src` is larger than the length of :math:`\X{data}.\DIINIT`, then:
+    b. If `src` is larger than the length of :math:`\X{data}.\DIDATA`, then:
 
        i. Trap.
 
-    c. Let :math:`b` be the byte :math:`\X{data}.\DIINIT[src]`.
+    c. Let :math:`b` be the byte :math:`\X{data}.\DIDATA[src]`.
 
     d. Push the value :math:`\I32.\CONST~b` to the stack.
 
@@ -791,8 +791,8 @@ Memory Instructions
    \end{array}
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & src < |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT| \\
-     \wedge & b = S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIINIT[src]) \\
+     (\iff & src < |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIDATA| \\
+     \wedge & b = S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIDATA[src]) \\
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
@@ -826,7 +826,7 @@ Memory Instructions
 
 4. Assert: due to :ref:`validation <valid-data.drop>`, :math:`S.\SDATA[a]` exists.
 
-5. Replace :math:`S.\SDATA[a]` with the :ref:`data instance <syntax-datainst>` :math:`\{\DIINIT~\epsilon\}`.
+5. Replace :math:`S.\SDATA[a]` with the :ref:`data instance <syntax-datainst>` :math:`\{\DIDATA~\epsilon\}`.
 
 .. math::
    ~\\[-1ex]
@@ -835,7 +835,7 @@ Memory Instructions
    S; F; (\DATADROP~x) &\stepto& S'; F; \epsilon
    \end{array}
    \\ \qquad
-     (\iff S' = S \with \SDATA[F.\AMODULE.\MIDATAS[x]] = \{ \DIINIT~\epsilon \}) \\
+     (\iff S' = S \with \SDATA[F.\AMODULE.\MIDATAS[x]] = \{ \DIDATA~\epsilon \}) \\
    \end{array}
 
 
@@ -1092,11 +1092,11 @@ Table Instructions
 
     a. Push the value :math:`\I32.\CONST~dst` to the stack.
 
-    b. If `src` is larger than the length of :math:`\X{elem}.\EIINIT`, then:
+    b. If `src` is larger than the length of :math:`\X{elem}.\EIELEM`, then:
 
        i. Trap.
 
-    c. Let :math:`\funcelem` be the :ref:`function element <syntax-funcelem>` :math:`\X{elem}.\EIINIT[src]`.
+    c. Let :math:`\funcelem` be the :ref:`function element <syntax-funcelem>` :math:`\X{elem}.\EIELEM[src]`.
 
     d. Push the value :math:`\funcelem` to the stack.
 
@@ -1124,34 +1124,29 @@ Table Instructions
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~0)~(\TABLEINIT~x) &\stepto& S; F; \epsilon
-   \end{array}
-   \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~1)~(\TABLEINIT~x) &\stepto& S; F;
-     (\I32.\CONST~dst)~\funcelem~(\TABLESET~x) \\
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~(\TABLEINIT~x) &\stepto& S; F; \TRAP
    \end{array}
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & src < |S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIINIT| \\
-     \wedge & \funcelem = S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIINIT[src]) \\
+     (\iff & s + n > |S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIELEM| \\
+     \vee & d + n > |S.\STABLE[F.\AMODULE.\MITABLES[x]].\TIELEM|) \\
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~(\TABLEINIT~x) &\stepto& S; F;
-     \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~1)~(\TABLEINIT~x) \\
-     (\vconst_{\I32}(dst+1))~(\vconst_{\I32}(src+1))~(\I32.\CONST~(cnt-1))~(\TABLEINIT~x) \\
-     \end{array} \\
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~0)~(\TABLEINIT~x) &\stepto& S; F; \epsilon \\
    \end{array}
    \\ \qquad
-     (\iff cnt > 1)
+     (\otherwise)
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~(\TABLEINIT~x) &\stepto& S; F; \TRAP
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~(\TABLEINIT~x) &\stepto& S; F;
+     \begin{array}[t]{@{}l@{}}
+     (\I32.\CONST~d)~\funcelem~(\TABLESET~x) \\
+     (\I32.\CONST~d+1)~(\I32.\CONST~s+1)~(\I32.\CONST~n)~(\TABLEINIT~x) \\
+     \end{array}
    \end{array}
    \\ \qquad
-     (\otherwise) \\
+     (\otherwise, \iff & \funcelem = S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIELEM[s]) \\
    \end{array}
 
 
@@ -1168,7 +1163,7 @@ Table Instructions
 
 4. Assert: due to :ref:`validation <valid-elem.drop>`, :math:`S.\SELEM[a]` exists.
 
-5. Replace :math:`S.\SELEM[a]` with the :ref:`element instance <syntax-eleminst>` :math:`\{\EIINIT~\epsilon\}`.
+5. Replace :math:`S.\SELEM[a]` with the :ref:`element instance <syntax-eleminst>` :math:`\{\EIELEM~\epsilon\}`.
 
 .. math::
    ~\\[-1ex]
@@ -1177,7 +1172,7 @@ Table Instructions
    S; F; (\ELEMDROP~x) &\stepto& S'; F; \epsilon
    \end{array}
    \\ \qquad
-     (\iff S' = S \with \SELEM[F.\AMODULE.\MIELEMS[x]] = \{ \EIINIT~\epsilon \}) \\
+     (\iff S' = S \with \SELEM[F.\AMODULE.\MIELEMS[x]] = \{ \EIELEM~\epsilon \}) \\
    \end{array}
 
 

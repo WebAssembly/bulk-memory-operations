@@ -318,7 +318,7 @@ It holds a vector of function elements.
 .. math::
   \begin{array}{llll}
   \production{(element instance)} & \eleminst &::=&
-    \{ \EIINIT~\vec(\funcelem) \} \\
+    \{ \EIELEM~\vec(\funcelem) \} \\
   \end{array}
 
 
@@ -336,7 +336,7 @@ It holds a vector of :ref:`bytes <syntax-byte>`.
 .. math::
   \begin{array}{llll}
   \production{(data instance)} & \datainst &::=&
-    \{ \DIINIT~\vec(\byte) \} \\
+    \{ \DIDATA~\vec(\byte) \} \\
   \end{array}
 
 
