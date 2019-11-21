@@ -234,11 +234,11 @@ which yields this view, with the fields carried by each flag value:
 
 | Flag | Meaning                  | Table index | Offset in table | Encoding      | Count       | Payload      |
 | -    | -                        | -           | -               | -             | -           | -            |
-| 0    | Legacy active, externval |             | `init_expr`     |               | `varuint32` | `idx`*       |
+| 0    | Legacy active, funcref externval |             | `init_expr`     |               | `varuint32` | `idx`*       |
 | 1    | Passive, externval       |             |                 | `extern_kind` | `varuint32` | `idx`*       |
 | 2    | Active, externval        | `varuint32` | `init_expr`     | `extern_kind` | `varuint32` | `idx`*       |
 | 3    | Declared, externval      |             |                 | `extern_kind` | `varuint32` | `idx`*       |
-| 4    | Legacy active, elemexpr  |             | `init_expr`     |               | `varuint32` | `elem_expr`* |
+| 4    | Legacy active, funcref elemexpr  |             | `init_expr`     |               | `varuint32` | `elem_expr`* |
 | 5    | Passive, elemexpr        |             |                 | `elem_type`   | `varuint32` | `elem_expr`* |
 | 6    | Active, elemexpr         | `varuint32` | `init_expr`     | `elem_type`   | `varuint32` | `elem_expr`* |
 | 7    | Declared, elemexpr       |             |                 | `elem_type`   | `varuint32` | `elem_expr`* |
