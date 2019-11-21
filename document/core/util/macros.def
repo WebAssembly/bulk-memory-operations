@@ -908,8 +908,8 @@
 .. |STABLES| mathdef:: \xref{exec/runtime}{syntax-store}{\K{tables}}
 .. |SMEMS| mathdef:: \xref{exec/runtime}{syntax-store}{\K{mems}}
 .. |SGLOBALS| mathdef:: \xref{exec/runtime}{syntax-store}{\K{globals}}
-.. |SELEM| mathdef:: \xref{exec/runtime}{syntax-store}{\K{elem}}
-.. |SDATA| mathdef:: \xref{exec/runtime}{syntax-store}{\K{data}}
+.. |SELEMS| mathdef:: \xref{exec/runtime}{syntax-store}{\K{elems}}
+.. |SDATAS| mathdef:: \xref{exec/runtime}{syntax-store}{\K{datas}}
 
 .. Store, non-terminals
 

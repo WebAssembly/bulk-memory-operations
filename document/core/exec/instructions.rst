@@ -726,9 +726,9 @@ Memory Instructions
 
 7. Let :math:`\X{da}` be the :ref:`data address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
 
-8. Assert: due to :ref:`validation <valid-memory.init>`, :math:`S.\SDATA[\X{da}]` exists.
+8. Assert: due to :ref:`validation <valid-memory.init>`, :math:`S.\SDATAS[\X{da}]` exists.
 
-9. Let :math:`\X{data}` be the  :ref:`data instance <syntax-datainst>` :math:`S.\SDATA[\X{da}]`.
+9. Let :math:`\X{data}` be the  :ref:`data instance <syntax-datainst>` :math:`S.\SDATAS[\X{da}]`.
 
 10. Assert: due to :ref:`validation <valid-memory.init>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
@@ -791,8 +791,8 @@ Memory Instructions
    \end{array}
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & src < |S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIDATA| \\
-     \wedge & b = S.\SDATA[F.\AMODULE.\MIDATAS[x]].\DIDATA[src]) \\
+     (\iff & src < |S.\SDATAS[F.\AMODULE.\MIDATAS[x]].\DIDATA| \\
+     \wedge & b = S.\SDATAS[F.\AMODULE.\MIDATAS[x]].\DIDATA[src]) \\
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
@@ -824,9 +824,9 @@ Memory Instructions
 
 3. Let :math:`a` be the :ref:`data address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
 
-4. Assert: due to :ref:`validation <valid-data.drop>`, :math:`S.\SDATA[a]` exists.
+4. Assert: due to :ref:`validation <valid-data.drop>`, :math:`S.\SDATAS[a]` exists.
 
-5. Replace :math:`S.\SDATA[a]` with the :ref:`data instance <syntax-datainst>` :math:`\{\DIDATA~\epsilon\}`.
+5. Replace :math:`S.\SDATAS[a]` with the :ref:`data instance <syntax-datainst>` :math:`\{\DIDATA~\epsilon\}`.
 
 .. math::
    ~\\[-1ex]
@@ -835,7 +835,7 @@ Memory Instructions
    S; F; (\DATADROP~x) &\stepto& S'; F; \epsilon
    \end{array}
    \\ \qquad
-     (\iff S' = S \with \SDATA[F.\AMODULE.\MIDATAS[x]] = \{ \DIDATA~\epsilon \}) \\
+     (\iff S' = S \with \SDATAS[F.\AMODULE.\MIDATAS[x]] = \{ \DIDATA~\epsilon \}) \\
    \end{array}
 
 
@@ -955,97 +955,109 @@ Table Instructions
 :math:`\TABLECOPY`
 ..................
 
-1. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. Pop the value :math:`\I32.\CONST~cnt` from the stack.
+2. Assert: due to :ref:`validation <valid-table.init>`, :math:`F.\AMODULE.\MITABLES[0]` exists.
 
-3. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+3. Let :math:`\X{ta}` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[0]`.
 
-4. Pop the value :math:`\I32.\CONST~src` from the stack.
+4. Assert: due to :ref:`validation <valid-table.init>`, :math:`S.\STABLES[\X{ta}]` exists.
 
-5. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+5. Let :math:`\X{tab}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}]`.
 
-6. Pop the value :math:`\I32.\CONST~dst` from the stack.
+6. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-7. If :math:`cnt = 0`, then:
+7. Pop the value :math:`\I32.\CONST~n` from the stack.
+
+8. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+
+9. Pop the value :math:`\I32.\CONST~s` from the stack.
+
+10. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+
+11. Pop the value :math:`\I32.\CONST~d` from the stack.
+
+12. If :math:`s + n` is larger than the length of :math:`\X{tab}.\TIELEM` or :math:`d + n` is larger than the length of :math:`\X{tab}.\TIELEM`, then:
+
+    a. Trap.
+
+13. If :math:`n = 0`, then:
 
    a. Return.
 
-8. If :math:`cnt = 1`, then:
+14. If :math:`d \leq s`, then:
 
-   a. Push the value :math:`\I32.\CONST~dst` to the stack.
+   a. Push the value :math:`\I32.\CONST~d` to the stack.
 
-   b. Push the value :math:`\I32.\CONST~src` to the stack.
+   b. Execute the instruction :math:`\TABLEGET`.
 
-   c. Execute the instruction :math:`\TABLEGET`.
+   c. Push the value :math:`\I32.\CONST~s` to the stack.
 
    d. Execute the instruction :math:`\TABLESET`.
 
-   e. Return.
+   e. Assert: due to the earlier check against the table size, :math:`d+1 < 2^{32}`.
 
-9. If :math:`dst <= src`, then:
+   f. Push the value :math:`\I32.\CONST~(d+1)` to the stack.
 
-   a. Push the value :math:`\I32.\CONST~dst` to the stack.
+   g. Assert: due to the earlier check against the table size, :math:`d+1 < 2^{32}`.
 
-   b. Push the value :math:`\I32.\CONST~src` to the stack.
+   h. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
 
-   c. Push the value :math:`\I32.\CONST~1` to the stack.
+15. Else:
 
-   d. Execute the instruction :math:`\TABLECOPY`.
+   a. Assert: due to the earlier check against the table size, :math:`d+n-1 < 2^{32}`.
 
-   e. Push the value :math:`\vconst_{\I32}(dst+1)` to the stack.
+   b. Push the value :math:`\I32.\CONST~(d+n-1)` to the stack.
 
-   f. Push the value :math:`\vconst_{\I32}(src+1)` to the stack.
+   c. Execute the instruction :math:`\TABLEGET`.
 
-10. Else:
+   d. Assert: due to the earlier check against the table size, :math:`d+n-1 < 2^{32}`.
 
-   a. Push the value :math:`\vconst_{\I32}(dst+cnt-1)` to the stack.
+   e. Push the value :math:`\I32.\CONST~(s+n-1)` to the stack.
 
-   b. Push the value :math:`\vconst_{\I32}(src+cnt-1)` to the stack.
+   f. Execute the instruction :math:`\TABLESET`.
 
-   c. Push the value :math:`\I32.\CONST~1` to the stack.
+   g. Push the value :math:`\I32.\CONST~d` to the stack.
 
-   d. Execute the instruction :math:`\TABLECOPY`.
+   h. Push the value :math:`\I32.\CONST~s` to the stack.
 
-   e. Push the value :math:`\I32.\CONST~dst` to the stack.
+16. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
 
-   f. Push the value :math:`\I32.\CONST~src` to the stack.
-
-11. Push the value :math:`\I32.\CONST~(cnt-1)` to the stack.
-
-12. Execute the instruction :math:`\TABLECOPY`.
+17. Execute the instruction :math:`\TABLECOPY`.
 
 .. math::
    ~\\[-1ex]
    \begin{array}{l}
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~0)~\TABLECOPY &\stepto& S; F; \epsilon
-   \end{array}
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~\TABLECOPY
+     \quad\stepto\quad S; F; \TRAP
+     \\ \qquad
+     \begin{array}[t]{@{}r@{~}l@{}}
+     (\iff & s + n > |S.\STABLES[F.\AMODULE.\MITABLES[0]].\TIELEM| \\
+      \vee & d + n > |S.\STABLES[F.\AMODULE.\MITABLES[0]].\TIELEM|) \\
+     \end{array}
    \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~1)~\TABLECOPY &\stepto& S; F;
-     (\I32.\CONST~dst)~(\I32.\CONST~src)~\TABLEGET~\TABLESET \\
-   \end{array}
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~0)~\TABLECOPY
+     \quad\stepto\quad S; F; \epsilon
+     \\ \qquad
+     (\otherwise)
    \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~\TABLECOPY &\stepto& S; F;
-     \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~1)~\TABLECOPY \\
-     (\vconst_{\I32}(dst+1))~(\vconst_{\I32}(src+1))~(\I32.\CONST~(cnt-1))~\TABLECOPY \\
-     \end{array} \\
-   \end{array}
-   \\ \qquad
-     (\iff dst <= src \wedge cnt > 1)
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~\TABLECOPY
+     \quad\stepto\quad S; F;
+       \begin{array}[t]{@{}l@{}}
+       (\I32.\CONST~d)~\TABLEGET~(\I32.\CONST~s)~\TABLESET \\
+       (\I32.\CONST~d+1)~(\I32.\CONST~s+1)~(\I32.\CONST~n)~\TABLECOPY \\
+       \end{array}
+     \\ \qquad
+     (\otherwise, \iff d \leq s)
    \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~cnt)~\TABLECOPY &\stepto& S; F;
-     \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~(dst+cnt-1))~(\I32.\CONST~(src+cnt-1))~(\I32.\CONST~1)~\TABLECOPY \\
-     (\I32.\CONST~dst)~(\I32.\CONST~src)~(\I32.\CONST~(cnt-1))~\TABLECOPY \\
-     \end{array} \\
-   \end{array}
-   \\ \qquad
-     (\iff dst > src \wedge cnt > 1) \\
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~\TABLECOPY
+     \quad\stepto\quad S; F;
+       \begin{array}[t]{@{}l@{}}
+       (\I32.\CONST~d+n-1)~\TABLEGET~(\I32.\CONST~s+n-1)~\TABLESET \\
+       (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~\TABLECOPY \\
+       \end{array}
+     \\ \qquad
+     (\otherwise, \iff d > s) \\
    \end{array}
 
 
@@ -1068,85 +1080,74 @@ Table Instructions
 
 7. Let :math:`\X{ea}` be the :ref:`element address <syntax-elemaddr>` :math:`F.\AMODULE.\MIELEMS[x]`.
 
-8. Assert: due to :ref:`validation <valid-table.init>`, :math:`S.\SELEM[\X{ea}]` exists.
+8. Assert: due to :ref:`validation <valid-table.init>`, :math:`S.\SELEMS[\X{ea}]` exists.
 
-9. Let :math:`\X{elem}` be the :ref:`element instance <syntax-eleminst>` :math:`S.\SELEM[\X{ea}]`.
+9. Let :math:`\X{elem}` be the :ref:`element instance <syntax-eleminst>` :math:`S.\SELEMS[\X{ea}]`.
 
 10. Assert: due to :ref:`validation <valid-table.init>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-11. Pop the value :math:`\I32.\CONST~cnt` from the stack.
+11. Pop the value :math:`\I32.\CONST~n` from the stack.
 
 12. Assert: due to :ref:`validation <valid-table.init>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-13. Pop the value :math:`\I32.\CONST~src` from the stack.
+13. Pop the value :math:`\I32.\CONST~s` from the stack.
 
 14. Assert: due to :ref:`validation <valid-table.init>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-15. Pop the value :math:`\I32.\CONST~dst` from the stack.
+15. Pop the value :math:`\I32.\CONST~d` from the stack.
 
-16. If :math:`cnt = 0`, then:
+16. If :math:`s + n` is larger than the length of :math:`\X{elem}.\EIELEM` or :math:`d + n` is larger than the length of :math:`\X{tab}.\TIELEM`, then:
+
+    a. Trap.
+
+17. If :math:`n = 0`, then:
 
     a. Return.
 
-17. If :math:`cnt = 1`, then:
+18. Let :math:`\funcelem` be the :ref:`function element <syntax-funcelem>` :math:`\X{elem}.\EIELEM[s]`.
 
-    a. Push the value :math:`\I32.\CONST~dst` to the stack.
+19. Push the value :math:`\I32.\CONST~d` to the stack.
 
-    b. If `src` is larger than the length of :math:`\X{elem}.\EIELEM`, then:
+20. Push the value :math:`\funcelem` to the stack.
 
-       i. Trap.
+21. Execute the instruction :math:`\TABLESET`.
 
-    c. Let :math:`\funcelem` be the :ref:`function element <syntax-funcelem>` :math:`\X{elem}.\EIELEM[src]`.
+22. Assert: due to the earlier check against the table size, :math:`d+1 < 2^{32}`.
 
-    d. Push the value :math:`\funcelem` to the stack.
+23. Push the value :math:`\I32.\CONST~(d+1)` to the stack.
 
-    e. Execute the instruction :math:`\TABLESET`.
+24. Assert: due to the earlier check against the segment size, :math:`s+1 < 2^{32}`.
 
-    f. Return.
+25. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
 
-18. Push the value :math:`\I32.\CONST~dst` to the stack.
-
-19. Push the value :math:`\I32.\CONST~src` to the stack.
-
-20. Push the value :math:`\I32.\CONST~1` to the stack.
-
-21. Execute the instruction :math:`\TABLEINIT~x`.
-
-22. Push the value :math:`\vconst_{\I32}(dst+1)` to the stack.
-
-23. Push the value :math:`\vconst_{\I32}(src+1)` to the stack.
-
-24. Push the value :math:`\I32.\CONST~(cnt-1)` to the stack.
+24. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
 
 25. Execute the instruction :math:`\TABLEINIT~x`.
 
 .. math::
    ~\\[-1ex]
    \begin{array}{l}
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~(\TABLEINIT~x) &\stepto& S; F; \TRAP
-   \end{array}
-   \\ \qquad
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~(\TABLEINIT~x)
+     \quad\stepto\quad S; F; \TRAP
+     \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & s + n > |S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIELEM| \\
-     \vee & d + n > |S.\STABLE[F.\AMODULE.\MITABLES[x]].\TIELEM|) \\
+     (\iff & s + n > |S.\SELEMS[F.\AMODULE.\MIELEMS[x]].\EIELEM| \\
+      \vee & d + n > |S.\STABLES[F.\AMODULE.\MITABLES[x]].\TIELEM|) \\
      \end{array}
    \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~0)~(\TABLEINIT~x) &\stepto& S; F; \epsilon \\
-   \end{array}
-   \\ \qquad
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~0)~(\TABLEINIT~x)
+     \quad\stepto\quad S; F; \epsilon
+     \\ \qquad
      (\otherwise)
    \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~(\TABLEINIT~x) &\stepto& S; F;
-     \begin{array}[t]{@{}l@{}}
-     (\I32.\CONST~d)~\funcelem~(\TABLESET~x) \\
-     (\I32.\CONST~d+1)~(\I32.\CONST~s+1)~(\I32.\CONST~n)~(\TABLEINIT~x) \\
-     \end{array}
-   \end{array}
-   \\ \qquad
-     (\otherwise, \iff & \funcelem = S.\SELEM[F.\AMODULE.\MIELEMS[x]].\EIELEM[s]) \\
+   S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~(\TABLEINIT~x)
+     \quad\stepto\quad S; F;
+       \begin{array}[t]{@{}l@{}}
+       (\I32.\CONST~d)~\funcelem~(\TABLESET~x) \\
+       (\I32.\CONST~d+1)~(\I32.\CONST~s+1)~(\I32.\CONST~n)~(\TABLEINIT~x) \\
+       \end{array}
+     \\ \qquad
+     (\otherwise, \iff \funcelem = S.\SELEMS[F.\AMODULE.\MIELEMS[x]].\EIELEM[s]) \\
    \end{array}
 
 
@@ -1161,9 +1162,9 @@ Table Instructions
 
 3. Let :math:`a` be the :ref:`element address <syntax-elemaddr>` :math:`F.\AMODULE.\MIELEMS[x]`.
 
-4. Assert: due to :ref:`validation <valid-elem.drop>`, :math:`S.\SELEM[a]` exists.
+4. Assert: due to :ref:`validation <valid-elem.drop>`, :math:`S.\SELEMS[a]` exists.
 
-5. Replace :math:`S.\SELEM[a]` with the :ref:`element instance <syntax-eleminst>` :math:`\{\EIELEM~\epsilon\}`.
+5. Replace :math:`S.\SELEMS[a]` with the :ref:`element instance <syntax-eleminst>` :math:`\{\EIELEM~\epsilon\}`.
 
 .. math::
    ~\\[-1ex]
@@ -1172,7 +1173,7 @@ Table Instructions
    S; F; (\ELEMDROP~x) &\stepto& S'; F; \epsilon
    \end{array}
    \\ \qquad
-     (\iff S' = S \with \SELEM[F.\AMODULE.\MIELEMS[x]] = \{ \EIELEM~\epsilon \}) \\
+     (\iff S' = S \with \SELEMS[F.\AMODULE.\MIELEMS[x]] = \{ \EIELEM~\epsilon \}) \\
    \end{array}
 
 

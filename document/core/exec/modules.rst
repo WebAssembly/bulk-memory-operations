@@ -383,7 +383,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 3. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIELEM~\funcelem^\ast \}`.
 
-4. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
+4. Append :math:`\eleminst` to the |SELEMS| of :math:`S`.
 
 5. Return :math:`a`.
 
@@ -391,9 +391,9 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
   \begin{array}{rlll}
   \allocelem(S, \funcelem^\ast) &=& S', \elemaddr \\[1ex]
   \mbox{where:} \hfill \\
-  \elemaddr &=& |S.\SELEM| \\
+  \elemaddr &=& |S.\SELEMS| \\
   \eleminst &=& \{ \EIELEM~\funcelem^\ast \} \\
-  S' &=& S \compose \{\SELEM~\eleminst\} \\
+  S' &=& S \compose \{\SELEMS~\eleminst\} \\
   \end{array}
 
 
@@ -409,7 +409,7 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 3. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIDATA~\bytes \}`.
 
-4. Append :math:`\datainst` to the |SDATA| of :math:`S`.
+4. Append :math:`\datainst` to the |SDATAS| of :math:`S`.
 
 5. Return :math:`a`.
 
@@ -417,9 +417,9 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
   \begin{array}{rlll}
   \allocdata(S, \bytes) &=& S', \dataaddr \\[1ex]
   \mbox{where:} \hfill \\
-  \dataaddr &=& |S.\SDATA| \\
+  \dataaddr &=& |S.\SDATAS| \\
   \datainst &=& \{ \DIDATA~\bytes \} \\
-  S' &=& S \compose \{\SDATA~\datainst\} \\
+  S' &=& S \compose \{\SDATAS~\datainst\} \\
   \end{array}
 
 
