@@ -97,8 +97,8 @@ Construct                                        Judgement
 :ref:`Table instance <extend-tableinst>`         :math:`\vdashtableinstextends \tableinst_1 \extendsto \tableinst_2`
 :ref:`Memory instance <extend-meminst>`          :math:`\vdashmeminstextends \meminst_1 \extendsto \meminst_2`
 :ref:`Global instance <extend-globalinst>`       :math:`\vdashglobalinstextends \globalinst_1 \extendsto \globalinst_2`
-:ref:`Elment instance <extend-eleminst>`         :math:`\vdasheleminstextends \eleminst_1 \extendsto \datainst_2`
-:ref:`Data instance <extend-datainst>`           :math:`\vdashdatainstextends \datainst_1 \extendsto \eleminst_2`
+:ref:`Element instance <extend-eleminst>`         :math:`\vdasheleminstextends \eleminst_1 \extendsto \eleminst_2`
+:ref:`Data instance <extend-datainst>`           :math:`\vdashdatainstextends \datainst_1 \extendsto \datainst_2`
 :ref:`Store <extend-store>`                      :math:`\vdashstoreextends \store_1 \extendsto \store_2`
 ===============================================  ===============================================================================
 
