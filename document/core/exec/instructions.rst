@@ -977,11 +977,11 @@ Table Instructions
 
 14. If :math:`d \leq s`, then:
 
-   a. Push the value :math:`\I32.\CONST~s` to the stack.
+   a. Push the value :math:`\I32.\CONST~d` to the stack.
 
-   b. Execute the instruction :math:`\TABLEGET`.
+   b. Push the value :math:`\I32.\CONST~s` to the stack.
 
-   c. Push the value :math:`\I32.\CONST~d` to the stack.
+   c. Execute the instruction :math:`\TABLEGET`.
 
    d. Execute the instruction :math:`\TABLESET`.
 
@@ -995,15 +995,15 @@ Table Instructions
 
 15. Else:
 
-   a. Assert: due to the earlier check against the table size, :math:`s+n-1 < 2^{32}`.
+   a. Assert: due to the earlier check against the table size, :math:`d+n-1 < 2^{32}`.
 
-   b. Push the value :math:`\I32.\CONST~(s+n-1)` to the stack.
+   b. Push the value :math:`\I32.\CONST~(d+n-1)` to the stack.
+
+   c. Assert: due to the earlier check against the table size, :math:`s+n-1 < 2^{32}`.
+
+   d. Push the value :math:`\I32.\CONST~(s+n-1)` to the stack.
 
    c. Execute the instruction :math:`\TABLEGET`.
-
-   d. Assert: due to the earlier check against the table size, :math:`d+n-1 < 2^{32}`.
-
-   e. Push the value :math:`\I32.\CONST~(d+n-1)` to the stack.
 
    f. Execute the instruction :math:`\TABLESET`.
 
@@ -1034,8 +1034,7 @@ Table Instructions
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~\TABLECOPY
      \quad\stepto\quad S; F;
        \begin{array}[t]{@{}l@{}}
-       (\I32.\CONST~s)~\TABLEGET \\
-       (\I32.\CONST~d)~\TABLESET \\
+       (\I32.\CONST~d)~(\I32.\CONST~s)~\TABLEGET~\TABLESET \\
        (\I32.\CONST~d+1)~(\I32.\CONST~s+1)~(\I32.\CONST~n)~\TABLECOPY \\
        \end{array}
      \\ \qquad
@@ -1044,8 +1043,7 @@ Table Instructions
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~\TABLECOPY
      \quad\stepto\quad S; F;
        \begin{array}[t]{@{}l@{}}
-       (\I32.\CONST~s+n-1)~\TABLEGET \\
-       (\I32.\CONST~d+n-1)~\TABLESET \\
+       (\I32.\CONST~d+n-1)~(\I32.\CONST~s+n-1)~\TABLEGET~\TABLESET \\
        (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~\TABLECOPY \\
        \end{array}
      \\ \qquad
