@@ -716,8 +716,6 @@ Memory Instructions
 
 5. Let :math:`\X{mem}` be the :ref:`memory instance <syntax-meminst>` :math:`S.\SMEMS[\X{ma}]`.
 
-1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
-
 6. Assert: due to :ref:`validation <valid-memory.init>`, :math:`F.\AMODULE.\MIDATAS[x]` exists.
 
 7. Let :math:`\X{da}` be the :ref:`data address <syntax-dataaddr>` :math:`F.\AMODULE.\MIDATAS[x]`.
@@ -762,9 +760,9 @@ Memory Instructions
 
 25. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
 
-24. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
+26. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
 
-25. Execute the instruction :math:`\MEMORYINIT~x`.
+27. Execute the instruction :math:`\MEMORYINIT~x`.
 
 .. math::
    ~\\[-1ex]
@@ -856,21 +854,21 @@ Memory Instructions
 
 14. If :math:`d \leq s`, then:
 
-   b. Push the value :math:`\I32.\CONST~d` to the stack.
+   a. Push the value :math:`\I32.\CONST~d` to the stack.
+
+   b. Push the value :math:`\I32.\CONST~s` to the stack.
 
    c. Execute the instruction :math:`\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}`.
 
-   e. Push the value :math:`\I32.\CONST~s` to the stack.
+   d. Execute the instruction :math:`\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}`.
 
-   f. Execute the instruction :math:`\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}`.
+   e. Assert: due to the earlier check against the memory size, :math:`d+1 < 2^{32}`.
 
-   a. Assert: due to the earlier check against the memory size, :math:`d+1 < 2^{32}`.
+   f. Push the value :math:`\I32.\CONST~(d+1)` to the stack.
 
-   e. Push the value :math:`\I32.\CONST~(d+1)` to the stack.
+   g. Assert: due to the earlier check against the memory size, :math:`s+1 < 2^{32}`.
 
-   d. Assert: due to the earlier check against the memory size, :math:`s+1 < 2^{32}`.
-
-   f. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
+   h. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
 
 15. Else:
 
@@ -878,11 +876,11 @@ Memory Instructions
 
    b. Push the value :math:`\I32.\CONST~(d+n-1)` to the stack.
 
-   c. Execute the instruction :math:`\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}`.
+   c. Assert: due to the earlier check against the memory size, :math:`s+n-1 < 2^{32}`.
 
-   d. Assert: due to the earlier check against the memory size, :math:`s+n-1 < 2^{32}`.
+   d. Push the value :math:`\I32.\CONST~(s+n-1)` to the stack.
 
-   e. Push the value :math:`\I32.\CONST~(s+n-1)` to the stack.
+   e. Execute the instruction :math:`\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}`.
 
    f. Execute the instruction :math:`\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}`.
 
@@ -913,8 +911,9 @@ Memory Instructions
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~\MEMORYCOPY
      \quad\stepto\quad S; F;
        \begin{array}[t]{@{}l@{}}
+       (\I32.\CONST~d) \\
        (\I32.\CONST~s)~(\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}) \\
-       (\I32.\CONST~d)~(\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
+       (\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
        (\I32.\CONST~d+1)~(\I32.\CONST~s+1)~(\I32.\CONST~n)~\MEMORYCOPY \\
        \end{array}
      \\ \qquad
@@ -923,8 +922,9 @@ Memory Instructions
    S; F; (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n+1)~\MEMORYCOPY
      \quad\stepto\quad S; F;
        \begin{array}[t]{@{}l@{}}
+       (\I32.\CONST~d+n-1) \\
        (\I32.\CONST~s+n-1)~(\I32\K{.}\LOAD\K{8\_u}~\{ \OFFSET~0, \ALIGN~0 \}) \\
-       (\I32.\CONST~d+n-1)~(\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
+       (\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}) \\
        (\I32.\CONST~d)~(\I32.\CONST~s)~(\I32.\CONST~n)~\MEMORYCOPY \\
        \end{array}
      \\ \qquad
@@ -977,11 +977,11 @@ Table Instructions
 
 14. If :math:`d \leq s`, then:
 
-   a. Push the value :math:`\I32.\CONST~d` to the stack.
+   a. Push the value :math:`\I32.\CONST~s` to the stack.
 
    b. Execute the instruction :math:`\TABLEGET`.
 
-   c. Push the value :math:`\I32.\CONST~s` to the stack.
+   c. Push the value :math:`\I32.\CONST~d` to the stack.
 
    d. Execute the instruction :math:`\TABLESET`.
 
@@ -995,15 +995,15 @@ Table Instructions
 
 15. Else:
 
-   a. Assert: due to the earlier check against the table size, :math:`d+n-1 < 2^{32}`.
+   a. Assert: due to the earlier check against the table size, :math:`s+n-1 < 2^{32}`.
 
-   b. Push the value :math:`\I32.\CONST~(d+n-1)` to the stack.
+   b. Push the value :math:`\I32.\CONST~(s+n-1)` to the stack.
 
    c. Execute the instruction :math:`\TABLEGET`.
 
-   d. Assert: due to the earlier check against the table size, :math:`s+n-1 < 2^{32}`.
+   d. Assert: due to the earlier check against the table size, :math:`d+n-1 < 2^{32}`.
 
-   e. Push the value :math:`\I32.\CONST~(s+n-1)` to the stack.
+   e. Push the value :math:`\I32.\CONST~(d+n-1)` to the stack.
 
    f. Execute the instruction :math:`\TABLESET`.
 
@@ -1112,9 +1112,9 @@ Table Instructions
 
 25. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
 
-24. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
+26. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
 
-25. Execute the instruction :math:`\TABLEINIT~x`.
+27. Execute the instruction :math:`\TABLEINIT~x`.
 
 .. math::
    ~\\[-1ex]
