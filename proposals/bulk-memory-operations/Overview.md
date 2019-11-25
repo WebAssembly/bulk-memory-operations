@@ -288,8 +288,12 @@ The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in 
 
 It is a validation error to use `memory.init` with an out-of-bounds segment index.
 
-A trap occurs if any of the accessed bytes lies outside the source data segment
-or the target memory.  Bounds checking is performed before any data are written.
+A trap occurs if:
+
+* the source offset plus size is greater than the length of the source data segment;
+  this includes the case that the segment has been dropped via `data.drop`
+* the destination offset plus size is greater than the length of the target memory
+
 The order of writing is unspecified, though this is currently unobservable.
 
 Note that it is allowed to use `memory.init` on the same data segment more than
@@ -333,8 +337,12 @@ The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in 
 - top-1: source address
 - top-0: size of memory region in bytes
 
-A trap occurs if any of the accessed bytes lies outside the source or target
-memory.  The bounds check is performed before any data are written.
+A trap occurs if:
+
+* the source offset plus size is greater than the length of the source memory   
+* the destination offset plus size is greater than the length of the target memory   
+
+The bounds check is performed before any data are written.
 
 ### `memory.fill` instruction
 
@@ -347,8 +355,12 @@ The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in 
 - top-1: byte value to set
 - top-0: size of memory region in bytes
 
-A trap occurs if any of the accessed bytes lies outside the target memory.  The
-bounds check is performed before any data are written.
+A trap occurs if:
+
+* the destination offset plus size is greater than the length of the target memory
+
+The bounds check is performed before any data are written.
+
 
 ### `table.init`, `elem.drop`, and `table.copy` instructions
 
