@@ -200,7 +200,7 @@ argument.
 
 ### Data segments
 
-The meaning of the bits of the flag field for data segments is:
+The meaning of the bits of the flag field (a `varuint32`) for data segments is:
 
 | Bit | Meaning                                        |
 | -   | -                                              |
@@ -221,7 +221,7 @@ but the upcoming multi-memory proposal changes that.
 
 ### Element segments
 
-The meaning of the bits of the flag field for element segments is:
+The meaning of the bits of the flag field (a `varuint32`) for element segments is:
 
 | Bit | Meaning                                          |
 | -   | -                                                |
@@ -243,7 +243,9 @@ which yields this view, with the fields carried by each flag value:
 | 6    | Active, elemexpr                 | `varuint32` | `init_expr`     | `elem_type`   | `varuint32` | `elem_expr`* |
 | 7    | Declared, elemexpr               |             |                 | `elem_type`   | `varuint32` | `elem_expr`* |
 
-All other flag values are illegal.
+All other flag values are illegal.  Note that the "declared" attribute
+is not used by this proposal, but is used by the reference-types
+proposal.
 
 The `extern_kind` must be zero, signifying a function definition.  An `idx` is a
 `varuint32` that references an entity in the module, currently only its function
@@ -288,7 +290,7 @@ It is a validation error to use `memory.init` with an out-of-bounds segment inde
 
 A trap occurs if any of the accessed bytes lies outside the source data segment
 or the target memory.  Bounds checking is performed before any data are written.
-The order of writing is unspecified.
+The order of writing is unspecified, though this is currently unobservable.
 
 Note that it is allowed to use `memory.init` on the same data segment more than
 once.
