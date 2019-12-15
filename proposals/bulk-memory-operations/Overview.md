@@ -333,6 +333,7 @@ The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in 
 A trap occurs if:
 * the source offset plus size is greater than the length of the source memory   
 * the destination offset plus size is greater than the length of the target memory   
+
 Memory copying order of bytes is not observable. When a trap resulting from an
 access outside the source or target region occurs, partial copying does not take
 place.
