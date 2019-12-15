@@ -280,9 +280,9 @@ A trap occurs if:
 Note that it is allowed to use `memory.init` on the same data segment more than
 once.
 
-Initialization takes place bytewise from lower addresses toward higher
-addresses. When a trap resulting from an access outside the source data segment
-or target memory occurs, partial initialization does not take place.
+Memory writing order of bytes is not observable. When a trap resulting from an
+access outside the source data segment or target memory occurs, partial
+initialization does not take place.
 
 (Data are read and written as-if individual bytes were read and
 written, but various optimizations are possible that avoid reading and
@@ -333,8 +333,9 @@ The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in 
 A trap occurs if:
 * the source offset plus size is greater than the length of the source memory   
 * the destination offset plus size is greater than the length of the target memory   
-When a trap resulting from an access outside the source or target region occurs,
-partial copying does not take place.
+Memory copying order of bytes is not observable. When a trap resulting from an
+access outside the source or target region occurs, partial copying does not take
+place.
 
 (Data are read and written as-if individual bytes were read and
 written, but various optimizations are possible that avoid reading and
@@ -354,9 +355,8 @@ The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in 
 A trap occurs if:
 * the destination offset plus size is greater than the length of the target memory   
 
-Filling takes place bytewise from lower addresses toward higher
-addresses. When a trap resulting from an access outside the target memory
-occurs, partial filling does not take place.
+Memory writing order of bytes is not obserable. When a trap resulting from an
+access outside the target memory occurs, partial filling does not take place.
 
 (Data are written as-if individual bytes were written, but various
 optimizations are possible that avoid writing only individual bytes.)
