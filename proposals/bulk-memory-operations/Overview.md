@@ -281,10 +281,8 @@ Note that it is allowed to use `memory.init` on the same data segment more than
 once.
 
 Initialization takes place bytewise from lower addresses toward higher
-addresses.  A trap resulting from an access outside the source data
-segment or target memory only occurs once the first byte that is
-outside the source or target is reached.  Bytes written before the
-trap stay written.
+addresses. When a trap resulting from an access outside the source data segment
+or target memory occurs, partial initialization does not take place.
 
 (Data are read and written as-if individual bytes were read and
 written, but various optimizations are possible that avoid reading and
@@ -297,16 +295,13 @@ succeeded will have to be written, if possible.
 
 ### `data.drop` instruction
 
-The `data.drop` instruction prevents further use of a given segment. After a
-data segment has been dropped, it is no longer valid to use it in a `memory.init`
-instruction. This instruction is intended to be used as an optimization hint to
-the WebAssembly implementation. After a memory segment is dropped its data can
-no longer be retrieved, so the memory used by this segment may be freed.
+The `data.drop` instruction prevents further use of a given segment. Dropping a
+segment has an effect of shrinking the segment to size 0. This instruction is
+intended to be used as an optimization hint to the WebAssembly implementation.
+After a memory segment is dropped its data can no longer be retrieved, so the
+memory used by this segment may be freed.
 
 It is a validation error to use `data.drop` with an out-of-bounds segment index.
-
-A trap occurs if the segment was already dropped. This includes active segments
-that were dropped after being copied into memory during module instantiation.
 
 ### `memory.copy` instruction
 
@@ -338,11 +333,8 @@ The instruction has the signature `[i32 i32 i32] -> []`. The parameters are, in 
 A trap occurs if:
 * the source offset plus size is greater than the length of the source memory   
 * the destination offset plus size is greater than the length of the target memory   
-
-A trap resulting from an access outside the source or target region
-only occurs once the first byte that is outside the source or target
-is reached (in the defined copy order).  Bytes written before the trap
-stay written.
+When a trap resulting from an access outside the source or target region occurs,
+partial copying does not take place.
 
 (Data are read and written as-if individual bytes were read and
 written, but various optimizations are possible that avoid reading and
@@ -363,9 +355,8 @@ A trap occurs if:
 * the destination offset plus size is greater than the length of the target memory   
 
 Filling takes place bytewise from lower addresses toward higher
-addresses.  A trap resulting from an access outside the target memory
-only occurs once the first byte that is outside the target is reached.
-Bytes written before the trap stay written.
+addresses. When a trap resulting from an access outside the target memory
+occurs, partial filling does not take place.
 
 (Data are written as-if individual bytes were written, but various
 optimizations are possible that avoid writing only individual bytes.)
