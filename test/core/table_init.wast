@@ -193,7 +193,7 @@
   (module
     (func (export "test")
       (elem.drop 0)))
-  "unknown element segment 0")
+  "unknown elem segment 0")
 
 (assert_invalid
   (module
@@ -207,7 +207,7 @@
     (func (result i32) (i32.const 0))
     (func (export "test")
       (elem.drop 4)))
-  "unknown element segment 4")
+  "unknown elem segment 4")
 
 (assert_invalid
   (module
