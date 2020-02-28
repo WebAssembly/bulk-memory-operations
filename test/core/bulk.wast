@@ -193,7 +193,7 @@
   (func (data.drop 64)))
 
 ;; No memory is required for the data.drop instruction.
-(module (data "") (func (data.drop 0)))
+(module (data "goodbye") (func (data.drop 0)))
 
 ;; table.init
 (module
@@ -294,7 +294,7 @@
   (func (elem.drop 64)))
 
 ;; No table is required for the elem.drop instruction.
-(module (elem funcref) (func (elem.drop 0)))
+(module (elem funcref (ref.func 0)) (func (elem.drop 0)))
 
 ;; table.copy
 (module
