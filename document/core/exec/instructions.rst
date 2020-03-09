@@ -736,31 +736,31 @@ Memory Instructions
 
 15. Pop the value :math:`\I32.\CONST~dst` from the stack.
 
-16. If :math:`s + n` is larger than the length of :math:`\X{data}.\DIDATA` or :math:`d + n` is larger than the length of :math:`\X{mem}.\MIDATA`, then:
+16. If :math:`src + cnt` is larger than the length of :math:`\X{data}.\DIDATA` or :math:`dst + cnt` is larger than the length of :math:`\X{mem}.\MIDATA`, then:
 
     a. Trap.
 
-17. If :math:`n = 0`, then:
+17. If :math:`cnt = 0`, then:
 
     a. Return.
 
 18. Let :math:`b` be the byte :math:`\X{data}.\DIDATA[s]`.
 
-19. Push the value :math:`\I32.\CONST~d` to the stack.
+19. Push the value :math:`\I32.\CONST~dst` to the stack.
 
 20. Push the value :math:`\I32.\CONST~b` to the stack.
 
 21. Execute the instruction :math:`\I32\K{.}\STORE\K{8}~\{ \OFFSET~0, \ALIGN~0 \}`.
 
-22. Assert: due to the earlier check against the memory size, :math:`d+1 < 2^{32}`.
+22. Assert: due to the earlier check against the memory size, :math:`dst+1 < 2^{32}`.
 
-23. Push the value :math:`\I32.\CONST~(d+1)` to the stack.
+23. Push the value :math:`\I32.\CONST~(dst+1)` to the stack.
 
-24. Assert: due to the earlier check against the memory size, :math:`s+1 < 2^{32}`.
+24. Assert: due to the earlier check against the memory size, :math:`src+1 < 2^{32}`.
 
-25. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
+25. Push the value :math:`\I32.\CONST~(src+1)` to the stack.
 
-26. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
+26. Push the value :math:`\I32.\CONST~(cnt-1)` to the stack.
 
 27. Execute the instruction :math:`\MEMORYINIT~x`.
 
