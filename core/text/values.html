@@ -1,19 +1,19 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Values &#8212; WebAssembly 1.0</title>
+    <meta charset="utf-8" />
+    <title>Values &#8212; WebAssembly 1.1</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"MAXBUFFER": 30720}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Types" href="types.html" />
@@ -24,7 +24,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+  </head><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -66,17 +66,15 @@
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="documentwrapper">
@@ -95,41 +93,41 @@ hence no <a class="reference internal" href="lexical.html#text-space"><span clas
 In both cases, digits can optionally be separated by underscores.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{sign} &amp; \href{../text/values.html#text-sign}{\mathtt{sign}} &amp;::=&amp;
+\def\mathdef2601#1{{}}\mathdef2601{sign} &amp; \href{../text/values.html#text-sign}{\mathtt{sign}} &amp;::=&amp;
   \epsilon \Rightarrow {+} ~~|~~
-  \def\mathdef2537#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2537{+} \Rightarrow {+} ~~|~~
-  \def\mathdef2538#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2538{-} \Rightarrow {-} \\
-\def\mathdef2501#1{{}}\mathdef2501{decimal digit} &amp; \href{../text/values.html#text-digit}{\mathtt{digit}} &amp;::=&amp;
-  \def\mathdef2539#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2539{0} \Rightarrow 0 ~~|~~ \dots ~~|~~ \def\mathdef2540#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2540{9} \Rightarrow 9 \\
-\def\mathdef2501#1{{}}\mathdef2501{hexadecimal digit} &amp; \href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}} &amp;::=&amp;
+  \def\mathdef2638#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2638{+} \Rightarrow {+} ~~|~~
+  \def\mathdef2639#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2639{-} \Rightarrow {-} \\
+\def\mathdef2601#1{{}}\mathdef2601{decimal digit} &amp; \href{../text/values.html#text-digit}{\mathtt{digit}} &amp;::=&amp;
+  \def\mathdef2640#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2640{0} \Rightarrow 0 ~~|~~ \dots ~~|~~ \def\mathdef2641#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2641{9} \Rightarrow 9 \\
+\def\mathdef2601#1{{}}\mathdef2601{hexadecimal digit} &amp; \href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}} &amp;::=&amp;
   d{:}\href{../text/values.html#text-digit}{\mathtt{digit}} \Rightarrow d \\ &amp;&amp;|&amp;
-  \def\mathdef2541#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2541{A} \Rightarrow 10 ~~|~~ \dots ~~|~~ \def\mathdef2542#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2542{F} \Rightarrow 15 \\ &amp;&amp;|&amp;
-  \def\mathdef2543#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2543{a} \Rightarrow 10 ~~|~~ \dots ~~|~~ \def\mathdef2544#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2544{f} \Rightarrow 15
+  \def\mathdef2642#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2642{A} \Rightarrow 10 ~~|~~ \dots ~~|~~ \def\mathdef2643#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2643{F} \Rightarrow 15 \\ &amp;&amp;|&amp;
+  \def\mathdef2644#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2644{a} \Rightarrow 10 ~~|~~ \dots ~~|~~ \def\mathdef2645#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2645{f} \Rightarrow 15
 \\[1ex]
-\def\mathdef2501#1{{}}\mathdef2501{decimal number} &amp; \href{../text/values.html#text-num}{\mathtt{num}} &amp;::=&amp;
+\def\mathdef2601#1{{}}\mathdef2601{decimal number} &amp; \href{../text/values.html#text-num}{\mathtt{num}} &amp;::=&amp;
   d{:}\href{../text/values.html#text-digit}{\mathtt{digit}} &amp;\Rightarrow&amp; d \\ &amp;&amp;|&amp;
-  n{:}\href{../text/values.html#text-num}{\mathtt{num}}~~\def\mathdef2545#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2545{\_}^?~~d{:}\href{../text/values.html#text-digit}{\mathtt{digit}} &amp;\Rightarrow&amp; 10\cdot n + d \\
-\def\mathdef2501#1{{}}\mathdef2501{hexadecimal number} &amp; \href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;::=&amp;
+  n{:}\href{../text/values.html#text-num}{\mathtt{num}}~~\def\mathdef2646#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2646{\_}^?~~d{:}\href{../text/values.html#text-digit}{\mathtt{digit}} &amp;\Rightarrow&amp; 10\cdot n + d \\
+\def\mathdef2601#1{{}}\mathdef2601{hexadecimal number} &amp; \href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;::=&amp;
   h{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}} &amp;\Rightarrow&amp; h \\ &amp;&amp;|&amp;
-  n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~~\def\mathdef2546#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2546{\_}^?~~h{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}} &amp;\Rightarrow&amp; 16\cdot n + h \\
+  n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~~\def\mathdef2647#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2647{\_}^?~~h{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}} &amp;\Rightarrow&amp; 16\cdot n + h \\
 \end{array}\end{split}\]</div>
 <p>The allowed syntax for integer literals depends on size and signedness.
 Moreover, their value must lie within the range of the respective type.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{unsigned integer} &amp; \href{../text/values.html#text-int}{\def\mathdef2521#1{{\mathtt{u}#1}}\mathdef2521{N}} &amp;::=&amp;
+\def\mathdef2601#1{{}}\mathdef2601{unsigned integer} &amp; \href{../text/values.html#text-int}{\def\mathdef2622#1{{\mathtt{u}#1}}\mathdef2622{N}} &amp;::=&amp;
   n{:}\href{../text/values.html#text-num}{\mathtt{num}} &amp;\Rightarrow&amp; n &amp; (\mathrel{\mbox{if}} n &lt; 2^N) \\ &amp;&amp;|&amp;
-  \def\mathdef2547#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2547{0x}~~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;\Rightarrow&amp; n &amp; (\mathrel{\mbox{if}} n &lt; 2^N) \\
-\def\mathdef2501#1{{}}\mathdef2501{signed integer} &amp; \href{../text/values.html#text-int}{\def\mathdef2527#1{{\mathtt{s}#1}}\mathdef2527{N}} &amp;::=&amp;
+  \def\mathdef2648#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2648{0x}~~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;\Rightarrow&amp; n &amp; (\mathrel{\mbox{if}} n &lt; 2^N) \\
+\def\mathdef2601#1{{}}\mathdef2601{signed integer} &amp; \href{../text/values.html#text-int}{\def\mathdef2628#1{{\mathtt{s}#1}}\mathdef2628{N}} &amp;::=&amp;
   {\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~~n{:}\href{../text/values.html#text-num}{\mathtt{num}} &amp;\Rightarrow&amp; \pm n &amp; (\mathrel{\mbox{if}} -2^{N-1} \leq \pm n &lt; 2^{N-1}) \\ &amp;&amp;|&amp;
-  {\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~~\def\mathdef2548#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2548{0x}~~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;\Rightarrow&amp; \pm n &amp; (\mathrel{\mbox{if}} -2^{N-1} \leq \pm n &lt; 2^{N-1}) \\
+  {\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~~\def\mathdef2649#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2649{0x}~~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;\Rightarrow&amp; \pm n &amp; (\mathrel{\mbox{if}} -2^{N-1} \leq \pm n &lt; 2^{N-1}) \\
 \end{array}\end{split}\]</div>
 <p><a class="reference internal" href="../syntax/values.html#syntax-int"><span class="std std-ref">Uninterpreted integers</span></a> can be written as either signed or unsigned, and are normalized to unsigned in the abstract syntax.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{uninterpreted integers} &amp; \href{../text/values.html#text-int}{\def\mathdef2530#1{{\mathtt{i}#1}}\mathdef2530{N}} &amp;::=&amp;
-  n{:}\href{../text/values.html#text-int}{\def\mathdef2521#1{{\mathtt{u}#1}}\mathdef2521{N}} &amp;\Rightarrow&amp; n \\ &amp;&amp;|&amp;
-  i{:}\href{../text/values.html#text-int}{\def\mathdef2527#1{{\mathtt{s}#1}}\mathdef2527{N}} &amp;\Rightarrow&amp; n &amp; (\mathrel{\mbox{if}} i = \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}(n)) \\
+\def\mathdef2601#1{{}}\mathdef2601{uninterpreted integers} &amp; \href{../text/values.html#text-int}{\def\mathdef2631#1{{\mathtt{i}#1}}\mathdef2631{N}} &amp;::=&amp;
+  n{:}\href{../text/values.html#text-int}{\def\mathdef2622#1{{\mathtt{u}#1}}\mathdef2622{N}} &amp;\Rightarrow&amp; n \\ &amp;&amp;|&amp;
+  i{:}\href{../text/values.html#text-int}{\def\mathdef2628#1{{\mathtt{s}#1}}\mathdef2628{N}} &amp;\Rightarrow&amp; n &amp; (\mathrel{\mbox{if}} i = \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}(n)) \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="floating-point">
@@ -137,86 +135,84 @@ Moreover, their value must lie within the range of the respective type.</p>
 <p><a class="reference internal" href="../syntax/values.html#syntax-float"><span class="std std-ref">Floating-point</span></a> values can be represented in either decimal or hexadecimal notation.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{decimal floating-point fraction} &amp; \href{../text/values.html#text-frac}{\mathtt{frac}} &amp;::=&amp;
-  \epsilon &amp;\Rightarrow&amp; 0 \\ &amp;&amp;|&amp;
-  d{:}\href{../text/values.html#text-digit}{\mathtt{digit}}~~q{:}\href{../text/values.html#text-frac}{\mathtt{frac}} &amp;\Rightarrow&amp; (d+q)/10 \\ &amp;&amp;|&amp;
-  d{:}\href{../text/values.html#text-digit}{\mathtt{digit}}~~\def\mathdef2549#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2549{\_}~~p{:}\href{../text/values.html#text-digit}{\mathtt{digit}}~~q{:}\href{../text/values.html#text-frac}{\mathtt{frac}} &amp;\Rightarrow&amp; (d+(p+q)/10)/10 \\
-\def\mathdef2501#1{{}}\mathdef2501{hexadecimal floating-point fraction} &amp; \href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}} &amp;::=&amp;
-  \epsilon &amp;\Rightarrow&amp; 0 \\ &amp;&amp;|&amp;
-  h{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}~~q{:}\href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}} &amp;\Rightarrow&amp; (h+q)/16 \\ &amp;&amp;|&amp;
-  h{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}~~\def\mathdef2550#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2550{\_}~~~~p{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}~~q{:}\href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}} &amp;\Rightarrow&amp; (h+(p+q)/16)/16 \\
-\def\mathdef2501#1{{}}\mathdef2501{decimal floating-point number} &amp; \href{../text/values.html#text-float}{\mathtt{float}} &amp;::=&amp;
-  p{:}\href{../text/values.html#text-num}{\mathtt{num}}
+\def\mathdef2601#1{{}}\mathdef2601{decimal floating-point fraction} &amp; \href{../text/values.html#text-frac}{\mathtt{frac}} &amp;::=&amp;
+  d{:}\href{../text/values.html#text-digit}{\mathtt{digit}} &amp;\Rightarrow&amp; d/10 \\ &amp;&amp;|&amp;
+  d{:}\href{../text/values.html#text-digit}{\mathtt{digit}}~~\def\mathdef2650#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2650{\_}^?~~p{:}\href{../text/values.html#text-frac}{\mathtt{frac}} &amp;\Rightarrow&amp; (d+p/10)/10 \\
+\def\mathdef2601#1{{}}\mathdef2601{hexadecimal floating-point fraction} &amp; \href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}} &amp;::=&amp;
+  h{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}} &amp;\Rightarrow&amp; h/16 \\ &amp;&amp;|&amp;
+  h{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}~~\def\mathdef2651#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2651{\_}^?~~p{:}\href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}} &amp;\Rightarrow&amp; (h+p/16)/16 \\
+\def\mathdef2601#1{{}}\mathdef2601{decimal floating-point number} &amp; \href{../text/values.html#text-float}{\mathtt{float}} &amp;::=&amp;
+  p{:}\href{../text/values.html#text-num}{\mathtt{num}}~\def\mathdef2652#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2652{.}^?
     &amp;\Rightarrow&amp; p \\ &amp;&amp;|&amp;
-  p{:}\href{../text/values.html#text-num}{\mathtt{num}}~\def\mathdef2551#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2551{.}~q{:}\href{../text/values.html#text-frac}{\mathtt{frac}}
+  p{:}\href{../text/values.html#text-num}{\mathtt{num}}~\def\mathdef2653#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2653{.}~q{:}\href{../text/values.html#text-frac}{\mathtt{frac}}
     &amp;\Rightarrow&amp; p+q \\ &amp;&amp;|&amp;
-  p{:}\href{../text/values.html#text-num}{\mathtt{num}}~(\def\mathdef2552#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2552{E}~|~\def\mathdef2553#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2553{e})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
+  p{:}\href{../text/values.html#text-num}{\mathtt{num}}~\def\mathdef2654#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2654{.}^?~(\def\mathdef2655#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2655{E}~|~\def\mathdef2656#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2656{e})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
     &amp;\Rightarrow&amp; p\cdot 10^{\pm e} \\ &amp;&amp;|&amp;
-  p{:}\href{../text/values.html#text-num}{\mathtt{num}}~\def\mathdef2554#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2554{.}~q{:}\href{../text/values.html#text-frac}{\mathtt{frac}}~(\def\mathdef2555#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2555{E}~|~\def\mathdef2556#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2556{e})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
+  p{:}\href{../text/values.html#text-num}{\mathtt{num}}~\def\mathdef2657#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2657{.}~q{:}\href{../text/values.html#text-frac}{\mathtt{frac}}~(\def\mathdef2658#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2658{E}~|~\def\mathdef2659#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2659{e})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
     &amp;\Rightarrow&amp; (p+q)\cdot 10^{\pm e} \\
-\def\mathdef2501#1{{}}\mathdef2501{hexadecimal floating-point number} &amp; \href{../text/values.html#text-hexfloat}{\mathtt{hexfloat}} &amp;::=&amp;
-  \def\mathdef2557#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2557{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}
+\def\mathdef2601#1{{}}\mathdef2601{hexadecimal floating-point number} &amp; \href{../text/values.html#text-hexfloat}{\mathtt{hexfloat}} &amp;::=&amp;
+  \def\mathdef2660#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2660{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2661#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2661{.}^?
     &amp;\Rightarrow&amp; p \\ &amp;&amp;|&amp;
-  \def\mathdef2558#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2558{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2559#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2559{.}~q{:}\href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}}
+  \def\mathdef2662#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2662{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2663#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2663{.}~q{:}\href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}}
     &amp;\Rightarrow&amp; p+q \\ &amp;&amp;|&amp;
-  \def\mathdef2560#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2560{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~(\def\mathdef2561#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2561{P}~|~\def\mathdef2562#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2562{p})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
+  \def\mathdef2664#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2664{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2665#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2665{.}^?~(\def\mathdef2666#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2666{P}~|~\def\mathdef2667#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2667{p})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
     &amp;\Rightarrow&amp; p\cdot 2^{\pm e} \\ &amp;&amp;|&amp;
-  \def\mathdef2563#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2563{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2564#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2564{.}~q{:}\href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}}~(\def\mathdef2565#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2565{P}~|~\def\mathdef2566#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2566{p})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
+  \def\mathdef2668#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2668{0x}~p{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2669#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2669{.}~q{:}\href{../text/values.html#text-hexfrac}{\mathtt{hexfrac}}~(\def\mathdef2670#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2670{P}~|~\def\mathdef2671#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2671{p})~{\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~e{:}\href{../text/values.html#text-num}{\mathtt{num}}
     &amp;\Rightarrow&amp; (p+q)\cdot 2^{\pm e}
 \end{array}\end{split}\]</div>
 <p>The value of a literal must not lie outside the representable range of the corresponding <a class="reference external" href="https://ieeexplore.ieee.org/document/8766229">IEEE 754-2019</a> type
 (that is, a numeric value must not overflow to <span class="math notranslate nohighlight">\(\pm\mbox{infinity}\)</span>),
 but it may be <a class="reference internal" href="../exec/numerics.html#aux-ieee"><span class="std std-ref">rounded</span></a> to the nearest representable value.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Rounding can be prevented by using hexadecimal notation with no more significant bits than supported by the required type.</p>
+<p class="admonition-title">Note</p>
+<p>Rounding can be prevented by using hexadecimal notation with no more significant bits than supported by the required type.</p>
 </div>
 <p>Floating-point values may also be written as constants for <em>infinity</em> or <em>canonical NaN</em> (<em>not a number</em>).
 Furthermore, arbitrary NaN values may be expressed by providing an explicit payload value.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{floating-point value} &amp; \href{../text/values.html#text-float}{\def\mathdef2533#1{{\mathtt{f}#1}}\mathdef2533{N}} &amp;::=&amp;
-  {\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~z{:}\href{../text/values.html#text-float}{\def\mathdef2534#1{{\mathtt{f}#1}}\mathdef2534{N}\mathtt{mag}} &amp;\Rightarrow&amp; \pm z \\
-\def\mathdef2501#1{{}}\mathdef2501{floating-point magnitude} &amp; \href{../text/values.html#text-float}{\def\mathdef2534#1{{\mathtt{f}#1}}\mathdef2534{N}\mathtt{mag}} &amp;::=&amp;
+\def\mathdef2601#1{{}}\mathdef2601{floating-point value} &amp; \href{../text/values.html#text-float}{\def\mathdef2634#1{{\mathtt{f}#1}}\mathdef2634{N}} &amp;::=&amp;
+  {\pm}{:}\href{../text/values.html#text-sign}{\mathtt{sign}}~z{:}\href{../text/values.html#text-float}{\def\mathdef2635#1{{\mathtt{f}#1}}\mathdef2635{N}\mathtt{mag}} &amp;\Rightarrow&amp; \pm z \\
+\def\mathdef2601#1{{}}\mathdef2601{floating-point magnitude} &amp; \href{../text/values.html#text-float}{\def\mathdef2635#1{{\mathtt{f}#1}}\mathdef2635{N}\mathtt{mag}} &amp;::=&amp;
   z{:}\href{../text/values.html#text-float}{\mathtt{float}} &amp;\Rightarrow&amp; \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(z) &amp; (\mathrel{\mbox{if}} \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(z) \neq \pm \infty) \\ &amp;&amp;|&amp;
   z{:}\href{../text/values.html#text-hexfloat}{\mathtt{hexfloat}} &amp;\Rightarrow&amp; \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(z) &amp; (\mathrel{\mbox{if}} \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(z) \neq \pm \infty) \\ &amp;&amp;|&amp;
-  \def\mathdef2567#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2567{inf} &amp;\Rightarrow&amp; \infty \\ &amp;&amp;|&amp;
-  \def\mathdef2568#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2568{nan} &amp;\Rightarrow&amp; \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(2^{\href{../syntax/values.html#aux-significand}{\mathrm{signif}}(N)-1}) \\ &amp;&amp;|&amp;
-  \def\mathdef2569#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2569{nan{:}0x}~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;\Rightarrow&amp; \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n) &amp; (\mathrel{\mbox{if}} 1 \leq n &lt; 2^{\href{../syntax/values.html#aux-significand}{\mathrm{signif}}(N)}) \\
+  \def\mathdef2672#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2672{inf} &amp;\Rightarrow&amp; \infty \\ &amp;&amp;|&amp;
+  \def\mathdef2673#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2673{nan} &amp;\Rightarrow&amp; \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(2^{\href{../syntax/values.html#aux-significand}{\mathrm{signif}}(N)-1}) \\ &amp;&amp;|&amp;
+  \def\mathdef2674#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2674{nan{:}0x}~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}} &amp;\Rightarrow&amp; \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n) &amp; (\mathrel{\mbox{if}} 1 \leq n &lt; 2^{\href{../syntax/values.html#aux-significand}{\mathrm{signif}}(N)}) \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="strings">
 <span id="text-string"></span><span id="text-byte"></span><span id="index-3"></span><h2>Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h2>
 <p><em>Strings</em> denote sequences of bytes that can represent both textual and binary data.
 They are enclosed in quotation marks
-and may contain any character other than <a class="reference external" href="http://webstore.ansi.org/RecordDetail.aspx?sku=INCITS+4-1986%5bR2012%5d">ASCII</a> control characters, quotation marks (<span class="math notranslate nohighlight">\(\def\mathdef2570#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2570{&quot;}\)</span>), or backslash (<span class="math notranslate nohighlight">\(\def\mathdef2571#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2571{\backslash}\)</span>),
+and may contain any character other than <a class="reference external" href="http://webstore.ansi.org/RecordDetail.aspx?sku=INCITS+4-1986%5bR2012%5d">ASCII</a> control characters, quotation marks (<span class="math notranslate nohighlight">\(\def\mathdef2675#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2675{&quot;}\)</span>), or backslash (<span class="math notranslate nohighlight">\(\def\mathdef2676#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2676{\backslash}\)</span>),
 except when expressed with an <em>escape sequence</em>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{string} &amp; \href{../text/values.html#text-string}{\mathtt{string}} &amp;::=&amp;
-  \def\mathdef2572#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2572{&quot;}~(b^\ast{:}\href{../text/values.html#text-string}{\mathtt{stringelem}})^\ast~\def\mathdef2573#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2573{&quot;}
+\def\mathdef2601#1{{}}\mathdef2601{string} &amp; \href{../text/values.html#text-string}{\mathtt{string}} &amp;::=&amp;
+  \def\mathdef2677#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2677{&quot;}~(b^\ast{:}\href{../text/values.html#text-string}{\mathtt{stringelem}})^\ast~\def\mathdef2678#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2678{&quot;}
     &amp;\Rightarrow&amp; \href{../syntax/conventions.html#notation-concat}{\mathrm{concat}}((b^\ast)^\ast)
     &amp; (\mathrel{\mbox{if}} |\href{../syntax/conventions.html#notation-concat}{\mathrm{concat}}((b^\ast)^\ast)| &lt; 2^{32}) \\
-\def\mathdef2501#1{{}}\mathdef2501{string element} &amp; \href{../text/values.html#text-string}{\mathtt{stringelem}} &amp;::=&amp;
+\def\mathdef2601#1{{}}\mathdef2601{string element} &amp; \href{../text/values.html#text-string}{\mathtt{stringelem}} &amp;::=&amp;
   c{:}\href{../text/values.html#text-string}{\mathtt{stringchar}} &amp;\Rightarrow&amp; \href{../binary/values.html#binary-utf8}{\mathrm{utf8}}(c) \\ &amp;&amp;|&amp;
-  \def\mathdef2574#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2574{\backslash}~n{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}~m{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}
+  \def\mathdef2679#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2679{\backslash}~n{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}~m{:}\href{../text/values.html#text-hexdigit}{\mathtt{hexdigit}}
     &amp;\Rightarrow&amp; 16\cdot n+m \\
 \end{array}\end{split}\]</div>
 <p>Each character in a string literal represents the byte sequence corresponding to its UTF-8 <a class="reference external" href="http://www.unicode.org/versions/latest/">Unicode</a> (Section 2.5) encoding,
 except for hexadecimal escape sequences <span class="math notranslate nohighlight">\(\mbox{‘}\backslash hh\mbox{’}\)</span>, which represent raw bytes of the respective value.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{string character} &amp; \href{../text/values.html#text-string}{\mathtt{stringchar}} &amp;::=&amp;
+\def\mathdef2601#1{{}}\mathdef2601{string character} &amp; \href{../text/values.html#text-string}{\mathtt{stringchar}} &amp;::=&amp;
   c{:}\href{../text/lexical.html#text-char}{\mathtt{char}} &amp;\Rightarrow&amp; c \qquad
-    &amp; (\mathrel{\mbox{if}} c \geq \def\mathdef2575#1{\mathrm{U{+}#1}}\mathdef2575{20} \wedge c \neq \def\mathdef2576#1{\mathrm{U{+}#1}}\mathdef2576{7F} \wedge c \neq \def\mathdef2577#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2577{&quot;} \wedge c \neq \def\mathdef2578#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2578{\backslash}) \\ &amp;&amp;|&amp;
-  \def\mathdef2579#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2579{\backslash t} &amp;\Rightarrow&amp; \def\mathdef2580#1{\mathrm{U{+}#1}}\mathdef2580{09} \\ &amp;&amp;|&amp;
-  \def\mathdef2581#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2581{\backslash n} &amp;\Rightarrow&amp; \def\mathdef2582#1{\mathrm{U{+}#1}}\mathdef2582{0A} \\ &amp;&amp;|&amp;
-  \def\mathdef2583#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2583{\backslash r} &amp;\Rightarrow&amp; \def\mathdef2584#1{\mathrm{U{+}#1}}\mathdef2584{0D} \\ &amp;&amp;|&amp;
-  \def\mathdef2585#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2585{\backslash{&quot;}} &amp;\Rightarrow&amp; \def\mathdef2586#1{\mathrm{U{+}#1}}\mathdef2586{22} \\ &amp;&amp;|&amp;
-  \def\mathdef2587#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2587{\backslash{'}} &amp;\Rightarrow&amp; \def\mathdef2588#1{\mathrm{U{+}#1}}\mathdef2588{27} \\ &amp;&amp;|&amp;
-  \def\mathdef2589#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2589{\backslash\backslash} &amp;\Rightarrow&amp; \def\mathdef2590#1{\mathrm{U{+}#1}}\mathdef2590{5C} \\ &amp;&amp;|&amp;
-  \def\mathdef2591#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2591{\backslash u\{}~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2592#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2592{\}}
-    &amp;\Rightarrow&amp; \def\mathdef2593#1{\mathrm{U{+}#1}}\mathdef2593{(n)} &amp; (\mathrel{\mbox{if}} n &lt; \def\mathdef2594#1{\mathtt{0x#1}}\mathdef2594{D800} \vee \def\mathdef2595#1{\mathtt{0x#1}}\mathdef2595{E000} \leq n &lt; \def\mathdef2596#1{\mathtt{0x#1}}\mathdef2596{110000}) \\
+    &amp; (\mathrel{\mbox{if}} c \geq \def\mathdef2680#1{\mathrm{U{+}#1}}\mathdef2680{20} \wedge c \neq \def\mathdef2681#1{\mathrm{U{+}#1}}\mathdef2681{7F} \wedge c \neq \def\mathdef2682#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2682{&quot;} \wedge c \neq \def\mathdef2683#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2683{\backslash}) \\ &amp;&amp;|&amp;
+  \def\mathdef2684#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2684{\backslash t} &amp;\Rightarrow&amp; \def\mathdef2685#1{\mathrm{U{+}#1}}\mathdef2685{09} \\ &amp;&amp;|&amp;
+  \def\mathdef2686#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2686{\backslash n} &amp;\Rightarrow&amp; \def\mathdef2687#1{\mathrm{U{+}#1}}\mathdef2687{0A} \\ &amp;&amp;|&amp;
+  \def\mathdef2688#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2688{\backslash r} &amp;\Rightarrow&amp; \def\mathdef2689#1{\mathrm{U{+}#1}}\mathdef2689{0D} \\ &amp;&amp;|&amp;
+  \def\mathdef2690#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2690{\backslash{&quot;}} &amp;\Rightarrow&amp; \def\mathdef2691#1{\mathrm{U{+}#1}}\mathdef2691{22} \\ &amp;&amp;|&amp;
+  \def\mathdef2692#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2692{\backslash{'}} &amp;\Rightarrow&amp; \def\mathdef2693#1{\mathrm{U{+}#1}}\mathdef2693{27} \\ &amp;&amp;|&amp;
+  \def\mathdef2694#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2694{\backslash\backslash} &amp;\Rightarrow&amp; \def\mathdef2695#1{\mathrm{U{+}#1}}\mathdef2695{5C} \\ &amp;&amp;|&amp;
+  \def\mathdef2696#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2696{\backslash u\{}~n{:}\href{../text/values.html#text-hexnum}{\mathtt{hexnum}}~\def\mathdef2697#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2697{\}}
+    &amp;\Rightarrow&amp; \def\mathdef2698#1{\mathrm{U{+}#1}}\mathdef2698{(n)} &amp; (\mathrel{\mbox{if}} n &lt; \def\mathdef2699#1{\mathtt{0x#1}}\mathdef2699{D800} \vee \def\mathdef2700#1{\mathtt{0x#1}}\mathdef2700{E000} \leq n &lt; \def\mathdef2701#1{\mathtt{0x#1}}\mathdef2701{110000}) \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="names">
@@ -225,50 +221,50 @@ except for hexadecimal escape sequences <span class="math notranslate nohighligh
 A name string must form a valid UTF-8 encoding as defined by <a class="reference external" href="http://www.unicode.org/versions/latest/">Unicode</a> (Section 2.5) and is interpreted as a string of Unicode scalar values.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{name} &amp; \href{../text/values.html#text-name}{\mathtt{name}} &amp;::=&amp;
+\def\mathdef2601#1{{}}\mathdef2601{name} &amp; \href{../text/values.html#text-name}{\mathtt{name}} &amp;::=&amp;
   b^\ast{:}\href{../text/values.html#text-string}{\mathtt{string}} &amp;\Rightarrow&amp; c^\ast &amp; (\mathrel{\mbox{if}} b^\ast = \href{../binary/values.html#binary-utf8}{\mathrm{utf8}}(c^\ast)) \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Presuming the source text is itself encoded correctly,
+<p class="admonition-title">Note</p>
+<p>Presuming the source text is itself encoded correctly,
 strings that do not contain any uses of hexadecimal byte escapes are always valid names.</p>
 </div>
 </div>
 <div class="section" id="text-id">
 <span id="text-idchar"></span><span id="index-5"></span><span id="identifiers"></span><h2>Identifiers<a class="headerlink" href="#text-id" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="../syntax/modules.html#syntax-index"><span class="std std-ref">Indices</span></a> can be given in both numeric and symbolic form.
-Symbolic <em>identifiers</em> that stand in lieu of indices start with <span class="math notranslate nohighlight">\(\def\mathdef2597#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2597{\$}\)</span>, followed by any sequence of printable <a class="reference external" href="http://webstore.ansi.org/RecordDetail.aspx?sku=INCITS+4-1986%5bR2012%5d">ASCII</a> characters that does not contain a space, quotation mark, comma, semicolon, or bracket.</p>
+Symbolic <em>identifiers</em> that stand in lieu of indices start with <span class="math notranslate nohighlight">\(\def\mathdef2702#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2702{\$}\)</span>, followed by any sequence of printable <a class="reference external" href="http://webstore.ansi.org/RecordDetail.aspx?sku=INCITS+4-1986%5bR2012%5d">ASCII</a> characters that does not contain a space, quotation mark, comma, semicolon, or bracket.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad}l}
-\def\mathdef2501#1{{}}\mathdef2501{identifier} &amp; \href{../text/values.html#text-id}{\mathtt{id}} &amp;::=&amp;
-  \def\mathdef2598#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2598{\$}~\href{../text/values.html#text-idchar}{\mathtt{idchar}}^+ \\
-\def\mathdef2501#1{{}}\mathdef2501{identifier character} &amp; \href{../text/values.html#text-idchar}{\mathtt{idchar}} &amp;::=&amp;
-  \def\mathdef2599#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2599{0} ~~|~~ \dots ~~|~~ \def\mathdef2600#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2600{9} \\ &amp;&amp;|&amp;
-  \def\mathdef2601#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2601{A} ~~|~~ \dots ~~|~~ \def\mathdef2602#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2602{Z} \\ &amp;&amp;|&amp;
-  \def\mathdef2603#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2603{a} ~~|~~ \dots ~~|~~ \def\mathdef2604#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2604{z} \\ &amp;&amp;|&amp;
-  \def\mathdef2605#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2605{!} ~~|~~
-  \def\mathdef2606#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2606{\#} ~~|~~
-  \def\mathdef2607#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2607{\$} ~~|~~
-  \def\mathdef2608#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2608{\%} ~~|~~
-  \def\mathdef2609#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2609{\&amp;} ~~|~~
-  \def\mathdef2610#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2610{'} ~~|~~
-  \def\mathdef2611#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2611{*} ~~|~~
-  \def\mathdef2612#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2612{+} ~~|~~
-  \def\mathdef2613#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2613{-} ~~|~~
-  \def\mathdef2614#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2614{.} ~~|~~
-  \def\mathdef2615#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2615{/} \\ &amp;&amp;|&amp;
-  \def\mathdef2616#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2616{:} ~~|~~
-  \def\mathdef2617#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2617{&lt;} ~~|~~
-  \def\mathdef2618#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2618{=} ~~|~~
-  \def\mathdef2619#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2619{&gt;} ~~|~~
-  \def\mathdef2620#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2620{?} ~~|~~
-  \def\mathdef2621#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2621{&#64;} ~~|~~
-  \def\mathdef2622#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2622{\backslash} ~~|~~
-  \def\mathdef2623#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2623{\hat{~~}} ~~|~~
-  \def\mathdef2624#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2624{\_} ~~|~~
-  \def\mathdef2625#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2625{\grave{~~}} ~~|~~
-  \def\mathdef2626#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2626{|} ~~|~~
-  \def\mathdef2627#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2627{\tilde{~~}} \\
+\def\mathdef2601#1{{}}\mathdef2601{identifier} &amp; \href{../text/values.html#text-id}{\mathtt{id}} &amp;::=&amp;
+  \def\mathdef2703#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2703{\$}~\href{../text/values.html#text-idchar}{\mathtt{idchar}}^+ \\
+\def\mathdef2601#1{{}}\mathdef2601{identifier character} &amp; \href{../text/values.html#text-idchar}{\mathtt{idchar}} &amp;::=&amp;
+  \def\mathdef2704#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2704{0} ~~|~~ \dots ~~|~~ \def\mathdef2705#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2705{9} \\ &amp;&amp;|&amp;
+  \def\mathdef2706#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2706{A} ~~|~~ \dots ~~|~~ \def\mathdef2707#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2707{Z} \\ &amp;&amp;|&amp;
+  \def\mathdef2708#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2708{a} ~~|~~ \dots ~~|~~ \def\mathdef2709#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2709{z} \\ &amp;&amp;|&amp;
+  \def\mathdef2710#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2710{!} ~~|~~
+  \def\mathdef2711#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2711{\#} ~~|~~
+  \def\mathdef2712#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2712{\$} ~~|~~
+  \def\mathdef2713#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2713{\%} ~~|~~
+  \def\mathdef2714#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2714{\&amp;} ~~|~~
+  \def\mathdef2715#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2715{'} ~~|~~
+  \def\mathdef2716#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2716{*} ~~|~~
+  \def\mathdef2717#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2717{+} ~~|~~
+  \def\mathdef2718#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2718{-} ~~|~~
+  \def\mathdef2719#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2719{.} ~~|~~
+  \def\mathdef2720#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2720{/} \\ &amp;&amp;|&amp;
+  \def\mathdef2721#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2721{:} ~~|~~
+  \def\mathdef2722#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2722{&lt;} ~~|~~
+  \def\mathdef2723#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2723{=} ~~|~~
+  \def\mathdef2724#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2724{&gt;} ~~|~~
+  \def\mathdef2725#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2725{?} ~~|~~
+  \def\mathdef2726#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2726{&#64;} ~~|~~
+  \def\mathdef2727#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2727{\backslash} ~~|~~
+  \def\mathdef2728#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2728{\hat{~~}} ~~|~~
+  \def\mathdef2729#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2729{\_} ~~|~~
+  \def\mathdef2730#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2730{\grave{~~}} ~~|~~
+  \def\mathdef2731#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2731{|} ~~|~~
+  \def\mathdef2732#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2732{\tilde{~~}} \\
 \end{array}\end{split}\]</div>
 <div class="section" id="conventions">
 <span id="text-id-fresh"></span><h3>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h3>
